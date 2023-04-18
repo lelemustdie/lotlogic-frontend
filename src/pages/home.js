@@ -1,7 +1,9 @@
-import SidebarAdmin from "../components/sidebarAdmin";
+import Sidebar from "../components/sidebar";
 
 export default function Home(){
-    return <div className="home">
-        <SidebarAdmin/>
+    return <div>
+        <section className="sidebar">
+            <Sidebar/>
+        </section>
     </div>
 }
