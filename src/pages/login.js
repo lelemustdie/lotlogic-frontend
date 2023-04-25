@@ -12,31 +12,6 @@ function Login() {
 
     const navigate = useNavigate();
 
-<<<<<<< HEAD
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    navigate("/home")
-    fetch (('http://localhost:8080/api/auth/login'),{
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method:"POST",
-        body: JSON.stringify(logInForm),
-    })
-    .then(response =>{
-        if (!response.ok){
-            throw new Error("Usuario Inválido")
-        }
-        return response.json()
-   })
-    .then(data=>{
-        localStorage.setItem("token",data.token)
-        navigate("/home")
-    })
-    .catch(error => console.log(error.message))
-    
-  }
-=======
     const handleSubmit = (event) => {
         event.preventDefault();
         fetch('http://localhost:8080/api/auth/login', {
@@ -62,7 +37,6 @@ function Login() {
                 // TODO: display an error message to the user
             });
     };
->>>>>>> d5dfa9ae8b01608f3d5c4f4b0e16d1ac9c2cca68
 
     return (<div className="container vh-100 d-flex align-items-center justify-content-center">
         <form onSubmit={handleSubmit}>
