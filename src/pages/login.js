@@ -14,24 +14,24 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     navigate("/home")
-    //fetch (('http://localhost:8080/api/auth/login'),{
-    //    headers: {
-    //        "Content-Type": "application/json"
-    //    },
-    //    method:"POST",
-    //    body: JSON.stringify(logInForm),
-    //})
-    //.then(response =>{
-    //    if (!response.ok){
-    //        throw new Error("Usuario Inválido")
-    //    }
-    //    return response.json()
-   //}//)
-    //.then(data=>{
-    //    localStorage.setItem("token",data.token)
-    //    navigate("/home")
-    //})
-    //.catch(error => console.log(error.message))
+    fetch (('http://localhost:8080/api/auth/login'),{
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method:"POST",
+        body: JSON.stringify(logInForm),
+    })
+    .then(response =>{
+        if (!response.ok){
+            throw new Error("Usuario Inválido")
+        }
+        return response.json()
+   })
+    .then(data=>{
+        localStorage.setItem("token",data.token)
+        navigate("/home")
+    })
+    .catch(error => console.log(error.message))
     
   }
 
