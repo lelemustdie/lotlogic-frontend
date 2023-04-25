@@ -4,13 +4,15 @@ import {useNavigate} from 'react-router-dom';
 function Login() {
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
+    
 
     const logInForm = {
         dni: dni,
-        password: password,
+        password: password, 
     }
 
     const navigate = useNavigate();
+    
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,13 +30,13 @@ function Login() {
                 return response.json();
             })
             .then((data) => {
-                localStorage.setItem('token', data.token);
+                localStorage.setItem('token', data.tokenResponse.token);
                 navigate('/home');
             })
             .catch((error) => {
                 console.log(error.message);
                 alert(error.message);
-                // TODO: display an error message to the user
+                
             });
     };
 
@@ -49,13 +51,13 @@ function Login() {
 
             <div className="form-group pb-3">
                 <label>Usuario</label>
-                <input type="text" className="form-control" id="dni" name="input_user" value={dni}
+                <input required type="text" className="form-control" id="dni" name="input_user" value={dni}
                        onChange={event => setDni(event.target.value)}/>
             </div>
 
             <div className="form-group pb-3">
                 <label>Contraseña</label>
-                <input type="password" className="form-control" id="password" name="input_password" value={password}
+                <input required type="password" className="form-control" id="password" name="input_password" value={password}
                        onChange={event => setPassword(event.target.value)}/>
             </div>
 

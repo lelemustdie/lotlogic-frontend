@@ -7,8 +7,7 @@ export default function Owners() {
     const [lastName, setLastName] = useState('');
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [equal,setEqual] = useState(false)
+    
 
 
 
@@ -17,17 +16,15 @@ export default function Owners() {
         name,
         lastName,
         password,
-        confirmPassword,
+    
     }
 
-    function handleSubmit(event) {
+    function handleSubmit  (event) {
         event.preventDefault();
-        if(!equal){ 
-            event.stopPropagation();
-            return;
-        }
+        
         fetch ('http://localhost:8080/api/user/admin/add-owner', {
         headers: {
+            "Authorization": 'bearer ${token}',
             "Content-Type": "application/json"
         },
         method: "post",
@@ -45,13 +42,7 @@ export default function Owners() {
 
     }
 
-    function handlePassword(event){
-        setConfirmPassword(event.target.value)
-        
-            setEqual(password=== event.target.value)
-            console.log(equal)
     
-    }
 
     
 
@@ -81,18 +72,13 @@ export default function Owners() {
                             <input required  type="password" className="form-control" id="password" name="input_ownerpassword" value={password} onChange={event=> setPassword(event.target.value)}/>
 
                         </div>
-                        <div>
-                            <label>Confirmar contraseña: </label>
-                            <input required type="password"  className="form-control" id="confirmPassword" name="input_ownerconfirmpassword" value={confirmPassword} onChange={handlePassword}/>
-                            
-
-                        </div>
+                        
                         <div>
                             <button type="submit" className='btn btn-dark'>AGREGAR DUEÑO</button>
                         </div>
 
                     </form>
-                    {!equal && <p>No coinciden las contrasenas</p>}
+                    
 
                 </section>
 
