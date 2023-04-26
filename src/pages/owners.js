@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import Sidebar from "../components/sidebar";
+import {useNavigate} from 'react-router-dom';
 
 
 export default function Owners() {
-    const [name,setName]= useState('');
+    const [firstName,setName]= useState('');
     const [lastName, setLastName] = useState('');
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
+
+    const token = localStorage.getItem(`token`)
+    const navigate = useNavigate();
     
-
-
-
     const newUserForm = {
-        dni,
-        name,
+        firstName,
         lastName,
+        dni,
         password,
     
     }
@@ -22,25 +23,26 @@ export default function Owners() {
     function handleSubmit  (event) {
         event.preventDefault();
         
-        fetch ('http://localhost:8080/api/user/admin/add-owner', {
-        headers: {
-            "Authorization": 'bearer ${token}',
-            "Content-Type": "application/json"
-        },
-        method: "post",
-        body: JSON.stringify(newUserForm),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al agregar dueño');
-            }
-            alert('Dueño agregado correctamente');
+            fetch ('http://localhost:8080/api/user/admin/add-owner', {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            method: "post",
+            body: JSON.stringify(newUserForm),
         })
-        .catch(error => {
-            alert(error.message);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al agregar dueño');
+                }
+                alert('Dueño agregado correctamente');
+                navigate('/home');
+            })
+            .catch(error => {
+                alert(error.message);
+            });
 
-    }
+        }
 
     
 
@@ -54,7 +56,7 @@ export default function Owners() {
                     <form onSubmit={handleSubmit} className='w-50'>
                         <div>
                             <label>Nombre del Dueño: </label>
-                            <input required type="text" className="form-control" id="name" name="input_ownername" value={name} onChange={event=> setName(event.target.value)}/>
+                            <input required type="text" className="form-control" id="firstName" name="input_ownername" value={firstName} onChange={event=> setName(event.target.value)}/>
 
                         </div>
                         <div>
@@ -78,8 +80,6 @@ export default function Owners() {
                         </div>
 
                     </form>
-                    
-
                 </section>
 
     </div>

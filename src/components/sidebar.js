@@ -28,6 +28,7 @@ function Sidebar(){
                             <li class="nav-item text-white fs-4 my-1">
                                 <a href="/owners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Dueños</span></a>
                             </li>
+                            
                         </ul>
                     </div>
                     <div class="dropdown open">
