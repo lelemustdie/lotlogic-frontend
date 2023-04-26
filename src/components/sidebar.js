@@ -26,7 +26,11 @@ function Sidebar(){
                                 <a href="/myparkings" class="nav-link text-white fs-5"><i class="bi bi-building"></i> <span className="ms-2">Mis Estacionamientos</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/owners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Dueños</span></a>
+                                <a href="/addowners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Agregar Dueño</span></a>
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                                <a href="/viewowners" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Ver/Modificar Dueños</span></a>
+
                             </li>
                             
                         </ul>

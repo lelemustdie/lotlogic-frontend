@@ -5,7 +5,8 @@ import Entry from './pages/entry';
 import Home from './pages/home';
 import Lele from './pages/lele';
 import Login from './pages/login';
-import Owners from './pages/owners';
+import Addowners from './pages/addowners';
+import Viewowners from './pages/viewowners'
 import { BrowserRouter as Router,Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
         <Route exact path="/carsview" element={<CarsView/>}/>
         <Route exact path="/entry" element={<Entry/>}/>
         <Route exact path="/lele" element={<Lele/>}/>
-        <Route exact path="/owners" element={<Owners/>}/>
+        <Route exact path="/owners" element={<Addowners/>}/>
+        <Route exact path='/viewowners' element={<Viewowners/>}/>
         
         
         {//<Route exact path="/carsin" element={<CarsIn/>}/>
