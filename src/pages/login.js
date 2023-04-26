@@ -1,3 +1,4 @@
+import React from 'react';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
@@ -7,7 +8,7 @@ function Login() {
 
     const logInForm = {
         dni: dni,
-        password: password,
+        password: password
     }
 
     const navigate = useNavigate();
@@ -23,7 +24,11 @@ function Login() {
         })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error('Usuario Inválido');
+                    if (response.status === 401) {
+                        throw new Error("Usuario o contraseña invalida");
+                    } else if (response.status === 404) {
+                        throw new Error("No pudimos encontrar tu cuenta de LotLogic");
+                    }
                 }
                 return response.json();
             })
@@ -34,7 +39,6 @@ function Login() {
             .catch((error) => {
                 console.log(error.message);
                 alert(error.message);
-
             });
     };
 
