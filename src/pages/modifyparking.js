@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import Sidebar from "../components/sidebar";
 import {useNavigate} from 'react-router-dom';
@@ -5,22 +6,20 @@ import {useNavigate} from 'react-router-dom';
 
 export default function ModifyParking() {
     const [dni,setDni]= useState('');
-    const [parkingAdress, setParkingAdress] = useState('');
-    const [floors, setFloors] = useState('');
-    const [fees, setFees] = useState('');
+    const [address, setAddress] = useState('');
     const [id, setId] = useState('');
+    const[fees, setFees] = useState('');
+    const [floors, setFloors] = useState('');
 
     const token = localStorage.getItem(`token`)
     const navigate = useNavigate();
-    
-    const newUserForm = {
-        dni,
-        parkingAdress,
-        floors,
-        fees,
-    
-    }
 
+    const modifyParkingForm = {
+        dni,
+        address,
+        floors: [],
+        fees: []
+    }
     function handleSubmit  (event) {
         event.preventDefault();
         
@@ -30,7 +29,7 @@ export default function ModifyParking() {
                 "Content-Type": "application/json"
             },
             method: "PUT",
-            body: JSON.stringify(newUserForm),
+            body: JSON.stringify(modifyParkingForm),
         })
             .then(response => {
                 if (!response.ok) {
@@ -68,7 +67,7 @@ export default function ModifyParking() {
                         </div>
                         <div>
                             <label>Direccion del Estacionamiento: </label>
-                            <input required type="text" className="form-control" id="adress" name="input_parkingadress" value={parkingAdress} onChange={event=> setParkingAdress(event.target.value)}/>
+                            <input required type="text" className="form-control" id="address" name="input_parkingadress" value={address} onChange={event=> setAddress(event.target.value)}/>
 
                         </div>
                         <div>

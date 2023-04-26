@@ -76,6 +76,7 @@ export default function Entry(){
                         <div>
                             <label className="m">Tipo de auto (TARIFA): </label>
                             <select required onChange={event =>setCarType(event.target.value)}>
+                                <option value="">SELLECIONE UNA</option>
                                 <option value="TRUCK">Camioneta/Pick Up</option>
                                 <option value="CAR">Auto</option>
                                 <option value="MOTORCYCLE">Moto</option>

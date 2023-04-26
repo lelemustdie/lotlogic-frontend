@@ -4,24 +4,20 @@ import {useNavigate} from 'react-router-dom';
 
 
 export default function AddParking() {
-    const [adress,setAdress]= useState('');
+    const [address,setAddress]= useState('');
     const [dni, setDniOwner] = useState('');
     const [floors, setFloors] = useState([]);
-    const [fees, setFees] = useState({
-        car:0,
-        truck:0,
-        motorcycle:0,
-    });
+    const [fees, setFees] = useState([]);
     
 
     const token = localStorage.getItem(`token`)
     const navigate = useNavigate();
     
     const newParkingForm = {
-        adress,
+        address,
         dni,
-        floors,
-        fees,
+        floors: [],
+        fees: []
     
     }
 
@@ -62,7 +58,7 @@ export default function AddParking() {
                     <form onSubmit={handleSubmit} className='w-50'>
                         <div>
                             <label>Direccion del estacionamiento: </label>
-                            <input required type="text" className="form-control" id="adress" name="input_adress" value={adress} onChange={event=> setAdress(event.target.value)}/>
+                            <input required type="text" className="form-control" id="address" name="input_address" value={address} onChange={event=> setAddress(event.target.value)}/>
 
                         </div>
                         <div>
@@ -72,7 +68,7 @@ export default function AddParking() {
                         </div>
                         <div>
                             <label>Pisos del Estacionamiento: </label>
-                            <input required type="number" className="form-control" id="floors" name="input_floors" value={floors} onChange={event=> setFloors(event.target.value)}/>
+                            <input required min='1' type="number" className="form-control" id="floors" name="input_floors" value={floors} onChange={event=> setFloors(event.target.value)}/>
                             
 
                         </div>
@@ -81,13 +77,13 @@ export default function AddParking() {
                             <label>Tarifas: </label>
                             </section>
                             <label>Precio Auto: </label>
-                            <input required type="number" className="form-control" id="car" name="input_carprice" value={fees.car} onChange={event => setFees({fees, auto: event.target.value })}/>
+                            <input required min="1" type="number" className="form-control" id="car" name="input_carprice" value={fees.car} onChange={event => setFees({fees, auto: event.target.value })}/>
 
                             <label>Precio Moto: </label>
-                            <input required type="number" className="form-control" id="motorcycle" name="input_motorcycleprice" value={fees.motorcycle} onChange={event => setFees({fees, moto: event.target.value })}/>
+                            <input required min="1" type="number" className="form-control" id="motorcycle" name="input_motorcycleprice" value={fees.motorcycle} onChange={event => setFees({fees, moto: event.target.value })}/>
 
                             <label>Precio Camioneta: </label>
-                            <input required type="number" className="form-control" id="truck" name="input_truckprice" value={fees.truck} onChange={event => setFees({fees, camioneta: event.target.value })}/>
+                            <input required min="1" type="number" className="form-control" id="truck" name="input_truckprice" value={fees.truck} onChange={event => setFees({fees, camioneta: event.target.value })}/>
 
                         </div>
                         

@@ -71,7 +71,7 @@ export default function AddOwners() {
                         </div>
                         <div>
                             <label>Contraseña: </label>
-                            <input required  type="password" className="form-control" id="password" name="input_ownerpassword" value={password} onChange={event=> setPassword(event.target.value)}/>
+                            <input required min="3" type="password" className="form-control" id="password" name="input_ownerpassword" value={password} onChange={event=> setPassword(event.target.value)}/>
 
                         </div>
                         
