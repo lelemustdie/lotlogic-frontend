@@ -22,14 +22,28 @@ function Sidebar(){
                             <li class="nav-item text-white fs-4 my-1">
                                 <a href="/carsin" class="nav-link text-white fs-5"><i class="bi bi-car-front-fill"></i><span className="ms-2">Autos Ingresados</span></a>
                             </li>
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/myparkings" class="nav-link text-white fs-5"><i class="bi bi-building"></i> <span className="ms-2">Mis Estacionamientos</span></a>
-                            </li>
+                        
                             <li class="nav-item text-white fs-4 my-1">
                                 <a href="/addowners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Agregar Dueño</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/viewowners" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Ver/Modificar Dueños</span></a>
+                                <a href="/modifyowners" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Dueños</span></a>
+
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                            <a href="/delowners" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Dueños</span></a>
+
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                            <a href="/addparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Agregar Estacionamiento</span></a>
+
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                            <a href="/modifyparking" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Estacionamiento</span></a>
+
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                            <a href="/delparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Estacionamiento</span></a>
 
                             </li>
                             

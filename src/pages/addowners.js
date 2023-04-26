@@ -3,7 +3,7 @@ import Sidebar from "../components/sidebar";
 import {useNavigate} from 'react-router-dom';
 
 
-export default function Owners() {
+export default function AddOwners() {
     const [firstName,setName]= useState('');
     const [lastName, setLastName] = useState('');
     const [dni, setDni] = useState('');

@@ -24,7 +24,7 @@ export default function ModifyOwners() {
     function handleSubmit  (event) {
         event.preventDefault();
         
-            fetch ('http://localhost:8080/api/user/admin/update-owner/${id}`', {
+            fetch (`http://localhost:8080/api/user/admin/update-owner/${id}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -34,9 +34,9 @@ export default function ModifyOwners() {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al agregar dueño');
+                    throw new Error('Error al modificar dueño');
                 }
-                alert('Dueño agregado correctamente');
+                alert('Dueño modificado correctamente');
                 navigate('/home');
             })
             .catch(error => {
