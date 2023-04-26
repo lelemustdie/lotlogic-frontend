@@ -83,7 +83,7 @@ export default function AddParking() {
                             <label>Precio Auto: </label>
                             <input required type="number" className="form-control" id="car" name="input_carprice" value={fees.car} onChange={event => setFees({fees, auto: event.target.value })}/>
 
-                            <label>Precio moto: </label>
+                            <label>Precio Moto: </label>
                             <input required type="number" className="form-control" id="motorcycle" name="input_motorcycleprice" value={fees.motorcycle} onChange={event => setFees({fees, moto: event.target.value })}/>
 
                             <label>Precio Camioneta: </label>

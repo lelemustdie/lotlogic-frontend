@@ -1,69 +1,84 @@
 import { useState } from "react";
 import Sidebar from "../components/sidebar";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Entry(){
-    const[owner, setOwner] = useState('');
-    const[plate,setPlate] = useState('');
-    const[brand, setBrand] = useState('');
-    const[model, setModel] = useState('');
-    const[fee, setFee] = useState('');
+    
+    const[carPlate,setPlate] = useState('');
+    const[carModel, setModel] = useState('');
+    const[carType, setCarType] = useState('');
     const[floor, setFloor] = useState('');
     const[lot, setLot] = useState('');
+    const[parkingId, setParkingId] = useState('');
 
     const floors = [50,100,75,81]
     const fees = [23,23,3]
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
     
     
 
     const entryForm = {
-        owner,
-        plate,
-        brand,
-        model,
-        fee,
+        
+        carPlate,
+        carModel,
+        carType,
         floor,
         lot,
+        parkingId,
     }
 
     function handleSubmit(event) {
         event.preventDefault(); 
+        fetch ('http://localhost:8080/api/user/employee/check-in-car', {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            method: "post",
+            body: JSON.stringify(entryForm),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al ingresar vehículo');
+                }
+                alert('Vehículo ingresado correctamente');
+                navigate('/home');
+            })
+            .catch(error => {
+                alert(error.message);
+            });
 
+        }
 
-
-    }
-
-    return (<div className="row">
-                <section className="col">
+        return (<div className="row w-100">
+                <section className="col-3">
                     <Sidebar/>
                 </section>
-                <section className="col fs-4">
+                <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                     <form onSubmit={handleSubmit}>
-
                         <div>
-                            <label>Propietario: </label>
-                            <input required type="text" className="form-control" id="owner" name="input_owner" value={owner} onChange={event=> setOwner(event.target.value)}/>
+                            <label>Parking ID: </label>
+                            <input required type="number" className="form-control" id="parkingId" name="input_id" value={parkingId} onChange={event=> setParkingId(event.target.value)}/>
                         </div>
+                        
                         <div>
                             <label>Patente: </label>
-                            <input required type="text" className="form-control" id="plate" name="input_plate" value={plate} onChange={event => setPlate(event.target.value)}/>
+                            <input required type="text" className="form-control" id="carPlate" name="input_plate" value={carPlate} onChange={event => setPlate(event.target.value)}/>
                         </div>
-                        <div>
-                            <label>Marca: </label>
-                            <input required type="text" className="form-control" id="brand" name="input_brand" value={brand} onChange={event => setBrand(event.target.value)}/>
-
-                        </div>
+        
                         <div>
                             <label>Modelo: </label>
-                            <input required type="text" className="form-control" id="model" name="input_model" value={model} onChange={event => setModel(event.target.value)}/>
+                            <input required type="text" className="form-control" id="carModel" name="input_model" value={carModel} onChange={event => setModel(event.target.value)}/>
 
                         </div>
                         <div>
-                            <label className="m">Tarifa: </label>
-                            <select required onChange={event =>setFee(event.target.value)}>
-                                <option value="truck">Camioneta/Pick Up</option>
-                                <option value="car">Auto</option>
-                                <option value="bike">Moto</option>
+                            <label className="m">Tipo de auto (TARIFA): </label>
+                            <select required onChange={event =>setCarType(event.target.value)}>
+                                <option value="TRUCK">Camioneta/Pick Up</option>
+                                <option value="CAR">Auto</option>
+                                <option value="MOTORCYCLE">Moto</option>
                             </select>
 
                         </div>
@@ -79,10 +94,23 @@ export default function Entry(){
                             <input type="number" className="form-control" id="lot" name="input_lot" value={lot} onChange={event=> setLot(event.target.value)} />
 
                         </div>
-
+                        <div>
+                            <button type="submit" className='btn btn-dark'>INGRESAR AUTO</button>
+                        </div>
+                        
+            
                     </form>
                 </section>
 
+
             </div>)
 
-}
+
+
+
+
+
+    }
+
+    
+

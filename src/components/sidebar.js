@@ -17,7 +17,10 @@ function Sidebar(){
                               
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/entry" class="nav-link text-white fs-5"><i class="bi bi-plus-square"></i><span className="ms-2">Ingreso</span></a>
+                                <a href="/entry" class="nav-link text-white fs-5"><i class="bi bi-box-arrow-right"></i><span className="ms-2">Ingreso</span></a>
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                                <a href="/checkout" class="nav-link text-white fs-5"><i class="bi bi-box-arrow-left"/><span className="ms-2">Egreso</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
                                 <a href="/carsin" class="nav-link text-white fs-5"><i class="bi bi-car-front-fill"></i><span className="ms-2">Autos Ingresados</span></a>
@@ -35,7 +38,7 @@ function Sidebar(){
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                            <a href="/addparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Agregar Estacionamiento</span></a>
+                            <a href="/addparking" class="nav-link text-white fs-5"><i class="bi bi-building-add"></i><span className="ms-2">Agregar Estacionamiento</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
@@ -52,7 +55,7 @@ function Sidebar(){
                     <div class="dropdown open">
                         <a class="text-decoration-none text-white p-3 dropdown-toggle fs-4" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                    <i className="bi bi-person-circle"></i><span className="ms-2">Lele</span>
+                                    <i className="bi bi-person-circle"></i><span className="ms-2">ADMIN</span>
                                 </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId">
                             <a class="dropdown-item" href="/login">Log Out</a>
