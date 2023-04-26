@@ -23,16 +23,16 @@ export default function ReservationsList() {
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <div>
-                    <h2>Reservations List</h2>
+                <div className="text-center">
+                    <h2>Autos ingresados</h2>
                     <ul>
                         {reservations.map(reservation => (
                             <li key={reservation.id}>
                                 <p>Reservation ID: {reservation.id}</p>
-                                <p>Car Plate: {reservation.carPlate}</p>
-                                <p>Car Model: {reservation.carModel}</p>
-                                <p>Car Type: {reservation.carType}</p>
-                                <p>Entry Date: {reservation.entryDate}</p>
+                                <p>Patente: {reservation.carPlate}</p>
+                                <p>Modelo: {reservation.carModel}</p>
+                                <p>Tipo de auto: {reservation.carType}</p>
+                                <p>Fecha de ingreso: {reservation.entryDate}</p>
                             </li>
                         ))}
                     </ul>
