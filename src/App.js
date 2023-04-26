@@ -9,6 +9,7 @@ import Addowners from './pages/addowners';
 import Modifyowners from './pages/modifyowners'
 import Delowners from './pages/delowners'
 import { BrowserRouter as Router,Route, Routes } from 'react-router-dom';
+import AddParking from './pages/addparking';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/addowners" element={<Addowners/>}/>
         <Route exact path='/modifyowners' element={<Modifyowners/>}/>
         <Route exact path='/delowners' element={<Delowners/>}/>
+        <Route exact path='/addparking' element={<AddParking/>}/>
         
         
         {//<Route exact path="/carsin" element={<CarsIn/>}/>
