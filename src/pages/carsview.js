@@ -15,8 +15,8 @@ export default function CarView() {
     }
 
     return (
-        <div className="row">
-            <section className="col">
+        <div className="row w-100">
+            <section className="col-3">
                 <Sidebar/>
 
             </section>

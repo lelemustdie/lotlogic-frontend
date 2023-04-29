@@ -1,7 +1,7 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/js/dist/dropdown'
+function Sidebar(){
 
-function Sidebar() {
     return (
         <div className="container-fluid">
             <div className="row">
@@ -13,59 +13,52 @@ function Sidebar() {
                         <hr className="text-secondary"></hr>
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/carsview" class="nav-link text-white fs-5" aria-current="page"><i
-                                    class="bi bi-grid-3x2"></i> <span className="ms-2">Vista Cocheras</span></a>
+                                <a href="/carsview" class="nav-link text-white fs-5" aria-current="page"><i class="bi bi-grid-3x2"></i> <span className="ms-2">Vista Cocheras</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/entry" class="nav-link text-white fs-5"><i
-                                    class="bi bi-box-arrow-right"></i><span className="ms-2">Ingreso</span></a>
+                                <a href="/entry" class="nav-link text-white fs-5"><i class="bi bi-box-arrow-right"></i><span className="ms-2">Ingreso</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/checkout" class="nav-link text-white fs-5"><i
-                                    class="bi bi-box-arrow-left"/><span className="ms-2">Egreso</span></a>
+                                <a href="/checkout" class="nav-link text-white fs-5"><i class="bi bi-box-arrow-left"/><span className="ms-2">Egreso</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/carsin" class="nav-link text-white fs-5"><i
-                                    class="bi bi-car-front-fill"></i><span className="ms-2">Autos Ingresados</span></a>
+                                <a href="/carsin" class="nav-link text-white fs-5"><i class="bi bi-car-front-fill"></i><span className="ms-2">Autos Ingresados</span></a>
                             </li>
 
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/addowners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span
-                                    className="ms-2">Agregar Dueño</span></a>
-                            </li>
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/modifyowners" class="nav-link text-white fs-5"><i
-                                    class="bi bi-pencil-square"></i><span className="ms-2">Modificar Dueños</span></a>
+                            <li className="nav-item text-white fs-4 my-1">
+                                <a href="/PanelOwners" className="nav-link text-white fs-5" aria-current="page"><i
+                                    className="bi bi-person"></i> <span className="ms-2">Dueños</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/delowners" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span
-                                    className="ms-2">Eliminar Dueños</span></a>
+                                <a href="/addowners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Agregar Dueño</span></a>
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                                <a href="/modifyowners" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Dueños</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/addparking" class="nav-link text-white fs-5"><i
-                                    class="bi bi-building-add"></i><span className="ms-2">Agregar Estacionamiento</span></a>
+                                <a href="/delowners" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Dueños</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/modifyparking" class="nav-link text-white fs-5"><i
-                                    class="bi bi-pencil-square"></i><span
-                                    className="ms-2">Modificar Estacionamiento</span></a>
+                                <a href="/addparking" class="nav-link text-white fs-5"><i class="bi bi-building-add"></i><span className="ms-2">Agregar Estacionamiento</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/delparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span
-                                    className="ms-2">Eliminar Estacionamiento</span></a>
+                                <a href="/modifyparking" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Estacionamiento</span></a>
+
+                            </li>
+                            <li class="nav-item text-white fs-4 my-1">
+                                <a href="/delparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Estacionamiento</span></a>
 
                             </li>
 
                         </ul>
                     </div>
                     <div class="dropdown open">
-                        <a class="text-decoration-none text-white p-3 dropdown-toggle fs-4" type="button" id="triggerId"
-                           data-bs-toggle="dropdown" aria-haspopup="true"
+                        <a class="text-decoration-none text-white p-3 dropdown-toggle fs-4" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i className="bi bi-person-circle"></i><span className="ms-2">ADMIN</span>
                         </a>
@@ -77,7 +70,7 @@ function Sidebar() {
                 </div>
             </div>
         </div>
-    )
-}
 
+
+    )}
 export default Sidebar

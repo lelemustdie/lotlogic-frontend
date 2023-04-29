@@ -1,0 +1,80 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: white;
+}
+
+.table-wrapper {
+    width: 200%;
+}
+
+.table {
+    display: block;
+    overflow: hidden;
+    table-layout: auto;
+    border-collapse: collapse;
+    box-shadow: 0 10px 10px #ccc;
+    border-radius: 10px;
+    white-space: nowrap;
+    width: 100em;
+    max-width: 100%;
+    margin: auto;
+    overflow-x: auto;
+}
+
+.table thead {
+    background-color: #ccc;
+    color: #222;
+}
+
+.table th, .table td {
+    padding: 0.8rem;
+}
+
+.table td {
+    border-top: 1px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table tbody tr:hover {
+    background-color: #eee;
+}
+
+.expand {
+    width: 100%;
+}
+
+.label {
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: white;
+}
+
+.label-draft {
+    background-color: #777;
+}
+
+.label-active {
+    background-color: green;
+}
+
+.label-nonActive {
+    background-color: red;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions svg {
+    cursor: pointer;
+}
+
+.delete-btn {
+    color: red;
+}
