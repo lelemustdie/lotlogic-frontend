@@ -28,7 +28,7 @@ export default function PanelOwners() {
             .catch(error => console.log(error));
     }, []);
 
-    const handleDeleteRow = (targetIndex) => {
+    const handleDeleteOwner = (targetIndex) => {
         const id = rows[targetIndex].id;
         fetch(`http://localhost:8080/api/user/admin/delete-owner/${id}`, {
             headers: {
@@ -49,13 +49,77 @@ export default function PanelOwners() {
             });
     };
 
+    //addOwner
+    const handleAddOwner = (event) => {
+        event.preventDefault();
+        const newUserForm = {
+            'dni': event.target.dni.value,
+            'firstName': event.target.firstName.value,
+            'lastName': event.target.lastName.value,
+            'password': event.target.password.value
+        }
+
+        fetch('http://localhost:8080/api/user/admin/add-owner', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(newUserForm),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al agregar dueño');
+                }
+                alert('Dueño agregado correctamente');
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+    };
+
+    const handleModifyOwner = (targetIndex) => {
+        const id = rows[targetIndex].id;
+
+/*        const editUserForm = {
+            'dni': event.target.dni.value,
+            'firstName': event.target.firstName.value,
+            'lastName': event.target.lastName.value,
+            'password': event.target.password.value
+        }*/
+
+        const editUserForm = {
+            'dni': '2000',
+            'firstName': 'sadsa',
+            'lastName': 'dsasad',
+            'password': '123455'
+        }
+        fetch(`http://localhost:8080/api/user/admin/update-owner/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(editUserForm),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al modificar dueño');
+                }
+                alert('Dueño modificado correctamente');
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+    }
+
     return (
         <div className='App'>
-            <Table rows={rows} deleteRow={handleDeleteRow}></Table>
+            <Table rows={rows} deleteRow={handleDeleteOwner} modifyRow={handleModifyOwner}></Table>
             <button className='btn btn-dark' onClick={() => setModalOpen(true)}>Añadir Dueño</button>
             {modalOpen && <Modal closeModal={() => {
                 setModalOpen(false)
-            }}/>}
+            }} addOwner={handleAddOwner}/>}
         </div>
     )
 }

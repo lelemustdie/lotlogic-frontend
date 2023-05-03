@@ -14,7 +14,7 @@
 .table {
     display: block;
     overflow: hidden;
-    table-layout: auto;
+    table-layout: fixed;
     border-collapse: collapse;
     box-shadow: 0 10px 10px #ccc;
     border-radius: 10px;
@@ -30,7 +30,7 @@
     color: #222;
 }
 
-.table th, .table td {
+.table th{
     padding: 0.8rem;
 }
 
@@ -38,6 +38,8 @@
     border-top: 1px solid #ddd;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding: 0.8rem;
+    width: 30%;
 }
 
 .table tbody tr:hover {

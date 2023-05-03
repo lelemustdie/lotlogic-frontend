@@ -1,7 +1,8 @@
 import React from 'react';
 import './Modal.css';
 
-export const Modal = ({closeModal}) => {
+export const Modal = ({closeModal, addOwner}) => {
+
     return (
         <div className='modal-container' onClick={(e) => {
             if (e.target.className === 'modal-container')
@@ -9,7 +10,7 @@ export const Modal = ({closeModal}) => {
         }}
         >
             <div className='modal1'>
-                <form className='w-100'>
+                <form className='w-100' onSubmit={addOwner}>
 
                     <div>
                         <label>Nombre</label>
@@ -35,7 +36,6 @@ export const Modal = ({closeModal}) => {
                     <div>
                         <button type='submit' className='btn btn-dark mt-4'>AGREGAR DUEÑO</button>
                     </div>
-
                 </form>
             </div>
         </div>

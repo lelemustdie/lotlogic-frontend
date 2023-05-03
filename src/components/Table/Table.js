@@ -1,7 +1,7 @@
 import React from "react";
 import './Table.css'
 
-export const Table = ({rows, deleteRow}) => {
+export const Table = ({rows, deleteRow, modifyRow}) => {
     return (
         <div className='table-wrapper'>
             <table className='table'>
@@ -23,7 +23,7 @@ export const Table = ({rows, deleteRow}) => {
                             <td>
                                 <div>
                                 <span className='actions'>
-                                    <button type='button' className='btn btn-dark bi-pen d-inline-block me-2'></button>
+                                    <button type='button' className='btn btn-dark bi-pen d-inline-block me-2' onClick={() => modifyRow(idx)}></button>
                                     <button type='button' className='btn btn-danger bi-trash d-inline-block' onClick={() => deleteRow(idx)}></button>
                                 </span>
                                 </div>
