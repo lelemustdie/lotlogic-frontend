@@ -1,26 +1,28 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Table} from '../components/Table/Table'
-import {Modal} from '../components/Modal/Modal';
+import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
+import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
 
 export default function PanelOwners() {
     const token = localStorage.getItem('token')
-    const [modalOpen, setModalOpen] = useState(false);
+    const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
+    const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:8080/api/user/admin/panel-owners', {
             headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
         })
             .then(response => response.json())
             .then(data => {
                 const updatedRows = data.map(item => {
                     return {
-                        id: item.id,
-                        dni: item.dni,
-                        firstName: item.firstName,
-                        lastName: item.lastName
+                        'id': item.id,
+                        'dni': item.dni,
+                        'firstName': item.firstName,
+                        'lastName': item.lastName
                     }
                 });
                 setRows(updatedRows);
@@ -61,7 +63,7 @@ export default function PanelOwners() {
 
         fetch('http://localhost:8080/api/user/admin/add-owner', {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             method: 'POST',
@@ -78,21 +80,28 @@ export default function PanelOwners() {
             });
     };
 
-    const handleModifyOwner = (targetIndex) => {
-        const id = rows[targetIndex].id;
-
-/*        const editUserForm = {
+    const getModifyInputFromModal = (event) => {
+        const editUserForm = {
             'dni': event.target.dni.value,
             'firstName': event.target.firstName.value,
             'lastName': event.target.lastName.value,
             'password': event.target.password.value
-        }*/
+        }
+        alert('input collected');
+        return editUserForm;
+    };
 
+    const handleModifyOwner = (targetIndex) => {
+        /*const id = rows[targetIndex].id;*/
+        const id = 4;
+
+        /*const editUserForm = getModifyInputFromModal();*/
         const editUserForm = {
-            'dni': '2000',
-            'firstName': 'sadsa',
-            'lastName': 'dsasad',
-            'password': '123455'
+            dni: 'xxxxxxx',
+            firstName: 'x',
+            lastName:'x',
+            password: 'xxxx'
+
         }
         fetch(`http://localhost:8080/api/user/admin/update-owner/${id}`, {
             headers: {
@@ -115,11 +124,18 @@ export default function PanelOwners() {
 
     return (
         <div className='App'>
-            <Table rows={rows} deleteRow={handleDeleteOwner} modifyRow={handleModifyOwner}></Table>
-            <button className='btn btn-dark' onClick={() => setModalOpen(true)}>Añadir Dueño</button>
-            {modalOpen && <Modal closeModal={() => {
-                setModalOpen(false)
-            }} addOwner={handleAddOwner}/>}
+            <Table rows={rows} deleteRow={handleDeleteOwner} modifyRow={handleModifyOwner}
+                   openEditModal={setModifyOwnerModalOpen}></Table>
+            <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Dueño</button>
+            {/*addOwner*/}
+            {addOwnerModalOpen && <AddOwnerModal closeModal={() => {
+                setAddOwnerModalOpen(false)
+            }} submitForm={handleAddOwner}/>}
+
+            {/*modifyOwner*/}
+            {modifyOwnerModalOpen && <ModifyOwnerModal closeModal={() => {
+                setModifyOwnerModalOpen(false)
+            }} submitForm={handleModifyOwner}/>}
         </div>
     )
 }
