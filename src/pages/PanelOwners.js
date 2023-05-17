@@ -74,6 +74,7 @@ export default function PanelOwners() {
                     throw new Error('Error al agregar dueño');
                 }
                 alert('Dueño agregado correctamente');
+                setRows(rows.concat(newUserForm))
             })
             .catch(error => {
                 alert(error.message);
@@ -95,14 +96,14 @@ export default function PanelOwners() {
         /*const id = rows[targetIndex].id;*/
         const id = 4;
 
-        /*const editUserForm = getModifyInputFromModal();*/
-        const editUserForm = {
+        const editUserForm = getModifyInputFromModal();
+/*        const editUserForm = {
             dni: 'xxxxxxx',
             firstName: 'x',
             lastName:'x',
             password: 'xxxx'
+        }*/
 
-        }
         fetch(`http://localhost:8080/api/user/admin/update-owner/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,

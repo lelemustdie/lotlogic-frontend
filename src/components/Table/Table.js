@@ -1,7 +1,7 @@
 import React from "react";
 import './Table.css'
 
-export const Table = ({rows, deleteRow, modifyRow, openEditModal}) => {
+export const Table = ({rows, deleteRow, openEditModal}) => {
     return (
         <div className='table-wrapper'>
             <table className='table'>
