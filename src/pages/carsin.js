@@ -4,6 +4,7 @@ import "./carsview.css"
 
 export default function ReservationsList() {
     const [reservations, setReservations] = useState([]);
+
     const token = localStorage.getItem(`token`)
 
     useEffect(() => {
@@ -33,6 +34,7 @@ export default function ReservationsList() {
                                 <p>Modelo: {reservation.carModel}</p>
                                 <p>Tipo de auto: {reservation.carType}</p>
                                 <p>Fecha de ingreso: {reservation.entryDate}</p>
+                                <p>Fecha de egreso: {reservation.exitDate}</p>
                             </li>
                         ))}
                     </ul>
