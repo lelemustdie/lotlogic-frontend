@@ -1,15 +1,15 @@
 import React from "react";
 import './Table.css'
 
-export const Table = ({rows, deleteRow, openEditModal}) => {
+export const TableParking = ({rows, deleteRow, openEditModal}) => {
     return (
         <div className='table-wrapper'>
             <table className='table'>
                 <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>DNI</th>
+                    <th>Dirección</th>
+                    <th>Pisos</th>
+                    <th>Tarifas</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -17,9 +17,9 @@ export const Table = ({rows, deleteRow, openEditModal}) => {
                 {
                     rows.map((row, idx) => {
                         return <tr key={idx}>
-                            <td>{row.firstName}</td>
-                            <td>{row.lastName}</td>
-                            <td>{row.dni}</td>
+                            <td>{row.address}</td>
+                            <td>{row.floors}</td>
+                            <td>{row.fees}</td>
                             <td>
                                 <div>
                                 <span className='actions'>

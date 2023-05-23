@@ -8,21 +8,19 @@
 }
 
 .table-wrapper {
-    width: 200%;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .table {
+    width: max-content;
     display: block;
     overflow: hidden;
-    table-layout: fixed;
     border-collapse: collapse;
     box-shadow: 0 10px 10px #ccc;
     border-radius: 10px;
     white-space: nowrap;
-    width: 100em;
-    max-width: 100%;
     margin: auto;
-    overflow-x: auto;
 }
 
 .table thead {
@@ -30,7 +28,7 @@
     color: #222;
 }
 
-.table th{
+.table th {
     padding: 0.8rem;
 }
 
@@ -39,7 +37,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0.8rem;
-    width: 30%;
 }
 
 .table tbody tr:hover {

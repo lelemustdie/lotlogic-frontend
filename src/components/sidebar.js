@@ -32,14 +32,13 @@ function Sidebar(){
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/addowners" class="nav-link text-white fs-5"><i class="bi bi-person-vcard"></i><span className="ms-2">Agregar Dueño</span></a>
-                            </li>
-                            <li class="nav-item text-white fs-4 my-1">
                                 <a href="/modifyowners" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Dueños</span></a>
 
                             </li>
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/delowners" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Dueños</span></a>
+                            <li className="nav-item text-white fs-4 my-1">
+                                <a href="/PanelParkings" className="nav-link text-white fs-5"><i
+                                    className="bi bi-building-add"></i><span
+                                    className="ms-2">Estacionamientos</span></a>
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
@@ -48,10 +47,6 @@ function Sidebar(){
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
                                 <a href="/modifyparking" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Estacionamiento</span></a>
-
-                            </li>
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/delparking" class="nav-link text-white fs-5"><i class="bi bi-trash"></i><span className="ms-2">Eliminar Estacionamiento</span></a>
 
                             </li>
 
@@ -64,7 +59,6 @@ function Sidebar(){
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId">
                             <a class="dropdown-item" href="/login">Log Out</a>
-
                         </div>
                     </div>
                 </div>
