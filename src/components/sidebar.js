@@ -3,7 +3,7 @@ import 'bootstrap/js/dist/dropdown'
 function Sidebar(){
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid vh-100">
             <div className="row">
                 <div className="bg-dark col-auto min-vh-100 d-flex justify-content-between flex-column">
                     <div>
@@ -23,7 +23,7 @@ function Sidebar(){
                                 <a href="/checkout" class="nav-link text-white fs-5"><i class="bi bi-box-arrow-left"/><span className="ms-2">Egreso</span></a>
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/carsin" class="nav-link text-white fs-5"><i class="bi bi-car-front-fill"></i><span className="ms-2">Autos Ingresados</span></a>
+                                <a href="/carsin" class="nav-link text-white fs-5"><i class="bi bi-car-front-fill"></i><span className="ms-2">Registro entrada/salida</span></a>
                             </li>
                         
                             <li class="nav-item text-white fs-4 my-1">

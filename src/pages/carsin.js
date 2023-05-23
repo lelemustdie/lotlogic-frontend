@@ -24,7 +24,7 @@ export default function ReservationsList() {
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
-                    <h2>AUTOS INGRESADOS</h2>
+                    <h2>AUTOS INGRESADOS/DESPACHADOS</h2>
                     <ul>
                         {reservations.map(reservation => (
                             <li key={reservation.id}>
