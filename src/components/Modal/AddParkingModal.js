@@ -6,16 +6,7 @@ export const AddParkingModal = ({closeModal, submitForm, setFloors, setFees, fee
     
 
     function handleFeeChange(event){
-        
-        if (fees.include(event.target.name)){
-            const feeswithoutactual = fees.filter(fee=>fee.carType!== event.target.name)
-            setFees([...feeswithoutactual,{feePrice:event.target.value, carType:event.target.name}])
-        }
-        else {
-            setFees([...fees,{feePrice:event.target.value,carType:event.target.name}])
-
-        }
-        
+        setFees([...fees,{feePrice:event.target.value,carType:event.target.name}])
     }
 
     return (
@@ -39,9 +30,9 @@ export const AddParkingModal = ({closeModal, submitForm, setFloors, setFees, fee
 
                     <div>
                         <div>Tarifas:</div>
-                        <span>Auto</span><input required type='number' className='form-control' id='fees' name='AUTO' onSubmit={handleFeeChange}/>
-                        <span>Camioneta/PickUp</span><input required type='number' className='form-control' id='fees' name='CAMIONETA'onSubmit={handleFeeChange}/>
-                        <span>Moto</span><input required type='number' className='form-control' id='fees' name='MOTO'onSubmit={handleFeeChange}/>
+                        <span>Auto</span><input required type='number' className='form-control' id='fees' name='AUTO' onChange={handleFeeChange}/>
+                        <span>Camioneta/PickUp</span><input required type='number' className='form-control' id='fees' name='CAMIONETA'onChanget={handleFeeChange}/>
+                        <span>Moto</span><input required type='number' className='form-control' id='fees' name='MOTO'onChange={handleFeeChange}/>
                     </div>
 
                     <div>

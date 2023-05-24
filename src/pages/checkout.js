@@ -1,6 +1,8 @@
 import {useNavigate} from "react-router-dom";
 import Sidebar from "../components/sidebar";
 import {useState} from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CheckOut() {
     const [reservationId, setReservationId] = useState('');
@@ -29,16 +31,17 @@ export default function CheckOut() {
                 if (!response.ok) {
                     throw new Error('Error al despachar/cobrar vehiculo');
                 }
-                alert('Vehiculo despachado/cobrado correctamente');
-                navigate('/home');
+                toast.success('Vehiculo despachado/cobrado correctamente');
+                
             })
             .catch(error => {
-                alert(error.message);
+                toast.error(error.message);
             });
     }
 
     return (
         <div className="row w-100">
+            <ToastContainer position="top-right"/>
             <section style={{paddingLeft:0}} className="col-3">
                 <Sidebar/>
             </section>
