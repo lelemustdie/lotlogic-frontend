@@ -13,6 +13,7 @@ import CheckOut from './pages/checkout';
 import NotFound from './pages/NotFound'
 import PanelOwners from './pages/PanelOwners'
 import PanelParkings from './pages/PanelParkings'
+import Privateroute from './components/privateroutes';
 
 function App() {
     return (
@@ -21,18 +22,19 @@ function App() {
                 <Routes>
                     
                     <Route exact path="/login" element={<Login/>}/>
-                    <Route exact path="/home" element={<Home/>}/>
-                    <Route exact path="/sidebar" element={<Sidebar/>}/>
-                    <Route exact path="/carsview" element={<CarsView/>}/>
-                    <Route exact path="/entry" element={<Entry/>}/>
-                    <Route exact path='/modifyowners' element={<Modifyowners/>}/>
-                    <Route exact path="/carsin" element={<CarsIn/>}/>
-                    <Route exact path="/checkout" element={<CheckOut/>}/>
-                    <Route exact path="/carsin" element={<CarsIn/>}/>
-                    <Route exact path='/PanelOwners' element={<PanelOwners/>}/>
-                    <Route exact path='/PanelParkings' element={<PanelParkings/>}/>
-                    <Route exact path='/modifyparking' element={<ModifyParking/>}/>
-
+                        <Route element={<Privateroute/>}>
+                            <Route exact path="/home" element={<Home/>}/>
+                            <Route exact path="/sidebar" element={<Sidebar/>}/>
+                            <Route exact path="/carsview" element={<CarsView/>}/>
+                            <Route exact path="/entry" element={<Entry/>}/>
+                            <Route exact path='/modifyowners' element={<Modifyowners/>}/>
+                            <Route exact path="/carsin" element={<CarsIn/>}/>
+                            <Route exact path="/checkout" element={<CheckOut/>}/>
+                            <Route exact path="/carsin" element={<CarsIn/>}/>
+                            <Route exact path='/PanelOwners' element={<PanelOwners/>}/>
+                            <Route exact path='/PanelParkings' element={<PanelParkings/>}/>
+                            <Route exact path='/modifyparking' element={<ModifyParking/>}/>
+                        </Route>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
