@@ -1,10 +1,13 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+
 
 function Login() {
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
+    const token = localStorage.getItem('token');
+
 
     const logInForm = {
         dni: dni,
@@ -12,6 +15,12 @@ function Login() {
     }
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(token){localStorage.removeItem('token')}
+
+    })
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
