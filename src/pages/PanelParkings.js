@@ -45,14 +45,14 @@ export default function PanelOwners() {
                 slotsNumber: 33
             }))
 
-        setFees(fees.concat({
-                feePrice: 1000,
-                carType: "AUTO"
-            },
-            {
-                feePrice: 700,
-                carType: "MOTO"
-            }));
+//        setFees(fees.concat({
+//                feePrice: 1000,
+//                carType: "AUTO"
+//            },
+//            {
+//                feePrice: 700,
+//                carType: "MOTO"
+//            }));
 
         const newParkingForm = {
             'dni': userDniFromLogin,
@@ -60,32 +60,33 @@ export default function PanelOwners() {
             'floors': floors,
             'fees': fees
         }
+        console.log(fees)
 
-        fetch('http://localhost:8080/api/user/owner/add-parking', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(newParkingForm),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al crear el estacionamiento');
-                } else {
-                    toast.success('Estacionamiento agregado correctamente');
-                    return response.text();
-                }
-            })
-            .then(data => {
-                // Handle the response body as a string
-                newParkingForm.id = data;
-                setRows(rows.concat(newParkingForm));
-                setAddParkingModalOpen(false);
-            })
-            .catch(error => {
-                toast.error(error.message);
-            });
+//        fetch('http://localhost:8080/api/user/owner/add-parking', {
+//            headers: {
+//                'Authorization': `Bearer ${token}`,
+//                'Content-Type': 'application/json'
+//            },
+//            method: 'POST',
+//            body: JSON.stringify(newParkingForm),
+//        })
+//            .then(response => {
+//                if (!response.ok) {
+//                    throw new Error('Error al crear el estacionamiento');
+//                } else {
+//                    toast.success('Estacionamiento agregado correctamente');
+//                    return response.text();
+//                }
+//            })
+//            .then(data => {
+//                // Handle the response body as a string
+//                newParkingForm.id = data;
+//                setRows(rows.concat(newParkingForm));
+//                setAddParkingModalOpen(false);
+//            })
+//            .catch(error => {
+//                toast.error(error.message);
+//            });
     };
 
     const handleDeleteParking = (targetIndex) => {
@@ -114,7 +115,7 @@ export default function PanelOwners() {
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
-            <section className="col-3">
+            <section style={{paddingLeft:0}} className="col-3">
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
@@ -126,7 +127,7 @@ export default function PanelOwners() {
                     </button>
 
                     {/*addParking*/}
-                    {addParkingModalOpen && <AddParkingModal closeModal={() => {
+                    {addParkingModalOpen && <AddParkingModal setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
                         setAddParkingModalOpen(false)
                     }} submitForm={handleAddParking}/>}
 

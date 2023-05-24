@@ -39,7 +39,7 @@ export default function CheckOut() {
 
     return (
         <div className="row w-100">
-            <section className="col-3">
+            <section style={{paddingLeft:0}} className="col-3">
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
