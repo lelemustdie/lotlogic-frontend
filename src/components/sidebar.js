@@ -42,11 +42,7 @@ function Sidebar(){
 
                             </li>
                             <li class="nav-item text-white fs-4 my-1">
-                                <a href="/addparking" class="nav-link text-white fs-5"><i class="bi bi-building-add"></i><span className="ms-2">Agregar Estacionamiento</span></a>
-
-                            </li>
-                            <li class="nav-item text-white fs-4 my-1">
-                                <a href="/modifyparking" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Estacionamiento</span></a>
+                                <a href="/modifyparking.js" class="nav-link text-white fs-5"><i class="bi bi-pencil-square"></i><span className="ms-2">Modificar Estacionamiento</span></a>
 
                             </li>
 

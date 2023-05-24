@@ -1,17 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import { useState } from 'react';
-import Sidebar from "../components/sidebar";
-import {useNavigate} from 'react-router-dom';
-
-
-
-export default function ModifyParking() {
-    const [dni,setDni]= useState('');
-    const [address, setAddress] = useState('');
-    const [floors, setFloors] = useState('');
-    const [fees, setFees] = useState('');
-=======
 import {useState} from 'react';
 import Sidebar from "../components/sidebar";
 import {useNavigate} from 'react-router-dom';
@@ -19,29 +6,18 @@ import {useNavigate} from 'react-router-dom';
 export default function ModifyParking() {
     const [dni, setDni] = useState('');
     const [address, setAddress] = useState('');
->>>>>>> 8582e2256d98ac4bfc199ce733199d28f4a83d5f
     const [id, setId] = useState('');
     const [fees, setFees] = useState('');
     const [floors, setFloors] = useState('');
 
     const token = localStorage.getItem(`token`)
     const navigate = useNavigate();
-<<<<<<< HEAD
-    
-    const modifyParkingForm = {
-        dni,
-        address,
-        floors,
-        fees,
-    
-=======
 
     const modifyParkingForm = {
         dni,
         address,
         floors: [],
         fees: []
->>>>>>> 8582e2256d98ac4bfc199ce733199d28f4a83d5f
     }
 
     function handleSubmit(event) {
@@ -80,35 +56,6 @@ export default function ModifyParking() {
 
                     </div>
 
-<<<<<<< HEAD
-                        </div>
-                        <div>
-                            <label>Direccion del Estacionamiento: </label>
-                            <input required type="text" className="form-control" id="address" name="input_parkingadress" value={address} onChange={event=> setAddress(event.target.value)}/>
-
-                        </div>
-                        <div>
-                            <label>Pisos: </label>
-                            <input required min="1" type="number" className="form-control" id="floors" name="input_parkingfloors" value={floors} onChange={event=> setFloors(event.target.value)}/>
-
-                        </div>
-                        <div>
-                            <label>Tarifas: </label>
-                           
-                        </div>
-                        <div>
-                            <label>Precio Auto: </label>
-                            <input required min="1" type="number" className="form-control" id="car" name="input_carprice" value={fees.car} onChange={event=> setFees(event.target.value)}/>
-                        </div>
-                        <div>
-                            <label>Precio Moto: </label>
-                            <input required min="1" type="number" className="form-control" id="motorcycle" name="input_motorcycleprice" value={fees.motorcycle} onChange={event=> setFees(event.target.value)}/>
-
-                        </div>
-                        <div>
-                            <label>Precio Camioneta: </label>
-                            <input required min="1" type="number" className="form-control" id="truck" name="input_truckprice" value={fees.truck} onChange={event=> setFees(event.target.value)}/>
-=======
                     <div>
                         <label>DNI/ID/user dueño: </label>
                         <input required type="text" className="form-control" id="name" name="input_dni" value={dni}
@@ -129,7 +76,6 @@ export default function ModifyParking() {
                     </div>
                     <div>
                         <label>Tarifas: </label>
->>>>>>> 8582e2256d98ac4bfc199ce733199d28f4a83d5f
 
                     </div>
                     <div>
