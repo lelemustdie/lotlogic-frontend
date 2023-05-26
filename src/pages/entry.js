@@ -1,40 +1,66 @@
-import {useState} from "react";
-import Sidebar from "../components/sidebar";
-import {useNavigate} from "react-router-dom";
-import {ToastContainer, toast} from 'react-toastify';
+import {useEffect, useState} from "react";
+import Sidebar from '../components/sidebar';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const token = localStorage.getItem('token');
+const userDniFromLogin = 'ADMIN'; //TODO get dni from logged user
+const parkingIdFromLogin = 1; //TODO get parking id previously from list or table*/
+
 export default function Entry() {
+    const [vehiclePlate, setPlate] = useState('');
+    const [vehicleModel, setModel] = useState('');
 
-    const [carPlate, setPlate] = useState('');
-    const [carModel, setModel] = useState('');
-    const [carType, setCarType] = useState('');
-    const [floor, setFloor] = useState('');
-    const [lot, setLot] = useState('');
-    const [parkingId, setParkingId] = useState('');
-    const floors = [50, 100, 75, 81]
-    const fees = [23, 23, 3]
+    const [fees, setFees] = useState([]);
+    const [floors, setFloors] = useState([]);
+    const [vehicleFee, setVehicleFee] = useState(''); //input of array from selected in dropdown
+    const [vehicleFloor, setVehicleFloor] = useState(''); //input of array from selected in dropdown
 
-    const navigate = useNavigate();
-    const token = localStorage.getItem('token');
-    const entryForm = {
+    useEffect(() => {
+        //getAllFees from current parking
+        fetch(`http://localhost:8080/api/user/employee/fees/${parkingIdFromLogin}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setFees(data);
+            })
+            .catch(error => console.log(error));
 
-        carPlate,
-        carModel,
-        carType,
-        floor,
-        lot,
-        parkingId
-    }
+        //getAllFloors from current parking
+        fetch(`http://localhost:8080/api/user/employee/floors/${parkingIdFromLogin}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setFloors(data);
+            })
+            .catch(error => console.log(error));
 
-    function handleSubmit(event) {
+    }, []);
+
+    function handleEntry(event) {
         event.preventDefault();
+        const entryForm = {
+            parkingId: parkingIdFromLogin,
+            dni: userDniFromLogin,
+            vehiclePlate: vehiclePlate,
+            vehicleModel: vehicleModel,
+            vehicleFee: fees[0]['feeId'], //select the vehicleFee id from fees array
+            floor: floors[0]['floorId']
+        }
+        console.log(entryForm);
+
         fetch('http://localhost:8080/api/user/employee/check-in-car', {
             headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             },
-            method: "post",
+            method: 'POST',
             body: JSON.stringify(entryForm),
         })
             .then(response => {
@@ -42,7 +68,6 @@ export default function Entry() {
                     throw new Error('Error al ingresar vehículo');
                 }
                 toast.success('Vehículo ingresado correctamente');
-                //navigate('/carsIn');
             })
             .catch(error => {
                 toast.error(error.message);
@@ -52,57 +77,46 @@ export default function Entry() {
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
-            <section style={{paddingLeft:0}} className="col-3">
+            <section style={{paddingLeft: 0}} className="col-3">
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleEntry}>
                     <div>
-                        <label>Parking ID: </label>
-                        <input required type="number" className="form-control" id="parkingId" name="input_id"
-                               value={parkingId} onChange={event => setParkingId(event.target.value)}/>
-                    </div>
-
-                    <div>
-                        <label>Patente: </label>
+                        <label>Patente</label>
                         <input required type="text" className="form-control" id="carPlate" name="input_plate"
-                               value={carPlate} onChange={event => setPlate(event.target.value)}/>
+                               value={vehiclePlate} onChange={event => setPlate(event.target.value)}/>
                     </div>
 
                     <div>
-                        <label>Modelo: </label>
+                        <label>Modelo</label>
                         <input required type="text" className="form-control" id="carModel" name="input_model"
-                               value={carModel} onChange={event => setModel(event.target.value)}/>
+                               value={vehicleModel} onChange={event => setModel(event.target.value)}/>
 
                     </div>
+
                     <div>
-                        <label className="m">Tipo de auto (TARIFA): </label>
-                        <select required onChange={event => setCarType(event.target.value)}>
-                            <option value="">SELECIONE UNA</option>
-                            <option value="TRUCK">Camioneta/Pick Up</option>
-                            <option value="CAR">Auto</option>
-                            <option value="MOTORCYCLE">Moto</option>
+                        <label className="m">Tarifas</label>
+                        <select required onChange={event => setVehicleFee(event.target.value)}>
+                            {fees.map((fee, index) =>
+                                <option key={index} value={fee}>
+                                    {fee['feeType']} ${fee['feePrice']}
+                                </option>)}
                         </select>
 
                     </div>
                     <div>
-                        <label>Piso: </label>
-                        <select>
-                            {floors.map((floor, index) => <option>{index + 1}</option>)}
+                        <label>Piso</label>
+                        <select required onChange={event => setVehicleFloor(event.target.value)}>
+                            {floors.map((floor, index) => <option>
+                                {index + 1} with {floor['slotsNumber']} slots
+                            </option>)}
                         </select>
-
-                    </div>
-                    <div>
-                        <label>Nro Cochera: </label>
-                        <input type="number" className="form-control" id="lot" name="input_lot" value={lot}
-                               onChange={event => setLot(event.target.value)}/>
 
                     </div>
                     <div>
                         <button type="submit" className='btn btn-dark'>INGRESAR AUTO</button>
                     </div>
-
-
                 </form>
             </section>
         </div>
