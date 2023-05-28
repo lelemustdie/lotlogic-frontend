@@ -14,7 +14,7 @@ export default function Entry() {
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
     const [vehicleFee, setVehicleFee] = useState(''); //input of array from selected in dropdown
-    const [vehicleFloor, setVehicleFloor] = useState(''); //input of array from selected in dropdown
+    const [vehicleFloor, setVehicleFloor] = useState(); //input of array from selected in dropdown
 
     useEffect(() => {
         //getAllFees from current parking
@@ -50,11 +50,10 @@ export default function Entry() {
             dni: userDniFromLogin,
             vehiclePlate: vehiclePlate,
             vehicleModel: vehicleModel,
-            vehicleFee: fees[0]['feeId'], //select the vehicleFee id from fees array
-            floor: floors[0]['floorId']
+            vehicleFee: fees[vehicleFee]['feeId'], //select the vehicleFee id from fees array
+            floor: floors[vehicleFloor]['floorId'] //select the floor
         }
         console.log(entryForm);
-
         fetch('http://localhost:8080/api/user/employee/check-in-car', {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -97,19 +96,19 @@ export default function Entry() {
 
                     <div>
                         <label className="m">Tarifas</label>
-                        <select required onChange={event => setVehicleFee(event.target.value)}>
+                        <select required onChange={event => setVehicleFee(event.target.selectedIndex)}>
                             {fees.map((fee, index) =>
                                 <option key={index} value={fee}>
-                                    {fee['feeType']} ${fee['feePrice']}
+                                    {fee['feeType']} ${fee['feePrice']}/h
                                 </option>)}
                         </select>
 
                     </div>
                     <div>
                         <label>Piso</label>
-                        <select required onChange={event => setVehicleFloor(event.target.value)}>
+                        <select required onChange={event => setVehicleFloor(event.target.selectedIndex)}>
                             {floors.map((floor, index) => <option>
-                                {index + 1} with {floor['slotsNumber']} slots
+                                {index + 1} - {floor['slotsNumber']} cocheras
                             </option>)}
                         </select>
 
