@@ -63,10 +63,9 @@ export default function Entry() {
             body: JSON.stringify(entryForm),
         })
             .then(response => {
-                if (response.status === 409){
+                if (response.status === 409) {
                     throw new Error('El piso ' + floors[vehicleFloor].floorId + ' esta lleno')
-                }
-                else if (!response.ok) {
+                } else if (!response.ok) {
                     throw new Error('Error al ingresar vehículo');
                 }
                 toast.success('Vehículo ingresado correctamente');
@@ -104,6 +103,7 @@ export default function Entry() {
                             console.log(event.target.selectedIndex)
                             setVehicleFee(event.target.selectedIndex)
                         }}>
+                            <option value="">Seleccione una tarifa</option>
                             {fees.map((fee, index) =>
                                 <option key={index} value={fee}>
                                     {fee['feeType']} ${fee['feePrice']}/h
@@ -118,6 +118,7 @@ export default function Entry() {
                             console.log(event.target.selectedIndex)
                             setVehicleFloor(event.target.selectedIndex)
                         }}>
+                            <option value="">Seleccione un piso</option>
                             {floors.map((floor, index) => <option>
                                 {index + 1} - {floor['slotsNumber']} cocheras
                             </option>)}

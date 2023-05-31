@@ -120,6 +120,7 @@ export default function PanelOwners() {
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
+                    <h2>ESTACIONAMIENTOS</h2>
                     <TableParking rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
                                   openEditModal={setModifyParkingModalOpen}></TableParking>
                     <button className='btn btn-dark' onClick={() => setAddParkingModalOpen(true)}>Añadir

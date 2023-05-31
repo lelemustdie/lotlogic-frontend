@@ -20,7 +20,7 @@ function App() {
                 <Routes>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route element={<Privateroute/>}>
-                        <Route exact path="/home" element={<Home/>}/>
+                        <Route exact path="/" element={<Home/>}/>
                         <Route exact path="/sidebar" element={<Sidebar/>}/>
                         <Route exact path="/entry" element={<Entry/>}/>
                         <Route exact path='/modifyowners' element={<Modifyowners/>}/>

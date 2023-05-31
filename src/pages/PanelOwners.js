@@ -146,6 +146,7 @@ export default function PanelOwners() {
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
+                    <h2>DUEÑOS</h2>
                     <Table rows={rows} deleteRow={handleDeleteOwner} modifyRow={handleModifyOwner}
                            openEditModal={setModifyOwnerModalOpen}></Table>
                     <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Dueño</button>
