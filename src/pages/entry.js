@@ -98,7 +98,7 @@ export default function Entry() {
 
                     <div>
                         <label className="m">Tarifas</label>
-                        <select required onChange={event => {
+                        <select class="form-select" required onChange={event => {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
                             setVehicleFee(event.target.selectedIndex)
@@ -113,7 +113,7 @@ export default function Entry() {
                     </div>
                     <div>
                         <label>Piso</label>
-                        <select required onChange={event => {
+                        <select class="form-select" required onChange={event => {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
                             setVehicleFloor(event.target.selectedIndex)

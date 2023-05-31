@@ -29,9 +29,8 @@ function Sidebar() {
 
                             </li>
                             <li className="nav-item text-white fs-4 my-1">
-                                <a href="/modifyowners" className="nav-link text-white fs-5"><i
-                                    className="bi bi-pencil-square"></i><span
-                                    className="ms-2">Modificar Dueños</span></a>
+                                <a href="/PanelEmployees" className="nav-link text-white fs-5" aria-current="page"><i
+                                    className="bi bi-person"></i> <span className="ms-2">Empleados</span></a>
 
                             </li>
                             <li className="nav-item text-white fs-4 my-1">
@@ -55,7 +54,7 @@ function Sidebar() {
                             <i className="bi bi-person-circle"></i><span className="ms-2">ADMIN</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="triggerId">
-                            <a className="dropdown-item" href="/login">Log Out</a>
+                            <a className="dropdown-item" href="/Login.js">Log Out</a>
                         </div>
                     </div>
                 </div>
