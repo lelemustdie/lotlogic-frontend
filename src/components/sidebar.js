@@ -54,7 +54,7 @@ function Sidebar() {
                             <i className="bi bi-person-circle"></i><span className="ms-2">ADMIN</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="triggerId">
-                            <a className="dropdown-item" href="/Login.js">Log Out</a>
+                            <a className="dropdown-item" href="/Login">Log Out</a>
                         </div>
                     </div>
                 </div>

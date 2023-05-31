@@ -92,17 +92,18 @@ export default function PanelOwners() {
             });
     };
 
-    const handleModifyOwner = (event) => {
-        event.preventDefault();
-        //get index modified from table
+    const handleModifyOwner = (editedOwner) => {
+        //get index toModified from table
         const modifiedIndex = 0;
         const id = rows[modifiedIndex].id;
         const editUserForm = {
-            dni: 'x',
-            firstName: 'x',
-            lastName: 'x',
-            password: 'x'
+            dni: editedOwner.dni,
+            firstName: editedOwner.firstName,
+            lastName: editedOwner.lastName,
+            password: editedOwner.password
         };
+        console.log(id)
+        console.log(editUserForm)
 
         fetch(`http://localhost:8080/api/user/admin/update-owner/${id}`, {
             headers: {
@@ -138,10 +139,14 @@ export default function PanelOwners() {
             });
     };
 
+    const closeModal = () => {
+        setAddOwnerModalOpen(false)
+    };
+
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
-            <section style={{paddingLeft:0}} className="col-3">
+            <section style={{paddingLeft: 0}} className="col-3">
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
@@ -152,14 +157,13 @@ export default function PanelOwners() {
                     <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Dueño</button>
 
                     {/*addOwner*/}
-                    {addOwnerModalOpen && <AddOwnerModal closeModal={() => {
-                        setAddOwnerModalOpen(false)
-                    }} submitForm={handleAddOwner}/>}
+                    {addOwnerModalOpen && <AddOwnerModal closeModal={closeModal} submitForm={handleAddOwner}/>}
 
                     {/*modifyOwner*/}
-                    {modifyOwnerModalOpen && <ModifyOwnerModal closeModal={() => {
-                        setModifyOwnerModalOpen(false)
-                    }} submitForm={handleModifyOwner}/>}
+                    {modifyOwnerModalOpen &&
+                        <ModifyOwnerModal updateNewOwnerData={handleModifyOwner} closeModal={() => {
+                            setModifyOwnerModalOpen(false)
+                        }}/>}
                 </div>
             </section>
         </div>
