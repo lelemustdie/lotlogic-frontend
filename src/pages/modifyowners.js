@@ -57,19 +57,19 @@ export default function ModifyOwners() {
                     </div>
 
                     <div>
-                        <label>Nombre del Dueño: </label>
+                        <label>Nombre</label>
                         <input required type="text" className="form-control" id="firstName" name="input_ownername"
                                value={firstName} onChange={event => setName(event.target.value)}/>
 
                     </div>
                     <div>
-                        <label>Apellido del Dueño: </label>
+                        <label>Apellido</label>
                         <input required type="text" className="form-control" id="lastName" name="input_ownerlastname"
                                value={lastName} onChange={event => setLastName(event.target.value)}/>
 
                     </div>
                     <div>
-                        <label>DNI/ID/user: </label>
+                        <label>DNI</label>
                         <input required type="number" className="form-control" id="dni" name="input_ownerdni"
                                value={dni} onChange={event => setDni(event.target.value)}/>
 

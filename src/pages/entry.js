@@ -50,8 +50,8 @@ export default function Entry() {
             dni: userDniFromLogin,
             vehiclePlate: vehiclePlate,
             vehicleModel: vehicleModel,
-            vehicleFee: fees[vehicleFee]['feeId'], //select the vehicleFee id from fees array
-            floor: floors[vehicleFloor]['floorId'] //select the floor
+            vehicleFee: fees[vehicleFee].feeType, //select the vehicleFee id from fees array
+            floor: floors[vehicleFloor].floorId //select the floor
         }
         console.log(entryForm);
         fetch('http://localhost:8080/api/user/employee/check-in-car', {
@@ -63,7 +63,10 @@ export default function Entry() {
             body: JSON.stringify(entryForm),
         })
             .then(response => {
-                if (!response.ok) {
+                if (response.status === 409){
+                    throw new Error('El piso ' + floors[vehicleFloor].floorId + ' esta lleno')
+                }
+                else if (!response.ok) {
                     throw new Error('Error al ingresar vehículo');
                 }
                 toast.success('Vehículo ingresado correctamente');
@@ -96,7 +99,11 @@ export default function Entry() {
 
                     <div>
                         <label className="m">Tarifas</label>
-                        <select required onChange={event => setVehicleFee(event.target.selectedIndex)}>
+                        <select required onChange={event => {
+                            console.log(event.target.value)
+                            console.log(event.target.selectedIndex)
+                            setVehicleFee(event.target.selectedIndex)
+                        }}>
                             {fees.map((fee, index) =>
                                 <option key={index} value={fee}>
                                     {fee['feeType']} ${fee['feePrice']}/h
@@ -106,7 +113,11 @@ export default function Entry() {
                     </div>
                     <div>
                         <label>Piso</label>
-                        <select required onChange={event => setVehicleFloor(event.target.selectedIndex)}>
+                        <select required onChange={event => {
+                            console.log(event.target.value)
+                            console.log(event.target.selectedIndex)
+                            setVehicleFloor(event.target.selectedIndex)
+                        }}>
                             {floors.map((floor, index) => <option>
                                 {index + 1} - {floor['slotsNumber']} cocheras
                             </option>)}

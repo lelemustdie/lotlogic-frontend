@@ -9,7 +9,6 @@ export const TableCarsIn = ({rows, deleteRow}) => {
                 <tr>
                     <th>Patente</th>
                     <th>Modelo</th>
-                    <th>Tipo de vehiculo</th>
                     <th>Fecha de ingreso</th>
                 </tr>
                 </thead>
@@ -19,7 +18,6 @@ export const TableCarsIn = ({rows, deleteRow}) => {
                         return <tr key={idx}>
                             <td>{row.vehiclePlate}</td>
                             <td>{row.vehicleModel}</td>
-                            <td>{row.vehicleType}</td>
                             <td>{row.entryDate}</td>
                             <td>
                                 <div>

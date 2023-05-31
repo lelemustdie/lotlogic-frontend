@@ -3,18 +3,17 @@ import {useState} from 'react';
 import Sidebar from "../components/sidebar";
 import {useNavigate} from 'react-router-dom';
 
+const token = localStorage.getItem('token');
+const userDniFromLogin = 'ADMIN'; //TODO get dni from logged user
+const parkingIdFromLogin = 1; //TODO get parking id previously from list or table*/
 export default function ModifyParking() {
-    const [dni, setDni] = useState('');
     const [address, setAddress] = useState('');
-    const [id, setId] = useState('');
     const [fees, setFees] = useState('');
     const [floors, setFloors] = useState('');
-
-    const token = localStorage.getItem(`token`)
     const navigate = useNavigate();
 
     const modifyParkingForm = {
-        dni,
+        userDniFromLogin,
         address,
         floors: [],
         fees: []
@@ -22,7 +21,7 @@ export default function ModifyParking() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        fetch(`http://localhost:8080/api/user/admin/update-parking/${id}`, {
+        fetch(`http://localhost:8080/api/user/admin/update-parking/${parkingIdFromLogin}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -44,53 +43,37 @@ export default function ModifyParking() {
 
     return (
         <div className="row w-100">
-            <section style={{paddingLeft:0}} className="col-3">
+            <section style={{paddingLeft: 0}} className="col-3">
                 <Sidebar/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleSubmit} className='w-50'>
                     <div>
-                        <label>ID del Estacionamiento a MODIFICAR: </label>
-                        <input required type="number" className="form-control" id="id" name="input_parkingid" value={id}
-                               onChange={event => setId(event.target.value)}/>
-
-                    </div>
-
-                    <div>
-                        <label>DNI/ID/user dueño: </label>
-                        <input required type="text" className="form-control" id="name" name="input_dni" value={dni}
-                               onChange={event => setDni(event.target.value)}/>
-
-                    </div>
-                    <div>
-                        <label>Direccion del Estacionamiento: </label>
+                        <label>Dirección del Estacionamiento: </label>
                         <input required type="text" className="form-control" id="address" name="input_parkingadress"
                                value={address} onChange={event => setAddress(event.target.value)}/>
 
                     </div>
                     <div>
-                        <label>Pisos: </label>
+                        <label>Pisos</label>
                         <input required type="number" className="form-control" id="floors" name="input_parkingfloors"
                                value={floors} onChange={event => setFloors(event.target.value)}/>
 
                     </div>
-                    <div>
-                        <label>Tarifas: </label>
 
-                    </div>
                     <div>
-                        <label>Precio Auto: </label>
+                        <label>Precio Auto</label>
                         <input required type="number" className="form-control" id="fees" name="input_fees" value={fees}
                                onChange={event => setFees(event.target.value)}/>
                     </div>
                     <div>
-                        <label>Precio Moto: </label>
+                        <label>Precio Moto</label>
                         <input required type="number" className="form-control" id="fees" name="input_fees" value={fees}
                                onChange={event => setFees(event.target.value)}/>
 
                     </div>
                     <div>
-                        <label>Precio Camioneta: </label>
+                        <label>Precio Camioneta</label>
                         <input required type="number" className="form-control" id="fees" name="input_fees" value={fees}
                                onChange={event => setFees(event.target.value)}/>
 

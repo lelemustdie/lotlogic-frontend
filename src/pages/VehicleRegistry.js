@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Sidebar from "../components/sidebar";
-import "./carsview.css"
 import {TableCarsIn} from '../components/Table/TableCarsIn'
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ReservationsList() {
     const [reservations, setReservations] = useState([]);
@@ -21,31 +22,34 @@ export default function ReservationsList() {
     const handleDeleteReservation = (targetIndex) => {
         const reservationId = reservations[targetIndex].id;
         const parkingId = 1;
-
+            console.log('reservationId ' + reservationId)
+            console.log('parkingId ' + parkingId)
         const deleteReservationForm = {
             parkingId: parkingId
         }
         fetch(`http://localhost:8080/api/user/employee/check-out-car/${reservationId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
             },
             method: 'PUT',
             body: JSON.stringify(deleteReservationForm),
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new alert('Error al eliminar Estacionamiento');
+                    throw new Error('Error al eliminar Estacionamiento');
                 }
-                alert('Estacionamiento eliminado correctamente');
+                toast.success('Estacionamiento eliminado correctamente');
                 setReservations(reservations.filter((_, idx) => idx !== targetIndex))
             })
             .catch(error => {
-                alert(error.message);
+                toast.error(error.message);
             });
     }
 
     return (
         <div className="row w-100">
+            <ToastContainer position="top-right"/>
             <section style={{paddingLeft:0}} className="col-3">
                 <Sidebar/>
             </section>
