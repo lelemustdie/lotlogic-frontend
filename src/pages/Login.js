@@ -1,6 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const [dni, setDni] = useState('');
@@ -39,17 +41,19 @@ function Login() {
                 return response.json();
             })
             .then((data) => {
+                toast.success("Sesion iniciada");
                 localStorage.setItem('token', data.tokenResponse.token);
                 navigate('/');
             })
             .catch((error) => {
                 console.log(error.message);
-                alert(error.message);
+                toast.error(error.message);
             });
     };
 
     return (
         <div className="container vh-100 d-flex align-items-center justify-content-center">
+            <ToastContainer position="top-right"/>
             <form onSubmit={handleSubmit}>
                 <div className="text-center pb-3">
                     <div className="pb-3">

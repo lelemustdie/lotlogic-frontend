@@ -13,8 +13,8 @@ export default function Entry() {
 
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
-    const [vehicleFee, setVehicleFee] = useState(''); //input of array from selected in dropdown
-    const [vehicleFloor, setVehicleFloor] = useState(); //input of array from selected in dropdown
+    const [vehicleFeeIndex, setVehicleFeeIndex] = useState(''); //input of array from selected in dropdown
+    const [vehicleFloorIndex, setVehicleFloorIndex] = useState(); //input of array from selected in dropdown
 
     useEffect(() => {
         //getAllFees from current parking
@@ -50,8 +50,8 @@ export default function Entry() {
             dni: userDniFromLogin,
             vehiclePlate: vehiclePlate,
             vehicleModel: vehicleModel,
-            vehicleFee: fees[vehicleFee].feeType, //select the vehicleFee id from fees array
-            floor: floors[vehicleFloor].floorId //select the floor
+            vehicleFee: fees[vehicleFeeIndex].feeType, //select the vehicleFee id from fees array
+            floor: floors[vehicleFloorIndex].floorId //select the floor
         }
         console.log(entryForm);
         fetch('http://localhost:8080/api/user/employee/check-in-car', {
@@ -64,7 +64,7 @@ export default function Entry() {
         })
             .then(response => {
                 if (response.status === 409) {
-                    throw new Error('El piso ' + floors[vehicleFloor].floorId + ' esta lleno')
+                    throw new Error('El piso ' + floors[vehicleFloorIndex].floorId + ' esta lleno')
                 } else if (!response.ok) {
                     throw new Error('Error al ingresar vehículo');
                 }
@@ -101,7 +101,7 @@ export default function Entry() {
                         <select class="form-select" required onChange={event => {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
-                            setVehicleFee(event.target.selectedIndex)
+                            setVehicleFeeIndex(event.target.selectedIndex - 1)
                         }}>
                             <option value="">Seleccione una tarifa</option>
                             {fees.map((fee, index) =>
@@ -116,7 +116,7 @@ export default function Entry() {
                         <select class="form-select" required onChange={event => {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
-                            setVehicleFloor(event.target.selectedIndex)
+                            setVehicleFloorIndex(event.target.selectedIndex - 1)
                         }}>
                             <option value="">Seleccione un piso</option>
                             {floors.map((floor, index) => <option>
