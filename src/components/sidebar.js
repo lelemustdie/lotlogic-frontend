@@ -1,7 +1,27 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/js/dist/dropdown'
+import {toast} from "react-toastify";
 
 function Sidebar() {
+    const token = localStorage.getItem('token')
+    function handleLogout() {
+        const tokenForm = {
+            token: token
+        }
+        fetch('http://localhost:8080/api/auth/logout', {
+            headers: {
+                'Authorization': `Bearer ${tokenForm}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(tokenForm),
+        })
+            .then(response => {
+            })
+            .catch(error => {
+                toast.error(error.message);
+            });
+    }
 
     return (
         <div className="container-fluid vh-100">
@@ -54,7 +74,7 @@ function Sidebar() {
                             <i className="bi bi-person-circle"></i><span className="ms-2">ADMIN</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="triggerId">
-                            <a className="dropdown-item" href="/Login">Log Out</a>
+                            <a className="dropdown-item" href="/Login" onClick={handleLogout}>Log Out</a>
                         </div>
                     </div>
                 </div>
