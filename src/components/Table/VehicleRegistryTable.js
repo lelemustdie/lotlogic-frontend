@@ -10,6 +10,7 @@ export const VehicleRegistryTable = ({rows, deleteRow}) => {
                     <th>Patente</th>
                     <th>Modelo</th>
                     <th>Fecha de ingreso</th>
+                    <th>Fecha de egreso</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,7 @@ export const VehicleRegistryTable = ({rows, deleteRow}) => {
                             <td>{row.vehiclePlate}</td>
                             <td>{row.vehicleModel}</td>
                             <td>{row.entryDate}</td>
+                            <td>{row.exitDate}</td>
                             <td>
                                 <div>
                                 <span className='actions'>

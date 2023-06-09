@@ -5,8 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarEmployee from "../components/SidebarEmployee";
 
-
-
 export default function ReservationsList() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -55,15 +53,37 @@ export default function ReservationsList() {
             body: JSON.stringify(deleteReservationForm),
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al eliminar Estacionamiento');
+                if (response.ok) {
+                    toast.success("Vehiculo egresado correctamente");
+                    const currentDate = new Date();
+                    const formattedDate = currentDate.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                    }).replace(/(\d+)\/(\d+)\/(\d+),?/, '$3/$1/$2');
+
+                    const updatedReservations = reservations.map((reservation, index) => {
+                        if (index === targetIndex) {
+                            return {
+                                ...reservation,
+                                exitDate: formattedDate
+                            };
+                        }
+                        return reservation;
+                    });
+                    setReservations(updatedReservations);
+                } else if (response.status === 409){
+                    toast.error("El vehiculo ya fue despachado")
                 }
-                toast.success('Estacionamiento eliminado correctamente');
-                setReservations(reservations.filter((_, idx) => idx !== targetIndex))
             })
             .catch(error => {
                 toast.error(error.message);
             });
+
     }
 
     return (
