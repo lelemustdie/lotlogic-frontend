@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import Sidebar from "../components/sidebar";
 import {TableCarsIn} from '../components/Table/TableCarsIn'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SidebarOwner from "../components/SidebarOwner";
+import SidebarEmployee from "../components/SidebarEmployee";
+
+const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
+const parkingId = 1; //get parking id from table in PanelParkings
 
 export default function ReservationsList() {
     const [reservations, setReservations] = useState([]);
-    const token = localStorage.getItem(`token`)
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/user/admin/panel-reservations-current', {
+        fetch(`http://localhost:8080/api/user/employee/panel-reservations/${parkingId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -22,8 +26,8 @@ export default function ReservationsList() {
     const handleDeleteReservation = (targetIndex) => {
         const reservationId = reservations[targetIndex].id;
         const parkingId = 1;
-            console.log('reservationId ' + reservationId)
-            console.log('parkingId ' + parkingId)
+        console.log('reservationId ' + reservationId)
+        console.log('parkingId ' + parkingId)
         const deleteReservationForm = {
             parkingId: parkingId
         }
@@ -50,15 +54,20 @@ export default function ReservationsList() {
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
-            <section style={{paddingLeft:0}} className="col-3">
-                <Sidebar/>
+            <section style={{paddingLeft: 0}} className="col-3">
+                {role === 'ADMIN' || role === 'OWNER' ? (
+                    <SidebarOwner/>
+                ) : (
+                    <SidebarEmployee/>
+                )}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
-                    <h2>AUTOS INGRESADOS</h2>
-                    <TableCarsIn rows={reservations} deleteRow={handleDeleteReservation}></TableCarsIn>
+                    <h2>AUTOS INGRESADOS/EGRESADOS</h2>
+                    <TableCarsIn rows={reservations} deleteRow={handleDeleteReservation}/>
                 </div>
             </section>
         </div>
+
     )
 }

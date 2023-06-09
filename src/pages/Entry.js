@@ -1,10 +1,12 @@
-import {useEffect, useState} from "react";
-import Sidebar from '../components/sidebar';
+import React, {useEffect, useState} from "react";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SidebarOwner from '../components/SidebarOwner';
+import SidebarEmployee from "../components/SidebarEmployee";
 
 const token = localStorage.getItem('token');
-const userDniFromLogin = 'ADMIN'; //TODO get dni from logged user
+const role = localStorage.getItem('role');
+const dni = localStorage.getItem('dni');
 const parkingIdFromLogin = 1; //TODO get parking id previously from list or table*/
 
 export default function Entry() {
@@ -14,7 +16,7 @@ export default function Entry() {
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
     const [vehicleFeeIndex, setVehicleFeeIndex] = useState(''); //input of array from selected in dropdown
-    const [vehicleFloorIndex, setVehicleFloorIndex] = useState(); //input of array from selected in dropdown
+    const [vehicleFloorIndex, setVehicleFloorIndex] = useState(''); //input of array from selected in dropdown
 
     useEffect(() => {
         //getAllFees from current parking
@@ -40,14 +42,13 @@ export default function Entry() {
                 setFloors(data);
             })
             .catch(error => console.log(error));
-
     }, []);
 
     function handleEntry(event) {
         event.preventDefault();
         const entryForm = {
             parkingId: parkingIdFromLogin,
-            dni: userDniFromLogin,
+            dni: dni,
             vehiclePlate: vehiclePlate,
             vehicleModel: vehicleModel,
             vehicleFee: fees[vehicleFeeIndex].feeType, //select the vehicleFee id from fees array
@@ -79,7 +80,11 @@ export default function Entry() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                <Sidebar/>
+                {role === 'ADMIN' || role === 'OWNER' ? (
+                    <SidebarOwner/>
+                ) : (
+                    <SidebarEmployee/>
+                )}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleEntry}>

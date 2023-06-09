@@ -1,28 +1,26 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
-import Sidebar from './components/sidebar';
-import Entry from './pages/entry';
-import Home from './pages/home';
 import Login from './pages/Login';
-import ModifyParking from './pages/modifyparking'
-import NotFound from './pages/NotFound'
+import Home from './pages/Home';
+import Entry from './pages/Entry';
+import VehicleRegistry from './pages/VehicleRegistry'
 import PanelOwners from './pages/PanelOwners'
 import PanelEmployees from './pages/PanelEmployees'
 import PanelParkings from './pages/PanelParkings'
-import Privateroute from './components/privateroutes';
-import VehicleRegistry from './pages/VehicleRegistry'
+import ModifyParking from './pages/modifyparking'
+import NotFound from './pages/NotFound'
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
     return (
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/Login" element={<Login/>}/>
-                    <Route element={<Privateroute/>}>
-                        <Route exact path="/" element={<Home/>}/>
-                        <Route exact path="/sidebar" element={<Sidebar/>}/>
-                        <Route exact path="/entry" element={<Entry/>}/>
+                    <Route exact path="/" element={<Login/>}/>
+                    <Route element={<PrivateRoute/>}>
+                        <Route exact path="/Home" element={<Home/>}/>
+                        <Route exact path="/Entry" element={<Entry/>}/>
                         <Route exact path='/PanelOwners' element={<PanelOwners/>}/>
                         <Route exact path='/PanelEmployees' element={<PanelEmployees/>}/>
                         <Route exact path='/PanelParkings' element={<PanelParkings/>}/>

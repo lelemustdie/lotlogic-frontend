@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {TableParking} from '../components/Table/TableParking';
-import {AddParkingModal} from '../components/Modal/AddParkingModal';
-import Sidebar from "../components/sidebar";
-import {ModifyParkingModal} from "../components/Modal/ModifyParkingModal";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {TableParking} from '../components/Table/TableParking';
+import {ModifyParkingModal} from "../components/Modal/ModifyParkingModal";
+import {AddParkingModal} from '../components/Modal/AddParkingModal';
+import SidebarOwner from "../components/SidebarOwner";
 
-const userDniFromLogin = 'ADMIN';
+const token = localStorage.getItem('token');
+const dni = localStorage.getItem('dni');
+
 export default function PanelOwners() {
-    const token = localStorage.getItem('token')
     const [addParkingModalOpen, setAddParkingModalOpen] = useState(false);
     const [modifyParkingModalOpen, setModifyParkingModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
@@ -55,7 +56,7 @@ export default function PanelOwners() {
 //            }));
 
         const newParkingForm = {
-            'dni': userDniFromLogin,
+            'dni': dni,
             'address': event.target.address.value,
             'floors': floors,
             'fees': fees
@@ -115,8 +116,8 @@ export default function PanelOwners() {
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
-            <section style={{paddingLeft:0}} className="col-3">
-                <Sidebar/>
+            <section style={{paddingLeft: 0}} className="col-3">
+                <SidebarOwner/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
@@ -128,9 +129,10 @@ export default function PanelOwners() {
                     </button>
 
                     {/*addParking*/}
-                    {addParkingModalOpen && <AddParkingModal setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
-                        setAddParkingModalOpen(false)
-                    }} submitForm={handleAddParking}/>}
+                    {addParkingModalOpen &&
+                        <AddParkingModal setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
+                            setAddParkingModalOpen(false)
+                        }} submitForm={handleAddParking}/>}
 
                     {/*modifyParking*/}
                     {modifyParkingModalOpen && <ModifyParkingModal closeModal={() => {

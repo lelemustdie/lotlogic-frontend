@@ -4,10 +4,11 @@ import {useNavigate} from 'react-router-dom';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const token = localStorage.getItem('token');
+
 function Login() {
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
-    const token = localStorage.getItem('token');
 
     const logInForm = {
         dni: dni,
@@ -18,6 +19,9 @@ function Login() {
     useEffect(() => {
         if (token) {
             localStorage.removeItem('token')
+            localStorage.removeItem('dni')
+            localStorage.removeItem('firstName')
+            localStorage.removeItem('role')
         }
     })
 
@@ -43,7 +47,11 @@ function Login() {
             .then((data) => {
                 toast.success("Sesion iniciada");
                 localStorage.setItem('token', data.tokenResponse.token);
-                navigate('/');
+                localStorage.setItem('dni', data.dni);
+                localStorage.setItem('firstName', data.firstName);
+                localStorage.setItem('role', data.role);
+                console.log(data);
+                navigate('/Home')
             })
             .catch((error) => {
                 console.log(error.message);

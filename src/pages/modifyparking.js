@@ -1,11 +1,12 @@
 import React from 'react';
 import {useState} from 'react';
-import Sidebar from "../components/sidebar";
 import {useNavigate} from 'react-router-dom';
+import SidebarOwner from "../components/SidebarOwner";
 
 const token = localStorage.getItem('token');
-const userDniFromLogin = 'ADMIN'; //TODO get dni from logged user
+const dni = localStorage.getItem('dni');
 const parkingIdFromLogin = 1; //TODO get parking id previously from list or table*/
+
 export default function ModifyParking() {
     const [address, setAddress] = useState('');
     const [fees, setFees] = useState('');
@@ -13,7 +14,7 @@ export default function ModifyParking() {
     const navigate = useNavigate();
 
     const modifyParkingForm = {
-        userDniFromLogin,
+        userDniFromLogin: dni,
         address,
         floors: [],
         fees: []
@@ -44,7 +45,7 @@ export default function ModifyParking() {
     return (
         <div className="row w-100">
             <section style={{paddingLeft: 0}} className="col-3">
-                <Sidebar/>
+                <SidebarOwner/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleSubmit} className='w-50'>
