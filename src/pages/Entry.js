@@ -10,18 +10,18 @@ export default function Entry() {
     const dni = localStorage.getItem('dni');
 
     //from fetch
-    const [parkingId, setParkingId] = useState('2');
-/*    const [parkingData, setParkingData] = useState([]);*/
+    const [parkings, setParkings] = useState([]);
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
-
     //from user input
+
+    const [parkingInputIndex, setParkingInputIndex] = useState('');
     const [vehiclePlate, setVehiclePlate] = useState('');
     const [vehicleModel, setVehicleModel] = useState('');
     const [feeInputIndex, setFeeInputIndex] = useState(''); //input of array from selected in dropdown
     const [floorInputIndex, setFloorInputIndex] = useState(''); //input of array from selected in dropdown
 
-/*    useEffect(() => {
+    useEffect(() => {
         if (role === "ADMIN") {
             fetch(`http://localhost:8080/api/user/admin/panel-parkings`, {
                 headers: {
@@ -30,7 +30,8 @@ export default function Entry() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    setParkingData(data);
+                    console.log(data);
+                    setParkings(data);
                 })
                 .catch(error => console.log(error));
         } else if (role === "EMPLOYEE") {
@@ -41,41 +42,49 @@ export default function Entry() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    setParkingData(data);
+                    console.log(data);
+                    setParkings(data);
                 })
                 .catch(error => console.log(error));
         } else {
             //TODO owner
         }
-    }, [])*/
+    }, [])
 
     useEffect(() => {
-        if (parkingId) {
+        //when user selects default input option
+        if (parkingInputIndex === -1){
+            setFees([]);
+            setFloors([]);
+        }
+        else if (parkingInputIndex !== '') {
             fetchData();
         }
-    }, [parkingId]);
+    }, [parkingInputIndex]);
 
     const fetchData = () => {
         // getAllFees from the current parking
-        fetch(`http://localhost:8080/api/user/employee/fees/${parkingId}`, {
+        fetch(`http://localhost:8080/api/user/employee/fees/${parkings[parkingInputIndex].id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 setFees(data);
             })
             .catch(error => console.log(error));
 
         // getAllFloors from the current parking
-        fetch(`http://localhost:8080/api/user/employee/floors/${parkingId}`, {
+        fetch(`http://localhost:8080/api/user/employee/floors/${parkings[parkingInputIndex].id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 setFloors(data);
             })
             .catch(error => console.log(error));
@@ -84,7 +93,7 @@ export default function Entry() {
     function handleEntry(event) {
         event.preventDefault();
         const entryForm = {
-            parkingId: parkingId,
+            parkingId: parkings[parkingInputIndex].id,
             employeeDni: dni,
             vehiclePlate: vehiclePlate,
             vehicleModel: vehicleModel,
@@ -125,10 +134,20 @@ export default function Entry() {
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleEntry}>
+
                     <div>
-                        <label>Parking ID</label>
-                        <input required type="text" className="form-control" id="parking_id" name="parking_id"
-                               value={parkingId} onChange={event => setParkingId(event.target.value)}/>
+                        <label className="m">Estacionamiento</label>
+                        <select className="form-select" id='parking' name='parking' required onChange={event => {
+                            console.log(event.target.selectedIndex)
+                            setParkingInputIndex(event.target.selectedIndex - 1)
+                            console.log(parkingInputIndex);
+                        }}>
+                            <option value="">Seleccione un estacionamiento</option>
+                            {parkings.map((parking, index) =>
+                                <option key={index} value={parking}>
+                                    {parking['id']} - {parking['address']}
+                                </option>)}
+                        </select>
                     </div>
 
                     <div>
@@ -161,7 +180,7 @@ export default function Entry() {
 
                     <div>
                         <label>Piso</label>
-                        <select className="form-select" id='fee' name='fee' required onChange={event => {
+                        <select className="form-select" id='floor' name='floor' required onChange={event => {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
                             setFloorInputIndex(event.target.selectedIndex - 1)
