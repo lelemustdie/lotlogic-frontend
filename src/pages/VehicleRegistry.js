@@ -5,22 +5,37 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarEmployee from "../components/SidebarEmployee";
 
-const token = localStorage.getItem('token');
-const role = localStorage.getItem('role');
-const parkingId = 1; //get parking id from table in PanelParkings
+
 
 export default function ReservationsList() {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    const parkingId = 1; //TODO get parking id from table in PanelParkings
+
     const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/user/employee/panel-reservations/${parkingId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => setReservations(data))
-            .catch(error => console.error(error));
+        if (role === 'ADMIN') {
+            fetch(`http://localhost:8080/api/user/admin/panel-reservations`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setReservations(data))
+                .catch(error => console.error(error));
+        } else if (role === 'EMPLOYEE') {
+            fetch(`http://localhost:8080/api/user/employee/panel-reservations/${parkingId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setReservations(data))
+                .catch(error => console.error(error));
+        } else {
+            //TODO owner
+        }
     }, []);
 
     const handleDeleteReservation = (targetIndex) => {
