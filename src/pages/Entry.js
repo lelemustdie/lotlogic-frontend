@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SidebarOwner from '../components/SidebarOwner';
+import SidebarAdmin from '../components/SidebarAdmin';
 import SidebarEmployee from "../components/SidebarEmployee";
 
 const token = localStorage.getItem('token');
@@ -81,7 +81,7 @@ export default function Entry() {
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
                 {role === 'ADMIN' || role === 'OWNER' ? (
-                    <SidebarOwner/>
+                    <SidebarAdmin/>
                 ) : (
                     <SidebarEmployee/>
                 )}

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {TableParking} from '../components/Table/TableParking';
+import {ParkingTable} from '../components/Table/ParkingTable';
 import {ModifyParkingModal} from "../components/Modal/ModifyParkingModal";
 import {AddParkingModal} from '../components/Modal/AddParkingModal';
-import SidebarOwner from "../components/SidebarOwner";
+import SidebarAdmin from "../components/SidebarAdmin";
 
 const token = localStorage.getItem('token');
 const dni = localStorage.getItem('dni');
@@ -117,13 +117,13 @@ export default function PanelOwners() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarOwner/>
+                <SidebarAdmin/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
                     <h2>ESTACIONAMIENTOS</h2>
-                    <TableParking rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
-                                  openEditModal={setModifyParkingModalOpen}></TableParking>
+                    <ParkingTable rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
+                                  openEditModal={setModifyParkingModalOpen}></ParkingTable>
                     <button className='btn btn-dark' onClick={() => setAddParkingModalOpen(true)}>Añadir
                         Estacionamiento
                     </button>

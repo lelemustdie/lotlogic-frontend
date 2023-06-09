@@ -2,7 +2,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/js/dist/dropdown'
 import {toast} from "react-toastify";
 
-function SidebarOwner() {
+function SidebarAdmin() {
     const token = localStorage.getItem('token')
     const name = localStorage.getItem('firstName')
     function handleLogout() {
@@ -61,7 +61,7 @@ function SidebarOwner() {
 
                             </li>
                             <li className="nav-item text-white fs-4 my-1">
-                                <a href="/modifyparking" className="nav-link text-white fs-5"><i
+                                <a href="/ModifyParking.js" className="nav-link text-white fs-5"><i
                                     className="bi bi-pencil-square"></i><span
                                     className="ms-2">Modificar Estacionamiento</span></a>
                             </li>
@@ -86,4 +86,4 @@ function SidebarOwner() {
     )
 }
 
-export default SidebarOwner
+export default SidebarAdmin

@@ -8,7 +8,7 @@ import VehicleRegistry from './pages/VehicleRegistry'
 import PanelOwners from './pages/PanelOwners'
 import PanelEmployees from './pages/PanelEmployees'
 import PanelParkings from './pages/PanelParkings'
-import ModifyParking from './pages/modifyparking'
+import ModifyParking from './pages/ModifyParking'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute';
 
@@ -18,6 +18,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<Login/>}/>
+                    <Route path="*" element={<NotFound/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route exact path="/Home" element={<Home/>}/>
                         <Route exact path="/Entry" element={<Entry/>}/>
@@ -27,7 +28,6 @@ function App() {
                         <Route exact path='/modifyparking' element={<ModifyParking/>}/>
                         <Route exact path='/VehicleRegistry' element={<VehicleRegistry/>}/>
                     </Route>
-                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

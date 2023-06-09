@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Table} from '../components/Table/Table'
+import {UserTable} from '../components/Table/UserTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
 import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
-import SidebarOwner from "../components/SidebarOwner";
+import SidebarAdmin from "../components/SidebarAdmin";
 
 const token = localStorage.getItem('token')
 
@@ -144,13 +144,13 @@ export default function PanelEmployees() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarOwner/>
+                <SidebarAdmin/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
                     <h2>EMPLEADOS</h2>
-                    <Table rows={rows} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
-                           openEditModal={setModifyOwnerModalOpen}></Table>
+                    <UserTable rows={rows} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
+                               openEditModal={setModifyOwnerModalOpen}></UserTable>
                     <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Empleado</button>
 
                     {/*addOwner*/}

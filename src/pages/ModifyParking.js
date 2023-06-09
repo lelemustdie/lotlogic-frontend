@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import SidebarOwner from "../components/SidebarOwner";
+import SidebarAdmin from "../components/SidebarAdmin";
 
 const token = localStorage.getItem('token');
 const dni = localStorage.getItem('dni');
@@ -45,7 +45,7 @@ export default function ModifyParking() {
     return (
         <div className="row w-100">
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarOwner/>
+                <SidebarAdmin/>
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleSubmit} className='w-50'>

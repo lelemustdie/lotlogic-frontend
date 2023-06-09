@@ -1,7 +1,7 @@
 import React from "react";
 import './Table.css'
 
-export const TableParking = ({rows, deleteRow, openEditModal}) => {
+export const ParkingTable = ({rows, deleteRow, openEditModal}) => {
     return (
         <div className='table-wrapper'>
             <table className='table'>

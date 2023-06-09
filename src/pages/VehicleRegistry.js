@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {TableCarsIn} from '../components/Table/TableCarsIn'
+import {VehicleRegistryTable} from '../components/Table/VehicleRegistryTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SidebarOwner from "../components/SidebarOwner";
+import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarEmployee from "../components/SidebarEmployee";
 
 const token = localStorage.getItem('token');
@@ -56,7 +56,7 @@ export default function ReservationsList() {
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
                 {role === 'ADMIN' || role === 'OWNER' ? (
-                    <SidebarOwner/>
+                    <SidebarAdmin/>
                 ) : (
                     <SidebarEmployee/>
                 )}
@@ -64,7 +64,7 @@ export default function ReservationsList() {
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
                     <h2>AUTOS INGRESADOS/EGRESADOS</h2>
-                    <TableCarsIn rows={reservations} deleteRow={handleDeleteReservation}/>
+                    <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation}/>
                 </div>
             </section>
         </div>
