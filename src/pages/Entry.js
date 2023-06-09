@@ -9,12 +9,14 @@ export default function Entry() {
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
 
-    //from fetch
+    //from fetch when render
     const [parkings, setParkings] = useState([]);
+
+    //from fetch when parkingInputIndex changes
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
-    //from user input
 
+    //from user input
     const [parkingInputIndex, setParkingInputIndex] = useState('');
     const [vehiclePlate, setVehiclePlate] = useState('');
     const [vehicleModel, setVehicleModel] = useState('');
@@ -46,18 +48,29 @@ export default function Entry() {
                     setParkings(data);
                 })
                 .catch(error => console.log(error));
+        } else if (role === 'OWNER') {
+            fetch(`http://localhost:8080/api/user/owner/panel-parkings/${dni}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setParkings(data);
+                })
+                .catch(error => console.log(error));
         } else {
-            //TODO owner
+            throw new Error("role not found");
         }
     }, [])
 
     useEffect(() => {
-        //when user selects default input option
-        if (parkingInputIndex === -1){
+        //to avoid error when selects default input option
+        if (parkingInputIndex === -1) {
             setFees([]);
             setFloors([]);
-        }
-        else if (parkingInputIndex !== '') {
+        } else if (parkingInputIndex !== '') {
             fetchData();
         }
     }, [parkingInputIndex]);
