@@ -58,7 +58,7 @@ export default function PanelOwners() {
             body: JSON.stringify(newUserForm),
         })
             .then(response => {
-                if (response.status === 403) {
+                if (response.status === 400) {
                     throw new Error("La contraseña no cumple los requisitos");
                 } else if (response.status === 409) {
                     throw new Error("El dueño ya existe");

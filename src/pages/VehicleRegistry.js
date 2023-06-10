@@ -10,7 +10,7 @@ export default function ReservationsList() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
-    const parkingId = localStorage.getItem('parkingId');
+    const employeeParkingId = localStorage.getItem('parkingId');
 
     const [reservations, setReservations] = useState([]);
 
@@ -25,8 +25,8 @@ export default function ReservationsList() {
                 .then(data => setReservations(data))
                 .catch(error => console.error(error));
             //TODO fix enters despite parkingId is NULL
-        } else if (role === 'EMPLOYEE' && parkingId !== null) {
-            fetch(`http://localhost:8080/api/user/employee/panel-reservations/${parkingId}`, {
+        } else if (role === 'EMPLOYEE' && employeeParkingId !== null) {
+            fetch(`http://localhost:8080/api/user/employee/panel-reservations/${employeeParkingId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
