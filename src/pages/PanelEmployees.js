@@ -15,7 +15,8 @@ export default function PanelEmployees() {
 
     const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
     const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
-    const [rows, setRows] = useState([]);
+    const [employees, setRows] = useState([]);
+    const [indexFromTable, setModifiedIndex] = useState(null);
 
     useEffect(() => {
         if (role === 'ADMIN') {
@@ -90,7 +91,7 @@ export default function PanelEmployees() {
             .then(data => {
                 // Handle the response body as a string
                 newUserForm.id = data;
-                setRows(rows.concat(newUserForm));
+                setRows(employees.concat(newUserForm));
                 setAddOwnerModalOpen(false);
             })
             .catch(error => {
@@ -99,7 +100,7 @@ export default function PanelEmployees() {
     };
 
     const handleDeleteEmployee = (targetIndex) => {
-        const id = rows[targetIndex].id;
+        const id = employees[targetIndex].id;
         fetch(`http://localhost:8080/api/user/owner/delete-employee/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -111,7 +112,7 @@ export default function PanelEmployees() {
                     throw new Error('Error al eliminar dueño');
                 }
                 toast.success('Dueño eliminado correctamente');
-                setRows(rows.filter((_, idx) => idx !== targetIndex))
+                setRows(employees.filter((_, idx) => idx !== targetIndex))
             })
             .catch(error => {
                 toast.error(error.message);
@@ -120,75 +121,86 @@ export default function PanelEmployees() {
 
     const handleModifyEmployee = (event) => {
         event.preventDefault();
-        //get index modified from table
-        const modifiedIndex = 0;
-        const id = rows[modifiedIndex].id;
-        //get editUserForm inputs from modal
-        const editUserForm = {
-            dni: 'x',
-            firstName: 'x',
-            lastName: 'x',
-            password: 'x'
-        };
+        if (indexFromTable !== null) {
+            const id = employees[indexFromTable].id;
+            //get editUserForm inputs from modal
+            const editUserForm = {
+                dni: event.target.dni.value,
+                firstName: event.target.firstName.value,
+                lastName: event.target.lastName.value,
+                password: event.target.password.value
+            };
 
-        fetch(`http://localhost:8080/api/user/owner/update-employee/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            method: 'PUT',
-            body: JSON.stringify(editUserForm),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al modificar dueño');
-                }
-                toast.success('Dueño modificado correctamente');
-                // Create a new array with the modified user data
-                const modifiedRow = {
-                    id: id,
-                    dni: editUserForm.dni,
-                    firstName: editUserForm.firstName,
-                    lastName: editUserForm.lastName
-                };
-
-                // Update the rows array by replacing the modified user
-                setRows(prevRows => {
-                    const updatedRows = [...prevRows];
-                    updatedRows[modifiedIndex] = modifiedRow;
-                    return updatedRows;
-                });
-                setModifyOwnerModalOpen(false);
+            fetch(`http://localhost:8080/api/user/owner/update-employee/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify(editUserForm),
             })
-            .catch(error => {
-                toast.error(error.message);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al modificar dueño');
+                    }
+                    toast.success('Dueño modificado correctamente');
+                    // Create a new array with the modified user data
+                    const modifiedRow = {
+                        id: id,
+                        dni: editUserForm.dni,
+                        firstName: editUserForm.firstName,
+                        lastName: editUserForm.lastName
+                    };
+
+                    // Update the employees array by replacing the modified user
+                    setRows(prevRows => {
+                        const updatedRows = [...prevRows];
+                        updatedRows[indexFromTable] = modifiedRow;
+                        return updatedRows;
+                    });
+                    setModifyOwnerModalOpen(false);
+                })
+                .catch(error => {
+                    toast.error(error.message);
+                });
+        }
+    };
+
+    const closeAddModal = () => {
+        setAddOwnerModalOpen(false)
+    };
+
+    const openEditModal = (isOpen, idx) => {
+        console.log(idx)
+        setModifiedIndex(idx);
+        setModifyOwnerModalOpen(isOpen);
+    };
+
+    const closeModifyModal = () => {
+        setModifiedIndex(null);
+        setModifyOwnerModalOpen(false);
     };
 
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                {role === 'ADMIN' && <SidebarAdmin />}
-                {role === 'OWNER' && <SidebarOwner />}
-                {role === 'EMPLOYEE' && <SidebarEmployee />}
+                {role === 'ADMIN' && <SidebarAdmin/>}
+                {role === 'OWNER' && <SidebarOwner/>}
+                {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
                     <h2>EMPLEADOS</h2>
-                    <UserTable rows={rows} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
-                               openEditModal={setModifyOwnerModalOpen}></UserTable>
+                    <UserTable rows={employees} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
+                               openEditModal={openEditModal}></UserTable>
                     <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Empleado</button>
 
                     {/*addOwner*/}
-                    {addOwnerModalOpen && <AddOwnerModal closeModal={() => {
-                        setAddOwnerModalOpen(false)
-                    }} submitForm={handleAddEmployee}/>}
+                    {addOwnerModalOpen && <AddOwnerModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
 
                     {/*modifyOwner*/}
-                    {modifyOwnerModalOpen && <ModifyOwnerModal closeModal={() => {
-                        setModifyOwnerModalOpen(false)
-                    }} submitForm={handleModifyEmployee}/>}
+                    {modifyOwnerModalOpen && <ModifyOwnerModal closeModal={closeModifyModal} submitForm={handleModifyEmployee}/>}
                 </div>
             </section>
         </div>
