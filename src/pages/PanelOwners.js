@@ -5,10 +5,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
 import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
 import SidebarAdmin from "../components/SidebarAdmin";
-
-const token = localStorage.getItem('token')
+import SidebarOwner from "../components/SidebarOwner";
+import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function PanelOwners() {
+    const token = localStorage.getItem('token')
+    const role = localStorage.getItem('role');
+
     const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
     const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
@@ -148,7 +151,9 @@ export default function PanelOwners() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarAdmin/>
+                {role === 'ADMIN' && <SidebarAdmin />}
+                {role === 'OWNER' && <SidebarOwner />}
+                {role === 'EMPLOYEE' && <SidebarEmployee />}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>

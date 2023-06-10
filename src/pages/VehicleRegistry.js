@@ -3,11 +3,13 @@ import {VehicleRegistryTable} from '../components/Table/VehicleRegistryTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from "../components/SidebarAdmin";
+import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function ReservationsList() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
+    const dni = localStorage.getItem('dni');
     const parkingId = 1; //TODO get parking id from table in PanelParkings
 
     const [reservations, setReservations] = useState([]);
@@ -31,8 +33,15 @@ export default function ReservationsList() {
                 .then(response => response.json())
                 .then(data => setReservations(data))
                 .catch(error => console.error(error));
-        } else {
-            //TODO owner
+        } else if (role === 'OWNER') {
+            fetch(`http://localhost:8080/api/user/owner/panel-reservations/${dni}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => setReservations(data))
+                .catch(error => console.error(error));
         }
     }, []);
 
@@ -76,7 +85,7 @@ export default function ReservationsList() {
                         return reservation;
                     });
                     setReservations(updatedReservations);
-                } else if (response.status === 409){
+                } else if (response.status === 409) {
                     toast.error("El vehiculo ya fue despachado")
                 }
             })
@@ -90,11 +99,9 @@ export default function ReservationsList() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                {role === 'ADMIN' || role === 'OWNER' ? (
-                    <SidebarAdmin/>
-                ) : (
-                    <SidebarEmployee/>
-                )}
+                {role === 'ADMIN' && <SidebarAdmin />}
+                {role === 'OWNER' && <SidebarOwner />}
+                {role === 'EMPLOYEE' && <SidebarEmployee />}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">

@@ -2,8 +2,11 @@ import React from 'react';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import SidebarAdmin from "../components/SidebarAdmin";
+import SidebarOwner from "../components/SidebarOwner";
+import SidebarEmployee from "../components/SidebarEmployee";
 
 const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
 const dni = localStorage.getItem('dni');
 const parkingIdFromLogin = 1; //TODO get parking id previously from list or table*/
 
@@ -45,7 +48,9 @@ export default function ModifyParking() {
     return (
         <div className="row w-100">
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarAdmin/>
+                {role === 'ADMIN' && <SidebarAdmin />}
+                {role === 'OWNER' && <SidebarOwner />}
+                {role === 'EMPLOYEE' && <SidebarEmployee />}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleSubmit} className='w-50'>

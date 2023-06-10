@@ -5,33 +5,58 @@ import 'react-toastify/dist/ReactToastify.css';
 import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
 import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
 import SidebarAdmin from "../components/SidebarAdmin";
-
-const token = localStorage.getItem('token')
+import SidebarOwner from "../components/SidebarOwner";
+import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function PanelEmployees() {
+    const token = localStorage.getItem('token')
+    const role = localStorage.getItem('role');
+    const dni = localStorage.getItem('dni');
+
     const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
     const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/user/admin/panel-employees', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                const updatedRows = data.map(item => {
-                    return {
-                        'id': item.id,
-                        'dni': item.dni,
-                        'firstName': item.firstName,
-                        'lastName': item.lastName
-                    }
-                });
-                setRows(updatedRows);
+        if (role === 'ADMIN') {
+            fetch('http://localhost:8080/api/user/admin/panel-employees', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
-            .catch(error => console.log(error));
+                .then(response => response.json())
+                .then(data => {
+                    const updatedRows = data.map(item => {
+                        return {
+                            'id': item.id,
+                            'dni': item.dni,
+                            'firstName': item.firstName,
+                            'lastName': item.lastName
+                        }
+                    });
+                    setRows(updatedRows);
+                })
+                .catch(error => console.log(error));
+        } else if (role === 'OWNER') {
+            fetch(`http://localhost:8080/api/user/owner/panel-employees/${dni}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const updatedRows = data.map(item => {
+                        return {
+                            'id': item.id,
+                            'dni': item.dni,
+                            'firstName': item.firstName,
+                            'lastName': item.lastName
+                        }
+                    });
+                    setRows(updatedRows);
+                })
+                .catch(error => console.log(error));
+        }
     }, []);
 
     const handleAddEmployee = (event) => {
@@ -144,7 +169,9 @@ export default function PanelEmployees() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                <SidebarAdmin/>
+                {role === 'ADMIN' && <SidebarAdmin />}
+                {role === 'OWNER' && <SidebarOwner />}
+                {role === 'EMPLOYEE' && <SidebarEmployee />}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>

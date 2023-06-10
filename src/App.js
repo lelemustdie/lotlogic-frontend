@@ -27,7 +27,7 @@ function App() {
                         <Route exact path='/PanelOwners' element={<PanelOwners/>}/>
                         <Route exact path='/PanelEmployees' element={<PanelEmployees/>}/>
                         <Route exact path='/PanelParkings' element={<PanelParkings/>}/>
-                        <Route exact path='/modifyparking' element={<ModifyParking/>}/>
+                        <Route exact path='/ModifyParking' element={<ModifyParking/>}/>
                         <Route exact path='/VehicleRegistry' element={<VehicleRegistry/>}/>
                     </Route>
                 </Routes>

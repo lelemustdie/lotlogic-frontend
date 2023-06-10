@@ -3,6 +3,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from '../components/SidebarAdmin';
 import SidebarEmployee from "../components/SidebarEmployee";
+import SidebarOwner from "../components/SidebarOwner";
 
 export default function Entry() {
     const token = localStorage.getItem('token');
@@ -139,11 +140,9 @@ export default function Entry() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                {role === 'ADMIN' || role === 'OWNER' ? (
-                    <SidebarAdmin/>
-                ) : (
-                    <SidebarEmployee/>
-                )}
+                {role === 'ADMIN' && <SidebarAdmin />}
+                {role === 'OWNER' && <SidebarOwner />}
+                {role === 'EMPLOYEE' && <SidebarEmployee />}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleEntry}>
