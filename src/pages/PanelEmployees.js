@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {UserTable} from '../components/Table/UserTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
+import {AddEmployeeModal} from '../components/Modal/AddEmployeeModal';
 import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
 import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarOwner from "../components/SidebarOwner";
@@ -60,17 +60,15 @@ export default function PanelEmployees() {
         }
     }, []);
 
-    const handleAddEmployee = (event) => {
+    const handleAddEmployee = (event, parkingId) => {
         event.preventDefault();
         const newUserForm = {
-            'id': '',
-            'dni': event.target.dni.value,
-            'firstName': event.target.firstName.value,
-            'lastName': event.target.lastName.value,
-            'password': event.target.password.value
-        }
-
-        fetch('http://localhost:8080/api/user/owner/add-employee', {
+            dni: event.target.dni.value,
+            firstName: event.target.firstName.value,
+            lastName: event.target.lastName.value,
+            password: event.target.password.value
+        };
+        fetch(`http://localhost:8080/api/user/owner/add-employee/${parkingId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -196,11 +194,12 @@ export default function PanelEmployees() {
                                openEditModal={openEditModal}></UserTable>
                     <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Empleado</button>
 
-                    {/*addOwner*/}
-                    {addOwnerModalOpen && <AddOwnerModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
+                    {/*addEmployee*/}
+                    {addOwnerModalOpen && <AddEmployeeModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
 
                     {/*modifyOwner*/}
-                    {modifyOwnerModalOpen && <ModifyOwnerModal closeModal={closeModifyModal} submitForm={handleModifyEmployee}/>}
+                    {modifyOwnerModalOpen &&
+                        <ModifyOwnerModal closeModal={closeModifyModal} submitForm={handleModifyEmployee}/>}
                 </div>
             </section>
         </div>
