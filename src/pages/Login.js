@@ -18,10 +18,7 @@ function Login() {
     const navigate = useNavigate();
     useEffect(() => {
         if (token) {
-            localStorage.removeItem('token')
-            localStorage.removeItem('dni')
-            localStorage.removeItem('firstName')
-            localStorage.removeItem('role')
+            localStorage.clear()
         }
     })
 
@@ -50,6 +47,7 @@ function Login() {
                 localStorage.setItem('dni', data.dni);
                 localStorage.setItem('firstName', data.firstName);
                 localStorage.setItem('role', data.role);
+                localStorage.setItem('parkingId', data.parkingId);
                 console.log(data);
                 navigate('/Home')
             })

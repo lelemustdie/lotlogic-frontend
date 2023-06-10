@@ -14,7 +14,7 @@ export const VehicleRegistryTable = ({rows, deleteRow}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {
+                {rows.length > 0 && (
                     rows.map((row, idx) => {
                         return <tr key={idx}>
                             <td>{row.vehiclePlate}</td>
@@ -25,13 +25,13 @@ export const VehicleRegistryTable = ({rows, deleteRow}) => {
                                 <div>
                                 <span className='actions'>
                                     <button type='button' name='delete'
-                                            className='btn btn-danger bi-trash d-inline-block'
-                                            onClick={() => deleteRow(idx)}></button>
+                                            className='btn btn-dark btn-box-arrow-in-left bi-box-arrow-in-left d-inline-block'
+                                            onClick={() => deleteRow(idx)}> Egreso</button>
                                 </span>
                                 </div>
                             </td>
                         </tr>
-                    })
+                    }))
                 }
                 </tbody>
             </table>
