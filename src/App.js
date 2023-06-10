@@ -12,10 +12,14 @@ import PanelParkings from './pages/PanelParkings'
 import ModifyParking from './pages/ModifyParking'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
 
 function App() {
     return (
         <div className="App">
+            <ToastContainer/>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<Login/>}/>

@@ -19,6 +19,9 @@ function Sidebar() {
             body: JSON.stringify(tokenForm),
         })
             .then(response => {
+                if (!response.ok){
+                    throw new Error();
+                }
             })
             .catch(error => {
                 toast.error(error.message);

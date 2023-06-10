@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {UserTable} from '../components/Table/UserTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +12,7 @@ import SidebarEmployee from "../components/SidebarEmployee";
 export default function PanelOwners() {
     const token = localStorage.getItem('token')
     const role = localStorage.getItem('role');
+    const navigate = useNavigate();
 
     const [owners, setRows] = useState([]);
     const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
@@ -23,7 +25,16 @@ export default function PanelOwners() {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 403) {
+                    toast.error("Hubo un problema con la autenticación")
+                    return navigate('/');
+                } else if (!response.ok) {
+                    throw new Error();
+                } else {
+                    return response.json();
+                }
+            })
             .then(data => {
                 setRows(data);
             })
