@@ -27,7 +27,7 @@ function SidebarOwner() {
     return (
         <div className="container-fluid vh-100">
             <div className="row">
-                <div className="bg-dark col-auto min-vh-100 d-flex justify-content-between flex-column">
+                <div className="bg-secondary col-auto min-vh-100 d-flex justify-content-between flex-column">
                     <div>
                         <a className="text-decoration-none text-white d-flex justify-content-center  mt-3">
                             <span className="ms-1 fs-4">LotLogic</span>
@@ -76,14 +76,12 @@ function SidebarOwner() {
                             <i className="bi bi-person-circle"></i><span className="ms-2">{name}</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="triggerId">
-                            <a className="dropdown-item" href="/" onClick={handleLogout}>Log Out</a>
+                            <a className="dropdown-item" href="/" onClick={handleLogout}>Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     )
 }
 

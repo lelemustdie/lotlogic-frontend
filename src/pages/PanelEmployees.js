@@ -81,9 +81,9 @@ export default function PanelEmployees() {
                 if (response.status === 403) {
                     throw new Error("La contraseña no cumple los requisitos");
                 } else if (response.status === 409) {
-                    throw new Error("El dueño ya existe");
+                    throw new Error("El empleado ya existe");
                 } else {
-                    toast.success('Dueño agregado correctamente');
+                    toast.success('Empleado agregado correctamente');
                     return response.text();
                 }
             })

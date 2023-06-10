@@ -81,7 +81,7 @@ function SidebarAdmin() {
                             <i className="bi bi-person-circle"></i><span className="ms-2">{name}</span>
                         </a>
                         <div className="dropdown-menu" aria-labelledby="triggerId">
-                            <a className="dropdown-item" href="/" onClick={handleLogout}>Log Out</a>
+                            <a className="dropdown-item" href="/" onClick={handleLogout}>Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
