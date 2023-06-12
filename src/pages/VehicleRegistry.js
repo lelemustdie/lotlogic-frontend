@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {VehicleRegistryTable} from '../components/Table/VehicleRegistryTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +8,7 @@ import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function ReservationsList() {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
@@ -23,7 +25,15 @@ export default function ReservationsList() {
             })
                 .then(response => response.json())
                 .then(data => setReservations(data))
-                .catch(error => console.error(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
             //TODO fix enters despite parkingId is NULL
         } else if (role === 'EMPLOYEE' && employeeParkingId !== null) {
             fetch(`http://localhost:8080/api/user/employee/panel-reservations/${employeeParkingId}`, {
@@ -33,7 +43,15 @@ export default function ReservationsList() {
             })
                 .then(response => response.json())
                 .then(data => setReservations(data))
-                .catch(error => console.error(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         } else if (role === 'OWNER') {
             fetch(`http://localhost:8080/api/user/owner/panel-reservations/${dni}`, {
                 headers: {
@@ -42,7 +60,15 @@ export default function ReservationsList() {
             })
                 .then(response => response.json())
                 .then(data => setReservations(data))
-                .catch(error => console.error(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         }
     }, []);
 
@@ -100,9 +126,9 @@ export default function ReservationsList() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                {role === 'ADMIN' && <SidebarAdmin />}
-                {role === 'OWNER' && <SidebarOwner />}
-                {role === 'EMPLOYEE' && <SidebarEmployee />}
+                {role === 'ADMIN' && <SidebarAdmin/>}
+                {role === 'OWNER' && <SidebarOwner/>}
+                {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">

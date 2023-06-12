@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from '../components/SidebarAdmin';
-import SidebarEmployee from "../components/SidebarEmployee";
 import SidebarOwner from "../components/SidebarOwner";
+import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function Entry() {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
@@ -31,52 +33,105 @@ export default function Entry() {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => {
                     console.log(data);
                     setParkings(data);
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         } else if (role === "EMPLOYEE") {
             fetch(`http://localhost:8080/api/user/employee/panel-parkings/${dni}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => {
                     console.log(data);
                     setParkings(data);
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         } else if (role === 'OWNER') {
             fetch(`http://localhost:8080/api/user/owner/panel-parkings/${dni}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => {
                     console.log(data);
                     setParkings(data);
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         } else {
-            throw new Error("role not found");
+            console.log("role not valid");
         }
     }, [])
 
+    //runs when parkingInputIndex is changed
     useEffect(() => {
         //to avoid error when selects default input option
         if (parkingInputIndex === -1) {
             setFees([]);
             setFloors([]);
         } else if (parkingInputIndex !== '') {
-            fetchData();
+            fetchParkingData();
         }
     }, [parkingInputIndex]);
 
-    const fetchData = () => {
+    //retrieves all fees and floors for selected parking
+    const fetchParkingData = () => {
         // getAllFees from the current parking
         fetch(`http://localhost:8080/api/user/employee/fees/${parkings[parkingInputIndex].id}`, {
             headers: {
@@ -132,7 +187,7 @@ export default function Entry() {
                 toast.success('Vehículo ingresado correctamente');
             })
             .catch(error => {
-                toast.error(error.message);
+                console.log(error.message);
             });
     }
 
@@ -140,9 +195,9 @@ export default function Entry() {
         <div className="row w-100">
             <ToastContainer position="top-right"/>
             <section style={{paddingLeft: 0}} className="col-3">
-                {role === 'ADMIN' && <SidebarAdmin />}
-                {role === 'OWNER' && <SidebarOwner />}
-                {role === 'EMPLOYEE' && <SidebarEmployee />}
+                {role === 'ADMIN' && <SidebarAdmin/>}
+                {role === 'OWNER' && <SidebarOwner/>}
+                {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form onSubmit={handleEntry}>
@@ -181,6 +236,7 @@ export default function Entry() {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
                             setFeeInputIndex(event.target.selectedIndex - 1)
+                            console.log(feeInputIndex)
                         }}>
                             <option value="">Seleccione una tarifa</option>
                             {fees.map((fee, index) =>
@@ -196,6 +252,7 @@ export default function Entry() {
                             console.log(event.target.value)
                             console.log(event.target.selectedIndex)
                             setFloorInputIndex(event.target.selectedIndex - 1)
+                            console.log(floorInputIndex)
                         }}>
                             <option value="">Seleccione un piso</option>
                             {floors.map((floor, index) => <option>

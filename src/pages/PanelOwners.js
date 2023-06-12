@@ -10,14 +10,14 @@ import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function PanelOwners() {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token')
     const role = localStorage.getItem('role');
-    const navigate = useNavigate();
 
     const [owners, setRows] = useState([]);
     const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
     const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
-    const [indexFromTable, setModifiedIndex] = useState(null);
+    const [indexFromTable, setIndexFromTable] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:8080/api/user/admin/panel-owners', {
@@ -38,8 +38,17 @@ export default function PanelOwners() {
             .then(data => {
                 setRows(data);
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                if (error.message === 'Failed to fetch') {
+                    toast.error("Hay un problema con la conexión al servidor");
+                    navigate('/');
+                    console.log(error)
+                } else {
+                    console.log(error);
+                }
+            });
     }, []);
+
 
     const handleAddOwner = (event) => {
         event.preventDefault();
@@ -59,7 +68,7 @@ export default function PanelOwners() {
         })
             .then(response => {
                 if (response.status === 400) {
-                    throw new Error("La contraseña no cumple los requisitos");
+                    throw new Error("La contraseña o el dni no cumple los requisitos");
                 } else if (response.status === 409) {
                     throw new Error("El dueño ya existe");
                 } else {
@@ -116,25 +125,26 @@ export default function PanelOwners() {
                 body: JSON.stringify(editUserForm),
             })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al modificar dueño');
-                    }
-                    toast.success('Dueño modificado correctamente');
-                    // Create a new array with the modified user data
-                    const modifiedRow = {
-                        id: id,
-                        dni: editUserForm.dni,
-                        firstName: editUserForm.firstName,
-                        lastName: editUserForm.lastName
-                    };
+                    if (response.status === 400) {
+                        throw new Error("La contraseña o el dni no cumple los requisitos");
+                    } else {
+                        toast.success('Dueño modificado correctamente');
+                        // Create a new array with the modified user data
+                        const modifiedRow = {
+                            id: id,
+                            dni: editUserForm.dni,
+                            firstName: editUserForm.firstName,
+                            lastName: editUserForm.lastName
+                        };
 
-                    // Update the owners array by replacing the modified user
-                    setRows(prevRows => {
-                        const updatedRows = [...prevRows];
-                        updatedRows[indexFromTable] = modifiedRow;
-                        return updatedRows;
-                    });
-                    setModifyOwnerModalOpen(false);
+                        // Update the owners array by replacing the modified user
+                        setRows(prevRows => {
+                            const updatedRows = [...prevRows];
+                            updatedRows[indexFromTable] = modifiedRow;
+                            return updatedRows;
+                        });
+                        setModifyOwnerModalOpen(false);
+                    }
                 })
                 .catch(error => {
                     toast.error(error.message);
@@ -148,12 +158,12 @@ export default function PanelOwners() {
 
     const openEditModal = (isOpen, idx) => {
         console.log(idx)
-        setModifiedIndex(idx);
+        setIndexFromTable(idx);
         setModifyOwnerModalOpen(isOpen);
     };
 
     const closeModifyModal = () => {
-        setModifiedIndex(null);
+        setIndexFromTable(null);
         setModifyOwnerModalOpen(false);
     };
 

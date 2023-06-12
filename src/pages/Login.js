@@ -4,18 +4,14 @@ import {useNavigate} from 'react-router-dom';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const token = localStorage.getItem('token');
-
 function Login() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+
+    //from user input
     const [dni, setDni] = useState('');
     const [password, setPassword] = useState('');
 
-    const logInForm = {
-        dni: dni,
-        password: password
-    }
-
-    const navigate = useNavigate();
     useEffect(() => {
         if (token) {
             localStorage.clear()
@@ -24,6 +20,12 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        const logInForm = {
+            dni: dni,
+            password: password
+        }
+
         fetch('http://localhost:8080/api/auth/login', {
             headers: {
                 'Content-Type': 'application/json',
@@ -37,23 +39,30 @@ function Login() {
                         throw new Error("Usuario o contraseña invalida");
                     } else if (response.status === 404) {
                         throw new Error("No pudimos encontrar tu cuenta de LotLogic");
+                    } else {
+                        throw new Error(response.statusMessage)
                     }
                 }
                 return response.json();
             })
             .then((data) => {
-                toast.success("Sesion iniciada");
+                toast.success("Sesión iniciada");
                 localStorage.setItem('token', data.tokenResponse.token);
                 localStorage.setItem('dni', data.dni);
                 localStorage.setItem('firstName', data.firstName);
                 localStorage.setItem('role', data.role);
                 localStorage.setItem('parkingId', data.parkingId);
-                console.log(data);
                 navigate('/Home')
             })
-            .catch((error) => {
-                console.log(error.message);
-                toast.error(error.message);
+            .catch(error => {
+                if (error.message === 'Failed to fetch') {
+                    toast.error("Hay un problema con la conexión al servidor");
+                    navigate('/');
+                    console.log(error);
+                } else {
+                    toast.error(error.message)
+                    console.log(error);
+                }
             });
     };
 
