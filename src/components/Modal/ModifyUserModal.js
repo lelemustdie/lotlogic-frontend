@@ -29,7 +29,7 @@ export const ModifyUserModal = ({closeModal, submitForm, employee}) => {
                     <div>
                         <label>Contraseña</label>
                         <input required min='3' type='password' className='form-control' id='password'
-                               name='input_ownerpassword' defaultValue={employee.password}/>
+                               name='input_ownerpassword'/>
                     </div>
 
                     <div>

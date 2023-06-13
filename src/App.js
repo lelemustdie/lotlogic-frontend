@@ -16,6 +16,9 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 
+
+import {Ticket} from './components/Modal/Ticket'
+
 function App() {
     return (
         <div className="App">
@@ -25,6 +28,9 @@ function App() {
                     <Route exact path="/" element={<Login/>}/>
                     <Route path="*" element={<NotFound/>}/>
                     <Route element={<PrivateRoute/>}>
+
+                        <Route exact path='/TicketDev' element={<Ticket/>}/>
+
                         <Route exact path="/Home" element={<Home/>}/>
                         <Route exact path="/Entry" element={<Entry/>}/>
                         <Route exact path="/Exit" element={<Exit/>}/>
