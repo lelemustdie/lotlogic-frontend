@@ -16,4 +16,12 @@
     padding: 2rem;
     background-color: white;
     width: 25em;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
 }

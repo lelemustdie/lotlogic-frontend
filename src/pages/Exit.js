@@ -172,7 +172,7 @@ export default function Exit() {
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form onSubmit={handleExit}>
+                <form className= 'form' onSubmit={handleExit}>
 
                     <div>
                         <label className="m">Estacionamiento</label>
@@ -203,8 +203,8 @@ export default function Exit() {
                                 </option>)}
                         </select>
                     </div>
-                    <div>
-                        <button type="submit" className='btn btn-dark'>EGRESAR AUTO</button>
+                    <div style={{textAlign:"center"}}>
+                        <button type="submit" className='btn btn-success'>EGRESAR AUTO</button>
                     </div>
                 </form>
             </section>

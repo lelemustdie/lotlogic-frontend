@@ -200,7 +200,7 @@ export default function Entry() {
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form onSubmit={handleEntry}>
+                <form className= 'form' onSubmit={handleEntry}>
 
                     <div>
                         <label className="m">Estacionamiento</label>
@@ -261,8 +261,8 @@ export default function Entry() {
                         </select>
                     </div>
 
-                    <div>
-                        <button type="submit" className='btn btn-dark'>INGRESAR AUTO</button>
+                    <div style={{textAlign:"center"}}>
+                        <button type="submit"  className='btn btn-success '>INGRESAR AUTO</button>
                     </div>
                 </form>
             </section>
