@@ -9,6 +9,7 @@ export const AddEmployeeModal = ({closeModal, submitForm}) => {
     const [parkingInputIndex, setInputIndex] = useState('')
     const [parkings, setParkings] = useState([]);
 
+    //to retrieve all parkings and select in dropdown
     useEffect(() => {
         if (role === "ADMIN") {
             fetch(`http://localhost:8080/api/user/admin/panel-parkings`, {

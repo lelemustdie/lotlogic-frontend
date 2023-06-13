@@ -4,7 +4,7 @@ import {UserTable} from '../components/Table/UserTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {AddOwnerModal} from '../components/Modal/AddOwnerModal';
-import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
+import {ModifyUserModal} from "../components/Modal/ModifyUserModal";
 import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
@@ -188,7 +188,7 @@ export default function PanelOwners() {
 
                     {/*modifyOwner*/}
                     {modifyOwnerModalOpen &&
-                        <ModifyOwnerModal submitForm={handleModifyOwner} closeModal={closeModifyModal}/>}
+                        <ModifyUserModal employee = {owners[indexFromTable]} submitForm={handleModifyOwner} closeModal={closeModifyModal}/>}
                 </div>
             </section>
         </div>

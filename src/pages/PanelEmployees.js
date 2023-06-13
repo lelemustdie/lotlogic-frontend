@@ -4,7 +4,7 @@ import {UserTable} from '../components/Table/UserTable'
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {AddEmployeeModal} from '../components/Modal/AddEmployeeModal';
-import {ModifyOwnerModal} from "../components/Modal/ModifyOwnerModal";
+import {ModifyUserModal} from "../components/Modal/ModifyUserModal";
 import SidebarAdmin from "../components/SidebarAdmin";
 import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
@@ -15,9 +15,9 @@ export default function PanelEmployees() {
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
 
-    const [addOwnerModalOpen, setAddOwnerModalOpen] = useState(false);
-    const [modifyOwnerModalOpen, setModifyOwnerModalOpen] = useState(false);
     const [employees, setRows] = useState([]);
+    const [addEmployeeModalOpen, setAddEmployeeModalOpen] = useState(false);
+    const [modifyUserModalOpen, setModifyUserModalOpen] = useState(false);
     const [indexFromTable, setIndexFromTable] = useState(null);
 
     useEffect(() => {
@@ -126,7 +126,7 @@ export default function PanelEmployees() {
                 // Handle the response body as a string
                 newUserForm.id = data;
                 setRows(employees.concat(newUserForm));
-                setAddOwnerModalOpen(false);
+                setAddEmployeeModalOpen(false);
             })
             .catch(error => {
                 toast.error(error.message);
@@ -192,7 +192,7 @@ export default function PanelEmployees() {
                             updatedRows[indexFromTable] = modifiedRow;
                             return updatedRows;
                         });
-                        setModifyOwnerModalOpen(false);
+                        setModifyUserModalOpen(false);
                     }
                 })
                 .catch(error => {
@@ -202,18 +202,18 @@ export default function PanelEmployees() {
     };
 
     const closeAddModal = () => {
-        setAddOwnerModalOpen(false)
+        setAddEmployeeModalOpen(false)
     };
 
     const openEditModal = (isOpen, idx) => {
         console.log(idx)
         setIndexFromTable(idx);
-        setModifyOwnerModalOpen(isOpen);
+        setModifyUserModalOpen(isOpen);
     };
 
     const closeModifyModal = () => {
         setIndexFromTable(null);
-        setModifyOwnerModalOpen(false);
+        setModifyUserModalOpen(false);
     };
 
     return (
@@ -229,14 +229,14 @@ export default function PanelEmployees() {
                     <h2>EMPLEADOS</h2>
                     <UserTable rows={employees} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
                                openEditModal={openEditModal}></UserTable>
-                    <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Empleado</button>
+                    <button className='btn btn-dark' onClick={() => setAddEmployeeModalOpen(true)}>Añadir Empleado</button>
 
                     {/*addEmployee*/}
-                    {addOwnerModalOpen && <AddEmployeeModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
+                    {addEmployeeModalOpen && <AddEmployeeModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
 
-                    {/*modifyOwner*/}
-                    {modifyOwnerModalOpen &&
-                        <ModifyOwnerModal closeModal={closeModifyModal} submitForm={handleModifyEmployee}/>}
+                    {/*modifyEmployee*/}
+                    {modifyUserModalOpen &&
+                        <ModifyUserModal employee = {employees[indexFromTable]} closeModal={closeModifyModal} submitForm={handleModifyEmployee}/>}
                 </div>
             </section>
         </div>

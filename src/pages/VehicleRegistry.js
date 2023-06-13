@@ -23,7 +23,16 @@ export default function ReservationsList() {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => setReservations(data))
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {
@@ -41,7 +50,16 @@ export default function ReservationsList() {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => setReservations(data))
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {
@@ -58,7 +76,16 @@ export default function ReservationsList() {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => setReservations(data))
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {

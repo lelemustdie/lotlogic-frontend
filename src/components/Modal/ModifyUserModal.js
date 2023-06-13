@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
 import './Modal.css';
 
-export const ModifyOwnerModal = ({closeModal, submitForm}) => {
+export const ModifyUserModal = ({closeModal, submitForm, employee}) => {
 
     return (
         <div className='modal-container' onClick={(e) => {
@@ -14,27 +13,27 @@ export const ModifyOwnerModal = ({closeModal, submitForm}) => {
 
                     <div>
                         <label>Nombre</label>
-                        <input required type='text' className='form-control' id='firstName' name='input_ownername'/>
+                        <input required type='text' className='form-control' id='firstName' name='input_ownername' defaultValue={employee.firstName}/>
                     </div>
 
                     <div>
                         <label>Apellido</label>
-                        <input required type='text' className='form-control' id='lastName' name='input_ownerlastname'/>
+                        <input required type='text' className='form-control' id='lastName' name='input_ownerlastname' defaultValue={employee.lastName}/>
                     </div>
 
                     <div>
                         <label>DNI</label>
-                        <input required type='number' className='form-control' id='dni' name='input_ownerdni'/>
+                        <input required type='number' className='form-control' id='dni' name='input_ownerdni' defaultValue={employee.dni}/>
                     </div>
 
                     <div>
                         <label>Contraseña</label>
                         <input required min='3' type='password' className='form-control' id='password'
-                               name='input_ownerpassword'/>
+                               name='input_ownerpassword' defaultValue={employee.password}/>
                     </div>
 
                     <div>
-                        <button type='submit' className='btn btn-dark mt-4'>MODIFICAR DUEÑO</button>
+                        <button type='submit' className='btn btn-dark mt-4'>MODIFICAR USUARIO</button>
                     </div>
                 </form>
             </div>
