@@ -261,8 +261,8 @@ export default function Entry() {
                         </select>
                     </div>
 
-                    <div>
-                        <button type="submit" className='btn btn-success'>INGRESAR AUTO</button>
+                    <div style={{textAlign:"center"}}>
+                        <button type="submit"  className='btn btn-success '>INGRESAR AUTO</button>
                     </div>
                 </form>
             </section>

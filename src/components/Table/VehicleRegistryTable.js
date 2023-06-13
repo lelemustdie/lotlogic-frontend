@@ -29,6 +29,7 @@ export const VehicleRegistryTable = ({ rows, deleteRow }) => {
             <th>Modelo</th>
             <th>Fecha de ingreso</th>
             <th>Fecha de egreso</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

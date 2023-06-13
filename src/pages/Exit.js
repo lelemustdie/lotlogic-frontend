@@ -203,7 +203,7 @@ export default function Exit() {
                                 </option>)}
                         </select>
                     </div>
-                    <div>
+                    <div style={{textAlign:"center"}}>
                         <button type="submit" className='btn btn-success'>EGRESAR AUTO</button>
                     </div>
                 </form>
