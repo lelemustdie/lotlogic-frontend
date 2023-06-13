@@ -180,7 +180,7 @@ export default function PanelOwners() {
                     <h2>DUEÑOS</h2>
                     <UserTable rows={owners} deleteRow={handleDeleteOwner} modifyRow={handleModifyOwner}
                                openEditModal={openEditModal}></UserTable>
-                    <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Dueño
+                    <button className='btn btn-success' onClick={() => setAddOwnerModalOpen(true)}>AÑADIR DUEÑO
                     </button>
 
                     {/*addOwner*/}

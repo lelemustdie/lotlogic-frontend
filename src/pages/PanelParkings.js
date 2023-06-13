@@ -3,8 +3,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {ParkingTable} from '../components/Table/ParkingTable';
 import {ModifyParkingModal} from "../components/Modal/ModifyParkingModal";
-import {AddParkingModal} from '../components/Modal/AddParkingModal';
 import SidebarAdmin from "../components/SidebarAdmin";
+import AddParkingModal from '../components/Modal/AddParkingModal';
 
 const token = localStorage.getItem('token');
 const dni = localStorage.getItem('dni');
@@ -13,8 +13,8 @@ export default function PanelOwners() {
     const [addParkingModalOpen, setAddParkingModalOpen] = useState(false);
     const [modifyParkingModalOpen, setModifyParkingModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
-    const [fees, setFees] = useState([]);
-    const [floors, setFloors] = useState([]);
+    const [fees, setFees] = useState({});
+    const [floors, setFloors] = useState({});
 
     useEffect(() => {
         fetch('http://localhost:8080/api/user/admin/panel-parkings', {
@@ -39,12 +39,7 @@ export default function PanelOwners() {
 
     const handleAddParking = (event) => {
         event.preventDefault();
-        setFloors(floors.concat({
-                slotsNumber: 3
-            },
-            {
-                slotsNumber: 33
-            }))
+        setFloors(floors.concat())
 
 //        setFees(fees.concat({
 //                feePrice: 1000,
@@ -89,6 +84,7 @@ export default function PanelOwners() {
 //                toast.error(error.message);
 //            });
     };
+    console.log(floors)
 
     const handleDeleteParking = (targetIndex) => {
         const id = rows[targetIndex].id;
@@ -124,13 +120,12 @@ export default function PanelOwners() {
                     <h2>ESTACIONAMIENTOS</h2>
                     <ParkingTable rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
                                   openEditModal={setModifyParkingModalOpen}></ParkingTable>
-                    <button className='btn btn-dark' onClick={() => setAddParkingModalOpen(true)}>Añadir
-                        Estacionamiento
+                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true)}>AÑADIR ESTACIONAMIENTO
                     </button>
 
                     {/*addParking*/}
                     {addParkingModalOpen &&
-                        <AddParkingModal setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
+                        <AddParkingModal floor={floors} setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
                             setAddParkingModalOpen(false)
                         }} submitForm={handleAddParking}/>}
 

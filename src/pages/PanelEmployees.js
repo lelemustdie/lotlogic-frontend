@@ -229,7 +229,7 @@ export default function PanelEmployees() {
                     <h2>EMPLEADOS</h2>
                     <UserTable rows={employees} deleteRow={handleDeleteEmployee} modifyRow={handleModifyEmployee}
                                openEditModal={openEditModal}></UserTable>
-                    <button className='btn btn-dark' onClick={() => setAddOwnerModalOpen(true)}>Añadir Empleado</button>
+                    <button className='btn btn-success' onClick={() => setAddOwnerModalOpen(true)}>AÑADIR EMPLEADO</button>
 
                     {/*addEmployee*/}
                     {addOwnerModalOpen && <AddEmployeeModal closeModal={closeAddModal} submitForm={handleAddEmployee}/>}
