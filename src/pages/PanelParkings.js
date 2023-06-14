@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {ParkingTable} from '../components/Table/ParkingTable';
@@ -9,6 +10,7 @@ import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
 
 export default function PanelOwners() {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
@@ -29,7 +31,16 @@ export default function PanelOwners() {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.status === 403) {
+                        toast.error("Hubo un problema con la autenticación")
+                        return navigate('/');
+                    } else if (!response.ok) {
+                        throw new Error();
+                    } else {
+                        return response.json();
+                    }
+                })
                 .then(data => {
                     const updatedRows = data.map(item => {
                         return {
@@ -42,7 +53,15 @@ export default function PanelOwners() {
                     setRows(updatedRows);
                     console.log(updatedRows)
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (error.message === 'Failed to fetch') {
+                        toast.error("Hay un problema con la conexión al servidor");
+                        navigate('/');
+                        console.log(error)
+                    } else {
+                        console.log(error);
+                    }
+                });
         } else if (role === 'OWNER') {
             fetch(`http://localhost:8080/api/user/owner/panel-parkings/${dni}`, {
                 headers: {
@@ -129,18 +148,6 @@ export default function PanelOwners() {
             });
     };
 
-    const handleModifyParking = (event) => {
-        event.preventDefault();
-        const editParkingForm = {
-            dni: dni,
-            address: event.target.address.value,
-/*            floors: event.target.floors.value,
-            fees: event.target.fees.value*/
-        }
-        console.log(editParkingForm)
-
-    };
-
     const openModifyParkingModal = (isOpen, idx) => {
         console.log(idx)
         setIndexFromTable(idx);
@@ -162,9 +169,9 @@ export default function PanelOwners() {
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className='App'>
                     <h2>ESTACIONAMIENTOS</h2>
-                    <ParkingTable rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
+                    <ParkingTable rows={rows} deleteRow={handleDeleteParking}
                                   openEditModal={openModifyParkingModal}></ParkingTable>
-                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true, )}>AÑADIR
+                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true,)}>AÑADIR
                         ESTACIONAMIENTO
                     </button>
 
@@ -177,7 +184,8 @@ export default function PanelOwners() {
                                          }} submitForm={handleAddParking}/>}
 
                     {/*modifyParking*/}
-                    {modifyParkingModalOpen && <ModifyParkingModal parkingId={rows[indexFromTable].id} closeModal={closeModifyParkingModal} />}
+                    {modifyParkingModalOpen &&
+                        <ModifyParkingModal parkingId={rows[indexFromTable].id} closeModal={closeModifyParkingModal}/>}
                 </div>
             </section>
         </div>
