@@ -173,7 +173,7 @@ export default function PanelOwners() {
                                          }} submitForm={handleAddParking}/>}
 
                     {/*modifyParking*/}
-                    {modifyParkingModalOpen && <ModifyParkingModal parkingId={rows[indexFromTable].id} submitForm={handleModifyParking} closeModal={closeModifyParkingModal} />}
+                    {modifyParkingModalOpen && <ModifyParkingModal parkingId={rows[indexFromTable].id} closeModal={closeModifyParkingModal} />}
                 </div>
             </section>
         </div>

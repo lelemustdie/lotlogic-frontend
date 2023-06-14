@@ -166,14 +166,6 @@ export default function Exit() {
             });
     }
 
-    const openTicketModal = (isOpen) => {
-        setTicketModalOpen(isOpen);
-    };
-
-    const closeTicketModal = () => {
-        setTicketModalOpen(false);
-    };
-
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
@@ -182,9 +174,6 @@ export default function Exit() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
-
-            {/*Ticket Modal*/}
-            {ticketModalOpen && <Ticket openModal={openTicketModal} closeModal={closeTicketModal}/>}
 
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form className= 'form' >
@@ -219,7 +208,7 @@ export default function Exit() {
                         </select>
                     </div>
                     <div style={{textAlign:"center"}}>
-                        <button type="submit" className='btn btn-success' onClick={() => setTicketModalOpen(true)}>EGRESAR AUTO</button>
+                        <button type="submit" className='btn btn-success' onClick={handleExit}>EGRESAR AUTO</button>
                     </div>
                 </form>
             </section>

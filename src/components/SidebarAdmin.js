@@ -47,7 +47,7 @@ function SidebarAdmin() {
                             <li className="nav-item text-white fs-4 my-1">
                                 <a href="/VehicleRegistry" className="nav-link text-white fs-5"><i
                                     className="bi bi-car-front-fill"></i><span
-                                    className="ms-2">Registro entrada</span></a>
+                                    className="ms-2">Historial</span></a>
                             </li>
 
                             <li className="nav-item text-white fs-4 my-1">
