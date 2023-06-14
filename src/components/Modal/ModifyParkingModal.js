@@ -44,9 +44,7 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
             body: JSON.stringify(editParkingForm)
         })
             .then(response => {
-                if (response.status === 400) {
-                    throw new Error("La contraseña o el dni no cumple los requisitos");
-                } else {
+                if (response.ok) {
                     toast.success('Estacionamiento modificado correctamente');
                 }
             })
