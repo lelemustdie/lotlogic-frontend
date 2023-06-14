@@ -15,7 +15,8 @@
 .table {
     width: max-content;
     display: block;
-    overflow: hidden;
+    overflow-y: auto;
+    height: 500px;
     border-collapse: collapse;
     box-shadow: 0 10px 10px #ccc;
     border-radius: 10px;
@@ -77,3 +78,6 @@
 .delete-btn {
     color: red;
 }
+
+
+  
