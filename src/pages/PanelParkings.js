@@ -112,6 +112,9 @@ export default function PanelOwners() {
                     throw new Error('Error al crear el estacionamiento');
                 } else {
                     toast.success('Estacionamiento agregado correctamente');
+                    setAddParkingModalOpen(false);
+                    //eslint-disable-next-line no-restricted-globals
+                    location.reload()
                     return response.text();
                 }
             })

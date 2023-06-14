@@ -104,7 +104,7 @@ export const AddEmployeeModal = ({closeModal, submitForm}) => {
                     </div>
 
                     <div>
-                        <button type='submit' className='btn btn-dark mt-4'>AGREGAR EMPLEADO</button>
+                        <button type='submit' className='btn btn-success mt-4'>AGREGAR EMPLEADO</button>
                     </div>
                 </form>
             </div>

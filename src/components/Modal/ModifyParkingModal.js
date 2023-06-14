@@ -46,7 +46,10 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
             .then(response => {
                 if (response.ok) {
                     toast.success('Estacionamiento modificado correctamente');
+                    //eslint-disable-next-line no-restricted-globals
+                    location.reload();
                 }
+
             })
             .catch(error => console.log(error));
     };

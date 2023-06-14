@@ -127,6 +127,8 @@ export default function PanelEmployees() {
                 newUserForm.id = data;
                 setRows(employees.concat(newUserForm));
                 setAddEmployeeModalOpen(false);
+                //eslint-disable-next-line no-restricted-globals
+                location.reload();
             })
             .catch(error => {
                 toast.error(error.message);

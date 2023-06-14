@@ -180,7 +180,7 @@ export default function Entry() {
         })
             .then(response => {
                 if (response.status === 409) {
-                    throw new Error('El piso ' + floors[floorInputIndex].floorId + ' esta lleno')
+                    throw new Error('El piso seleccionado esta lleno')
                 } else if (!response.ok) {
                     throw new Error('Error al ingresar vehículo');
                 }

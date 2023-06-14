@@ -41,7 +41,7 @@
 }
 
 .table tbody tr:hover {
-    background-color: #eee;
+    background-color: #ffffff;
 }
 
 .expand {
@@ -78,6 +78,14 @@
 .delete-btn {
     color: red;
 }
+.aire{
+    
+}
+
+.scroll{
+    margin-top: 20px;
+}
+
 
 
   

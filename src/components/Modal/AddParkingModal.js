@@ -45,7 +45,7 @@ export default function AddParkingModal(props) {
 
                     <div>
                         <label>Dirección:</label>
-                        <input required type='text' className='form-control' id='address' name='input_address'
+                        <input placeholder='Av. Cabildo 892'required type='text' className='form-control' id='address' name='input_address'
                                onChange={event => handleAddressChange(event)}/>
                     </div>
 
@@ -53,12 +53,15 @@ export default function AddParkingModal(props) {
 
                         {Object.values(floor)?.map(floor => (
                             <div key={floor.index}>
-                                <div>Piso {floor.index}</div>
-                                <input className='form-control'
-                                       type="number"
-                                       value={floor.slotsNumber}
-                                       onChange={event => handleCocherasChange(event, floor.index)}
+                                <div>Piso {floor.index} Ingresar cant. cocheras (Máx. 250)</div>
+                                <input
+                                    className='form-control'
+                                    type="number"
+                                    value={floor.slotsNumber > 250 ? 250 : floor.slotsNumber}
+                                    onChange={event => handleCocherasChange(event, floor.index)}
+                                    max={250}
                                 />
+
                                 <button type="button" className='btn btn-danger mt-4'
                                         onClick={() => handleRemoveFloor(floor.index)}>
                                     Eliminar piso
@@ -71,7 +74,7 @@ export default function AddParkingModal(props) {
                     </div>
 
                     <div>
-                        <div>Tarifas:</div>
+                        <div>Tarifas (Precio/HS):</div>
                         <span>Auto</span>
                         <input required type='number' className='form-control' id='fees'
                                name='AUTO' onChange={handleFeeChange}/>
