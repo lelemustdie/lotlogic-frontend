@@ -9,26 +9,23 @@ export const Ticket = ({closeModal, submitForm}) => {
     const [plate, setPlate] = useState('');
     const [model, setModel] = useState('');
     const [entryDate, setEntryDate] = useState('');
-    const [price, setPrice] = useState(' ');
+    const [price, setPrice] = useState(0);
 
     useEffect(() => {
-        console.log(reservationId)
         fetch(`http://localhost:8080/api/user/employee/reservation-ticket/${reservationId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
             method: 'GET',
         }).then(response => {
-            return response.text();
+            return response.json();
         })
             .then(data => {
                 console.log(data);
                 setPlate(data.vehiclePlate);
                 setModel(data.vehicleModel);
                 setEntryDate(data.entryDate);
-                setPrice(data.price);
-                console.log(data.vehiclePlate)
-                console.log(plate)
+                setPrice(data.amount);
             })
             .catch(error => {
                 toast.error(error.message);
@@ -42,7 +39,7 @@ export const Ticket = ({closeModal, submitForm}) => {
         }}
         >
             <div className='modal1'>
-                <form className='w-100' onSubmit={submitForm}>
+                <form className='w-100'>
                     <div>
                         <h1>Información de la reserva</h1>
                     </div>

@@ -8,6 +8,7 @@ import AddParkingModal from '../components/Modal/AddParkingModal';
 
 export default function PanelOwners() {
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
     const dni = localStorage.getItem('dni');
 
     const [addParkingModalOpen, setAddParkingModalOpen] = useState(false);
@@ -17,25 +18,52 @@ export default function PanelOwners() {
     const [fees, setFees] = useState({});
     const [floors, setFloors] = useState({});
 
+    /*modify*/
+    const [indexFromTable, setIndexFromTable] = useState('')
     useEffect(() => {
-        fetch('http://localhost:8080/api/user/admin/panel-parkings', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                const updatedRows = data.map(item => {
-                    return {
-                        'id': item.id,
-                        'address': item.address,
-                        'floors': item.floors.length,
-                        'fees': item.fees.length
-                    }
-                });
-                setRows(updatedRows);
+        if (role === 'ADMIN') {
+            fetch('http://localhost:8080/api/user/admin/panel-parkings', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
-            .catch(error => console.log(error));
+                .then(response => response.json())
+                .then(data => {
+                    const updatedRows = data.map(item => {
+                        return {
+                            'id': item.id,
+                            'address': item.address,
+                            'floors': item.floors.length,
+                            'fees': item.fees.length
+                        }
+                    });
+                    setRows(updatedRows);
+                    console.log(updatedRows)
+                })
+                .catch(error => console.log(error));
+        } else if (role === 'OWNER') {
+            fetch(`http://localhost:8080/api/user/owner/panel-parkings/${dni}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const updatedRows = data.map(item => {
+                        return {
+                            'id': item.id,
+                            'address': item.address,
+                            'floors': item.floors.length,
+                            'fees': item.fees.length
+                        }
+                    });
+                    setRows(updatedRows);
+                    console.log(updatedRows)
+                })
+                .catch(error => console.log(error));
+        } else {
+            throw new Error("role not found")
+        }
     }, []);
 
     const handleAddParking = (event) => {
@@ -76,10 +104,8 @@ export default function PanelOwners() {
                 toast.error(error.message);
             });
     };
-
     console.log(floors)
     console.log(fees)
-
 
     const handleDeleteParking = (targetIndex) => {
         const id = rows[targetIndex].id;
@@ -102,6 +128,25 @@ export default function PanelOwners() {
     };
 
     const handleModifyParking = (event) => {
+        event.preventDefault();
+        const editParkingForm = {
+            dni: dni,
+            address: event.target.address.value,
+/*            floors: event.target.floors.value,
+            fees: event.target.fees.value*/
+        }
+        console.log(editParkingForm)
+
+    };
+
+    const openModifyParkingModal = (isOpen, idx) => {
+        console.log(idx)
+        setIndexFromTable(idx);
+        setModifyParkingModalOpen(isOpen);
+    };
+
+    const closeModifyParkingModal = () => {
+        setModifyParkingModalOpen(false);
     };
 
     return (
@@ -114,8 +159,8 @@ export default function PanelOwners() {
                 <div className='App'>
                     <h2>ESTACIONAMIENTOS</h2>
                     <ParkingTable rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
-                                  openEditModal={setModifyParkingModalOpen}></ParkingTable>
-                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true)}>AÑADIR
+                                  openEditModal={openModifyParkingModal}></ParkingTable>
+                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true, )}>AÑADIR
                         ESTACIONAMIENTO
                     </button>
 
@@ -128,9 +173,7 @@ export default function PanelOwners() {
                                          }} submitForm={handleAddParking}/>}
 
                     {/*modifyParking*/}
-                    {modifyParkingModalOpen && <ModifyParkingModal closeModal={() => {
-                        setModifyParkingModalOpen(false)
-                    }} submitForm={handleModifyParking}/>}
+                    {modifyParkingModalOpen && <ModifyParkingModal parkingId={rows[indexFromTable].id} submitForm={handleModifyParking} closeModal={closeModifyParkingModal} />}
                 </div>
             </section>
         </div>

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from '../components/SidebarAdmin';
 import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
+import {Ticket} from "../components/Modal/Ticket";
 
 export default function Exit() {
     const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function Exit() {
     const [parkingInputIndex, setParkingInputIndex] = useState('');
     const [reservations, setReservations] = useState([]);
     const [reservationsInputIndex, setReservationsInputIndex] = useState('');
+
+    const [ticketModalOpen, setTicketModalOpen] = useState(false);
 
     useEffect(() => {
         if (role === "ADMIN") {
@@ -163,6 +166,14 @@ export default function Exit() {
             });
     }
 
+    const openTicketModal = (isOpen) => {
+        setTicketModalOpen(isOpen);
+    };
+
+    const closeTicketModal = () => {
+        setTicketModalOpen(false);
+    };
+
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
@@ -171,8 +182,12 @@ export default function Exit() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
+
+            {/*Ticket Modal*/}
+            {ticketModalOpen && <Ticket openModal={openTicketModal} closeModal={closeTicketModal}/>}
+
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form className= 'form' onSubmit={handleExit}>
+                <form className= 'form' >
 
                     <div>
                         <label className="m">Estacionamiento</label>
@@ -204,7 +219,7 @@ export default function Exit() {
                         </select>
                     </div>
                     <div style={{textAlign:"center"}}>
-                        <button type="submit" className='btn btn-success'>EGRESAR AUTO</button>
+                        <button type="submit" className='btn btn-success' onClick={() => setTicketModalOpen(true)}>EGRESAR AUTO</button>
                     </div>
                 </form>
             </section>

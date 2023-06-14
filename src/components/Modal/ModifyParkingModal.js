@@ -1,7 +1,84 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Modal.css';
+import {toast} from "react-toastify";
 
-export const ModifyParkingModal = ({closeModal, submitForm}) => {
+export const ModifyParkingModal = ({closeModal, parkingId}) => {
+    const token = localStorage.getItem('token');
+    const dni = localStorage.getItem('dni');
+
+    const [address, setAddress] = useState('')
+    const [fees, setFees] = useState({});
+    const [floors, setFloors] = useState({});
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/user/owner/get-parking/${parkingId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setAddress(data.address)
+                setFees(data.fees)
+                setFloors(data.floors)
+            })
+            .catch(error => console.log(error));
+    }, []);
+
+    const handleModifyParking = (event) => {
+        event.preventDefault();
+        const editParkingForm = {
+            dni: dni,
+            address: address,
+            floors: floors,
+            fees: fees
+        }
+        console.log(editParkingForm)
+        console.log(parkingId)
+        fetch(`http://localhost:8080/api/user/owner/update-parking/${parkingId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(editParkingForm)
+        })
+            .then(response => {
+                if (response.status === 400) {
+                    throw new Error("La contraseña o el dni no cumple los requisitos");
+                } else {
+                    toast.success('Estacionamiento modificado correctamente');
+                }
+            })
+            .catch(error => console.log(error));
+    };
+
+    function handleAddFloor() {
+        if (Object.values(floors).length < 20) { // Verificar el límite de pisos (20)
+            const newFloor = {index: Object.values(floors).length + 1, slotsNumber: 0};
+            setFloors({...floors, [Object.values(floors).length + 1]: newFloor});
+        }
+    }
+
+    function handleCocherasChange(event, floorIndex) {
+        const updatedFloors = Object.values(floors).map(floor => {
+            if (floor.index === floorIndex) {
+                return {...floor, slotsNumber: parseInt(event.target.value)};
+            }
+            return floor;
+        });
+        setFloors(updatedFloors);
+    }
+
+    function handleFeeChange(event, feeIndex) {
+        const updatedFees = Object.values(fees).map(fee => {
+            if (fee.index === feeIndex) {
+                return {...fee, feePrice: parseInt(event.target.value)};
+            }
+            return fee;
+        });
+        setFees(updatedFees);
+    }
 
     return (
         <div className='modal-container' onClick={(e) => {
@@ -10,20 +87,44 @@ export const ModifyParkingModal = ({closeModal, submitForm}) => {
         }}
         >
             <div className='modal1'>
-                <form className='w-100' onSubmit={submitForm}>
+                <form className='w-100'>
 
                     <div>
-                        <label>Direccion</label>
-                        <input required type='text' className='form-control' id='firstName' name='input_ownername'/>
+                        <label>Dirección</label>
+                        <input required type='text' className='form-control' id='firstName' name='input_ownername'
+                               defaultValue={address} onChange={event => setAddress(event.target.value)}/>
                     </div>
 
                     <div>
-                        <label>Pisos</label>
-                        <input required type='text' className='form-control' id='lastName' name='input_ownerlastname'/>
+                        {Object.values(floors)?.map(floor => (
+                            <div key={floor.index}>
+                                <div>Piso {floor.index}</div>
+                                <input className='form-control'
+                                       type="number"
+                                       defaultValue={floor.slotsNumber}
+                                       onChange={event => handleCocherasChange(event, floor.index)}
+                                />
+                            </div>
+                        ))}
+                        <button type="button" className='btn btn-dark mt-4' onClick={handleAddFloor}>Añadir un piso
+                        </button>
                     </div>
 
+                    {Object.values(fees)?.map(fee => (
+                        <div key={fee.index}>
+                            <div>Tarifa {fee.feeType}</div>
+                            <input className='form-control'
+                                   type="number"
+                                   defaultValue={fee.feePrice}
+                                   onChange={event => handleFeeChange(event, fee.index)}
+                            />
+                        </div>
+                    ))}
+
                     <div>
-                        <button type='submit' className='btn btn-dark mt-4'>MODIFICAR ESTACIONAMIENTO</button>
+                        <button type='submit' className='btn btn-dark mt-4' onClick={handleModifyParking}>MODIFICAR
+                            ESTACIONAMIENTO
+                        </button>
                     </div>
                 </form>
             </div>

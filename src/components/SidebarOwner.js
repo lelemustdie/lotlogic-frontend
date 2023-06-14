@@ -61,12 +61,6 @@ function SidebarOwner() {
                                     className="ms-2">Estacionamientos</span></a>
 
                             </li>
-                            <li className="nav-item text-white fs-4 my-1">
-                                <a href="/ModifyParking" className="nav-link text-white fs-5"><i
-                                    className="bi bi-pencil-square"></i><span
-                                    className="ms-2">Modificar Estacionamiento</span></a>
-                            </li>
-
                         </ul>
                     </div>
                     <div className="dropdown open">
