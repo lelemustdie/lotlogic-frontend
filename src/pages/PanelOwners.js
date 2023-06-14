@@ -127,6 +127,8 @@ export default function PanelOwners() {
                 .then(response => {
                     if (response.status === 400) {
                         throw new Error("La contraseña o el dni no cumple los requisitos");
+                    } else if (response.status === 409) {
+                        throw new Error("El dueño ya existe");
                     } else {
                         toast.success('Dueño modificado correctamente');
                         // Create a new array with the modified user data
