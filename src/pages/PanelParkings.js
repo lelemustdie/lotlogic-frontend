@@ -6,13 +6,14 @@ import {ModifyParkingModal} from "../components/Modal/ModifyParkingModal";
 import SidebarAdmin from "../components/SidebarAdmin";
 import AddParkingModal from '../components/Modal/AddParkingModal';
 
-const token = localStorage.getItem('token');
-const dni = localStorage.getItem('dni');
-
 export default function PanelOwners() {
+    const token = localStorage.getItem('token');
+    const dni = localStorage.getItem('dni');
+
     const [addParkingModalOpen, setAddParkingModalOpen] = useState(false);
     const [modifyParkingModalOpen, setModifyParkingModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
+    const [address, setAddress] = useState('');
     const [fees, setFees] = useState({});
     const [floors, setFloors] = useState({});
 
@@ -39,52 +40,46 @@ export default function PanelOwners() {
 
     const handleAddParking = (event) => {
         event.preventDefault();
-        setFloors(floors.concat())
-
-//        setFees(fees.concat({
-//                feePrice: 1000,
-//                carType: "AUTO"
-//            },
-//            {
-//                feePrice: 700,
-//                carType: "MOTO"
-//            }));
-
+        //to avoid "fees":{"AUTO":{"feePrice":"1000","feeType":"AUTO"},"MOTO":{"feePrice":"700","feeType":"MOTO"},"CAMIONETA":{"feePrice":"1200","feeType":"CAMIONETA"}}}
+        const feesArray = Object.values(fees).map(({feePrice, feeType}) => ({feePrice, feeType}));
         const newParkingForm = {
-            'dni': dni,
-            'address': event.target.address.value,
-            'floors': floors,
-            'fees': fees
+            dni: dni,
+            address: address, //get from add modal
+            floors: floors,
+            fees: feesArray
         }
-        console.log(fees)
 
-//        fetch('http://localhost:8080/api/user/owner/add-parking', {
-//            headers: {
-//                'Authorization': `Bearer ${token}`,
-//                'Content-Type': 'application/json'
-//            },
-//            method: 'POST',
-//            body: JSON.stringify(newParkingForm),
-//        })
-//            .then(response => {
-//                if (!response.ok) {
-//                    throw new Error('Error al crear el estacionamiento');
-//                } else {
-//                    toast.success('Estacionamiento agregado correctamente');
-//                    return response.text();
-//                }
-//            })
-//            .then(data => {
-//                // Handle the response body as a string
-//                newParkingForm.id = data;
-//                setRows(rows.concat(newParkingForm));
-//                setAddParkingModalOpen(false);
-//            })
-//            .catch(error => {
-//                toast.error(error.message);
-//            });
+        console.log(JSON.stringify(newParkingForm))
+        fetch('http://localhost:8080/api/user/owner/add-parking', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(newParkingForm),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al crear el estacionamiento');
+                } else {
+                    toast.success('Estacionamiento agregado correctamente');
+                    return response.text();
+                }
+            })
+            .then(data => {
+                /*                //Handle the response body as a string
+                                newParkingForm.id = data;
+                                setRows(rows.concat(newParkingForm));
+                                setAddParkingModalOpen(false);*/
+            })
+            .catch(error => {
+                toast.error(error.message);
+            });
     };
+
     console.log(floors)
+    console.log(fees)
+
 
     const handleDeleteParking = (targetIndex) => {
         const id = rows[targetIndex].id;
@@ -120,14 +115,17 @@ export default function PanelOwners() {
                     <h2>ESTACIONAMIENTOS</h2>
                     <ParkingTable rows={rows} deleteRow={handleDeleteParking} modifyRow={handleModifyParking}
                                   openEditModal={setModifyParkingModalOpen}></ParkingTable>
-                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true)}>AÑADIR ESTACIONAMIENTO
+                    <button className='btn btn-success' onClick={() => setAddParkingModalOpen(true)}>AÑADIR
+                        ESTACIONAMIENTO
                     </button>
 
                     {/*addParking*/}
                     {addParkingModalOpen &&
-                        <AddParkingModal floor={floors} setFloors={setFloors} setFees={setFees} fees={fees} closeModal={() => {
-                            setAddParkingModalOpen(false)
-                        }} submitForm={handleAddParking}/>}
+                        <AddParkingModal floor={floors} setFloors={setFloors} setFees={setFees} fees={fees}
+                                         setAddress={setAddress}
+                                         closeModal={() => {
+                                             setAddParkingModalOpen(false)
+                                         }} submitForm={handleAddParking}/>}
 
                     {/*modifyParking*/}
                     {modifyParkingModalOpen && <ModifyParkingModal closeModal={() => {
