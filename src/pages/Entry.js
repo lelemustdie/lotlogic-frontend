@@ -77,6 +77,7 @@ export default function Entry() {
                     console.log(data);
                     setParkings(data);
                     if (data.length > 0) {
+                        setParkingInputIndex(0);
                         setParkingAddress(data[0].address); 
                       }
                 })
@@ -218,15 +219,15 @@ export default function Entry() {
                         <option value="">Seleccione un estacionamiento</option>
                         {parkings.map((parking, index) => (
                         <option key={index} value={parking}>
-                            {parking['id']} - {parking['address']}
+                            {parking['id']} - {parking['address']} 
                     </option>
                     ))}
                 </select>
             ) : (
-                <div>
-                    <input disabled type="text" className="form-control" value={parkingAddress} />
-                </div>
-            )}       
+            <div>
+                <input disabled type="text" className="form-control" value={parkingAddress} />
+            </div>
+                )}       
                     </div>
                     <div>
                         <label>Patente</label>

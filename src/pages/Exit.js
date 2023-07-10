@@ -75,6 +75,7 @@ export default function Exit() {
                     setParkings(data);
                     if (data.length > 0) {
                         setParkingAddress(data[0].address);
+                        setParkingInputIndex(0);
                       }
                 })
                 .catch(error => {
