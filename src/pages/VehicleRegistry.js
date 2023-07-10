@@ -99,7 +99,6 @@ export default function ReservationsList() {
         }
     }, []);
     const exportToCSV = () => {
-
         const csvRows = reservations.map((reservation) => [
             reservation.vehiclePlate,
             reservation.vehicleModel,
@@ -184,7 +183,7 @@ export default function ReservationsList() {
                 <div className="text-center">
                     <h2>AUTOS INGRESADOS/EGRESADOS</h2>
                     <button onClick={exportToCSV}>Export to CSV</button>
-                    <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation}/>
+                    <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation} adminColumn={role === 'ADMIN'}/>
                 </div>
             </section>
         </div>
