@@ -18,6 +18,7 @@ export default function Entry() {
     //from fetch when parkingInputIndex changes
     const [fees, setFees] = useState([]);
     const [floors, setFloors] = useState([]);
+    const [parkingAddress, setParkingAddress] = useState('');
 
     //from user input
     const [parkingInputIndex, setParkingInputIndex] = useState('');
@@ -75,6 +76,9 @@ export default function Entry() {
                 .then(data => {
                     console.log(data);
                     setParkings(data);
+                    if (data.length > 0) {
+                        setParkingAddress(data[0].address); 
+                      }
                 })
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {
@@ -157,6 +161,7 @@ export default function Entry() {
                 setFloors(data);
             })
             .catch(error => console.log(error));
+
     };
 
     function handleEntry(event) {
@@ -202,22 +207,27 @@ export default function Entry() {
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <form className= 'form' onSubmit={handleEntry}>
-
                     <div>
                         <label className="m">Estacionamiento</label>
-                        <select className="form-select" id='parking' name='parking' required onChange={event => {
-                            console.log(event.target.selectedIndex)
-                            setParkingInputIndex(event.target.selectedIndex - 1)
-                            console.log(parkingInputIndex);
-                        }}>
-                            <option value="">Seleccione un estacionamiento</option>
-                            {parkings.map((parking, index) =>
-                                <option key={index} value={parking}>
-                                    {parking['id']} - {parking['address']}
-                                </option>)}
-                        </select>
+                        {role === 'ADMIN' || role === 'OWNER' ? (
+                    <select className="form-select" id='parking' name='parking' required onChange={event => {
+                        console.log(event.target.selectedIndex);
+                        setParkingInputIndex(event.target.selectedIndex - 1);
+                        console.log(parkingInputIndex);
+                    }}>
+                        <option value="">Seleccione un estacionamiento</option>
+                        {parkings.map((parking, index) => (
+                        <option key={index} value={parking}>
+                            {parking['id']} - {parking['address']}
+                    </option>
+                    ))}
+                </select>
+            ) : (
+                <div>
+                    <input disabled type="text" className="form-control" value={parkingAddress} />
+                </div>
+            )}       
                     </div>
-
                     <div>
                         <label>Patente</label>
                         <input required type="text" className="form-control" id="vehicle_plate" name="vehicle_plate"
