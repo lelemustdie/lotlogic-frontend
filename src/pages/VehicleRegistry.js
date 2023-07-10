@@ -98,6 +98,29 @@ export default function ReservationsList() {
                 });
         }
     }, []);
+    const exportToCSV = () => {
+
+        const csvRows = reservations.map((reservation) => [
+            reservation.vehiclePlate,
+            reservation.vehicleModel,
+            reservation.entryDate,
+            reservation.exitDate ?? "N/A",
+        ]);
+      
+        const csvHeader = "Patente; Modelo; Ingreso; Egreso\n";
+        const csvContent = csvRows.reduce((content, row) => {
+          const csvRow = row.map((field) => `"${field}"`).join(";");
+          return content + csvRow + "\n";
+        }, csvHeader );
+      
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "Historial.csv");
+        link.click();
+      };
+      
 
     const handleDeleteReservation = (targetIndex) => {
         const reservationId = reservations[targetIndex].id;
@@ -160,6 +183,7 @@ export default function ReservationsList() {
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
                     <h2>AUTOS INGRESADOS/EGRESADOS</h2>
+                    <button onClick={exportToCSV}>Export to CSV</button>
                     <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation}/>
                 </div>
             </section>
