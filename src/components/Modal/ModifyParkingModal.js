@@ -62,8 +62,9 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
     }
 
     function handleCocherasChange(event, floorIndex) {
-        const updatedFloors = Object.values(floors).map(floor => {
-            if (floor.index === floorIndex) {
+        console.log(floorIndex)
+        const updatedFloors = Object.values(floors).map((floor, index) => {
+            if (index === floorIndex) {
                 return {...floor, slotsNumber: parseInt(event.target.value)};
             }
             return floor;
@@ -98,13 +99,13 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
                     </div>
 
                     <div>
-                        {Object.values(floors)?.map(floor => (
-                            <div key={floor.index}>
+                        {Object.values(floors)?.map((floor, index) => (
+                            <div key={index}>
                                 <div>Piso {floor.index}</div>
                                 <input className='form-control'
                                        type="number"
                                        defaultValue={floor.slotsNumber}
-                                       onChange={event => handleCocherasChange(event, floor.index)}
+                                       onChange={event => handleCocherasChange(event, index)}
                                 />
                             </div>
                         ))}
