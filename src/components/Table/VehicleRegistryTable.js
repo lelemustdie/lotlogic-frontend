@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Table.css";
 
-export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false }) => {
+export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false}) => {
   const [filterValue, setFilterValue] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -72,7 +72,7 @@ export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false }) =
                     <td>{row.vehicleModel}</td>
                     <td>{row.entryDate}</td>
                     <td>{row.exitDate}</td>
-                    {adminColumn && <td>{row.parking}</td>}
+                    {adminColumn && <td>{row.id}</td>}
                     <td></td>
                   </tr>
                 );
