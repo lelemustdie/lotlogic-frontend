@@ -1,10 +1,46 @@
 import React, { useState } from "react";
+import { DateRange, DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "./Table.css";
 
-export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false}) => {
+export const VehicleRegistryTable = ({rows,deleteRow,adminColumn = false,}) => {
   const [filterValue, setFilterValue] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleOnNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handleOnPreviousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleDateRangeChange = (date) => {
+    setStartDate(date.selection.startDate);
+    setEndDate(date.selection.endDate);
+  };
+
+  const filteredRows = rows
+    ?.filter((row) =>
+      Object.values(row)
+        .join(" ")
+        .toLowerCase()
+        .includes(filterValue.toLowerCase())
+    )
+    .filter((row) => {
+      if (startDate && endDate) {
+        const entryDate = new Date(row.entryDate);
+        return entryDate >= startDate && entryDate <= endDate;
+      }
+      return true;
+    });
+
+  const startIndex = (currentPage - 1) * 5;
+  const endIndex = startIndex + 5;
+  const currentRows = filteredRows.slice(startIndex, endIndex);
 
   return (
     <div className="table-wrapper">
@@ -22,24 +58,9 @@ export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false}) =>
               />
               <label className="form-label" htmlFor="datatable-search-input"></label>
             </div>
-            <div>
-              <label htmlFor="Desde">Desde:</label>
-              <input
-                type="date"
-                id="start-date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-              <label htmlFor="Hasta">Hasta:</label>
-              <input
-                type="date"
-                id="end-date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
             <div id="datatable"></div>
           </section>
+          <DateRange ranges={[{startDate: startDate,endDate: endDate,key: "selection",},]}onChange={handleDateRangeChange}/>
           <thead>
             <tr>
               <th>Patente</th>
@@ -51,34 +72,35 @@ export const VehicleRegistryTable = ({ rows, deleteRow, adminColumn = false}) =>
             </tr>
           </thead>
           <tbody>
-            {rows
-              ?.filter((row) =>
-                Object.values(row)
-                  .join(" ")
-                  .toLowerCase()
-                  .includes(filterValue.toLowerCase())
-              )
-              .filter((row) => {
-                if (startDate && endDate) {
-                  const entryDate = new Date(row.entryDate);
-                  return entryDate >= new Date(startDate) && entryDate <= new Date(endDate);
-                }
-                return true;
-              })
-              .map((row, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td>{row.vehiclePlate}</td>
-                    <td>{row.vehicleModel}</td>
-                    <td>{row.entryDate}</td>
-                    <td>{row.exitDate}</td>
-                    {adminColumn && <td>{row.parkingReservationAddress}</td>}
-                    <td></td>
-                  </tr>
-                );
-              })}
+            
+            {currentRows.map((row, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{row.vehiclePlate}</td>
+                  <td>{row.vehicleModel}</td>
+                  <td>{row.entryDate}</td>
+                  <td>{row.exitDate}</td>
+                  {adminColumn && <td>{row.id}</td>}
+                  <td></td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+        <div>
+          <button
+            onClick={handleOnPreviousPage}
+            disabled={currentPage === 1}
+          >
+            Página anterior
+          </button>
+          <button
+            onClick={handleOnNextPage}
+            disabled={endIndex >= filteredRows.length}
+          >
+            Próxima página
+          </button>
+        </div>
       </div>
     </div>
   );
