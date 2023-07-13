@@ -26,7 +26,6 @@ export default function Entry() {
     const [vehicleModel, setVehicleModel] = useState('');
     const [feeInputIndex, setFeeInputIndex] = useState(''); //input of array from selected in dropdown
     const [floorInputIndex, setFloorInputIndex] = useState(''); //input of array from selected in dropdown
-    const [availableSlots, setAvailableSlots] = useState([]);
 
 
     useEffect(() => {
@@ -162,8 +161,6 @@ export default function Entry() {
             .then(data => {
                 console.log(data);
                 setFloors(data);
-                const updatedSlots = data.map(floor => floor.slotsNumber);
-                setAvailableSlots(updatedSlots);
             })
             .catch(error => console.log(error));
 
@@ -180,9 +177,6 @@ export default function Entry() {
             fee: fees[feeInputIndex].feeId //select the vehicleFee id from fees array
         }
         console.log(entryForm);
-        const updatedAvailableSlots = [...availableSlots];
-        updatedAvailableSlots[floorInputIndex] -= 1;
-        setAvailableSlots(updatedAvailableSlots);
         fetch('http://localhost:8080/api/user/employee/check-in-car', {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -275,7 +269,7 @@ export default function Entry() {
                         }}>
                             <option value="">Seleccione un piso</option>
                             {floors.map((floor, index) => <option>
-                                {index + 1} - {availableSlots[index]} cocheras
+                                {index + 1} - {floor['slotsNumber']} cocheras
                             </option>)}
                         </select>
                     </div>
