@@ -72,8 +72,9 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
     }
 
     function handleFeeChange(event, feeIndex) {
-        const updatedFees = Object.values(fees).map(fee => {
-            if (fee.index === feeIndex) {
+        console.log(feeIndex)
+        const updatedFees = Object.values(fees).map((fee, index) => {
+            if (index === feeIndex) {
                 return {...fee, feePrice: parseInt(event.target.value)};
             }
             return fee;
@@ -111,13 +112,13 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
                         </button>
                     </div>
 
-                    {Object.values(fees)?.map(fee => (
-                        <div key={fee.index}>
+                    {Object.values(fees)?.map((fee, index) => (
+                        <div key={index}>
                             <div>Tarifa {fee.feeType}</div>
                             <input className='form-control'
                                    type="number"
                                    defaultValue={fee.feePrice}
-                                   onChange={event => handleFeeChange(event, fee.index)}
+                                   onChange={event => handleFeeChange(event, index)}
                             />
                         </div>
                     ))}
