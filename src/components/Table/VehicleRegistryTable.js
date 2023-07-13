@@ -80,7 +80,7 @@ export const VehicleRegistryTable = ({rows,deleteRow,adminColumn = false,}) => {
                   <td>{row.vehicleModel}</td>
                   <td>{row.entryDate}</td>
                   <td>{row.exitDate}</td>
-                  {adminColumn && <td>{row.id}</td>}
+                  {adminColumn && <td>{row.parkingReservationAddress}</td>}
                   <td></td>
                 </tr>
               );
