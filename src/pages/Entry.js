@@ -79,8 +79,8 @@ export default function Entry() {
                     setParkings(data);
                     if (data.length > 0) {
                         setParkingInputIndex(0);
-                        setParkingAddress(data[0].address); 
-                      }
+                        setParkingAddress(data[0].address);
+                    }
                 })
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {
@@ -192,6 +192,7 @@ export default function Entry() {
                     throw new Error('Error al ingresar vehículo');
                 }
                 toast.success('Vehículo ingresado correctamente');
+                navigate('/VehicleRegistry')
             })
             .catch(error => {
                 console.log(error.message);
@@ -208,27 +209,27 @@ export default function Entry() {
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form className= 'form' onSubmit={handleEntry}>
+                <form className='form' onSubmit={handleEntry}>
                     <div>
                         <label className="m">Estacionamiento</label>
                         {role === 'ADMIN' || role === 'OWNER' ? (
-                    <select className="form-select" id='parking' name='parking' required onChange={event => {
-                        console.log(event.target.selectedIndex);
-                        setParkingInputIndex(event.target.selectedIndex - 1);
-                        console.log(parkingInputIndex);
-                    }}>
-                        <option value="">Seleccione un estacionamiento</option>
-                        {parkings.map((parking, index) => (
-                        <option key={index} value={parking}>
-                            {parking['id']} - {parking['address']} 
-                    </option>
-                    ))}
-                </select>
-            ) : (
-            <div>
-                <input disabled type="text" className="form-control" value={parkingAddress} />
-            </div>
-                )}       
+                            <select className="form-select" id='parking' name='parking' required onChange={event => {
+                                console.log(event.target.selectedIndex);
+                                setParkingInputIndex(event.target.selectedIndex - 1);
+                                console.log(parkingInputIndex);
+                            }}>
+                                <option value="">Seleccione un estacionamiento</option>
+                                {parkings.map((parking, index) => (
+                                    <option key={index} value={parking}>
+                                        {parking['id']} - {parking['address']}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <div>
+                                <input disabled type="text" className="form-control" value={parkingAddress}/>
+                            </div>
+                        )}
                     </div>
                     <div>
                         <label>Patente</label>
@@ -268,14 +269,15 @@ export default function Entry() {
                             console.log(floorInputIndex)
                         }}>
                             <option value="">Seleccione un piso</option>
-                            {floors.map((floor, index) => <option>
-                                {index + 1} - {floor['slotsNumber']} cocheras
-                            </option>)}
+                            {floors.map((floor, index) =>
+                                <option>
+                                    {index + 1} - {floor['slotsNumber']} cocheras disponibles
+                                </option>)}
                         </select>
                     </div>
 
-                    <div style={{textAlign:"center"}}>
-                        <button type="submit"  className='btn btn-success '>INGRESAR AUTO</button>
+                    <div style={{textAlign: "center"}}>
+                        <button type="submit" className='btn btn-success '>INGRESAR AUTO</button>
                     </div>
                 </form>
             </section>
