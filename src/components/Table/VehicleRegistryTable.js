@@ -9,6 +9,7 @@ export const VehicleRegistryTable = ({rows,deleteRow,adminColumn = false,}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
+  const [showDateRange, setShowDateRange] = useState(false);
 
   const handleOnNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -60,7 +61,12 @@ export const VehicleRegistryTable = ({rows,deleteRow,adminColumn = false,}) => {
             </div>
             <div id="datatable"></div>
           </section>
-          <DateRange ranges={[{startDate: startDate,endDate: endDate,key: "selection",},]}onChange={handleDateRangeChange}/>
+          <div>
+            <button type ="submit" className='btn btn-success'  onClick={() => setShowDateRange(!showDateRange)}>
+              Seleccionar fecha
+            </button>
+          {showDateRange && (<DateRange ranges={[{startDate: startDate,endDate: endDate,key: "selection",},]}onChange={handleDateRangeChange}/>)}
+          </div>
           <thead>
             <tr>
               <th>Patente</th>
@@ -89,12 +95,16 @@ export const VehicleRegistryTable = ({rows,deleteRow,adminColumn = false,}) => {
         </table>
         <div>
           <button
+            button type ="submit"
+            className='btn btn-success'
             onClick={handleOnPreviousPage}
             disabled={currentPage === 1}
           >
             Página anterior
           </button>
           <button
+            button type ="submit"
+            className='btn btn-success'
             onClick={handleOnNextPage}
             disabled={endIndex >= filteredRows.length}
           >
