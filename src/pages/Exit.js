@@ -76,7 +76,7 @@ export default function Exit() {
                     if (data.length > 0) {
                         setParkingAddress(data[0].address);
                         setParkingInputIndex(0);
-                      }
+                    }
                 })
                 .catch(error => {
                     if (error.message === 'Failed to fetch') {
@@ -171,6 +171,10 @@ export default function Exit() {
             });
     }
 
+    const closeTicketModal = () => {
+        setTicketModalOpen(false)
+    };
+
     return (
         <div className="row w-100">
             <ToastContainer position="top-right"/>
@@ -179,47 +183,50 @@ export default function Exit() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
-
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form className= 'form' >
-                <div>
-                        <label className="m">Estacionamiento</label>
+                <form className='form'>
+                    <div className='App'>
+
+                        {/* reservations[reservationsInputIndex].id IS THE ID FROM THE RESERVATION */}
+                        {ticketModalOpen && <Ticket reservationId={reservations[reservationsInputIndex].id}
+                                                    closeModal={closeTicketModal}/>}
+
+                        <label>Estacionamiento</label>
                         {role === 'ADMIN' || role === 'OWNER' ? (
-                    <select className="form-select" id='parking' name='parking' required onChange={event => {
-                        console.log(event.target.selectedIndex);
-                        setParkingInputIndex(event.target.selectedIndex - 1);
-                        console.log(parkingInputIndex);
-                    }}>
-                        <option value="">Seleccione un estacionamiento</option>
-                        {parkings.map((parking, index) => (
-                        <option key={index} value={parking}>
-                            {parking['id']} - {parking['address']}
-                    </option>
-                    ))}
-                    </select>
-                ) : (
-                    <div>
-                        <input disabled type="text" className="form-control" value={parkingAddress} />
-                    </div>
-                )}
-                    </div>
-                    <div>
-                        <label className="m">Reservas</label>
-                        <select className="form-select" id='reservations' name='reservations' required
-                                onChange={event => {
-                                    console.log(event.target.selectedIndex)
-                                    setReservationsInputIndex(event.target.selectedIndex - 1)
-                                    console.log(reservationsInputIndex)
-                                }}>
-                            <option value="">Seleccione una reserva</option>
-                            {reservations.map((reservations, index) =>
-                                <option key={index} value={reservations}>
-                                    {reservations['vehiclePlate']} - {reservations['vehicleModel']}
-                                </option>)}
-                        </select>
-                    </div>
-                    <div style={{textAlign:"center"}}>
-                        <button type="submit" className='btn btn-success' onClick={handleExit}>EGRESAR AUTO</button>
+                            <select className="form-select" id='parking' name='parking' required onChange={event => {
+                                console.log(event.target.selectedIndex);
+                                setParkingInputIndex(event.target.selectedIndex - 1);
+                                console.log(parkingInputIndex);
+                            }}>
+                                <option value="">Seleccione un estacionamiento</option>
+                                {parkings.map((parking, index) => (
+                                    <option key={index} value={parking}>
+                                        {parking['id']} - {parking['address']}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <div>
+                                <input disabled type="text" className="form-control" value={parkingAddress}/>
+                            </div>
+                        )}
+
+                        <div>
+                            <label className="mt-2">Reservas</label>
+                            <select className="form-select" id='reservations' name='reservations' required
+                                    onChange={event => {
+                                        console.log(event.target.selectedIndex)
+                                        setReservationsInputIndex(event.target.selectedIndex - 1)
+                                        console.log(reservationsInputIndex)
+                                    }}>
+                                <option value="">Seleccione una reserva</option>
+                                {reservations.map((reservations, index) =>
+                                    <option key={index} value={reservations}>
+                                        {reservations['vehiclePlate']} - {reservations['vehicleModel']}
+                                    </option>)}
+                            </select>
+                        </div>
+                        <button className='btn btn-success mt-2'  onClick={() => setTicketModalOpen(true)}>Cobrar</button>
                     </div>
                 </form>
             </section>

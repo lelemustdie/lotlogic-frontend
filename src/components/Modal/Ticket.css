@@ -1,19 +1,63 @@
-.modal-container {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+.parking-ticket {
+    padding: 20px;
+    width: 350px;
+    height: 600px;
+    box-shadow: 0 0 10px #8c8c8c;
+    font-family: Consolas, sans-serif;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal1 {
-    border-radius: 25px;
-    padding: 2rem;
-    background-color: white;
-    width: 35em;
+.parking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.parking-name {
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.parking-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.parking-ticket-info {
+    margin-bottom: 20px;
+}
+
+.parking-ticket-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.parking-ticket-label {
+    font-weight: bold;
+    padding-right: 50px;
+}
+
+.parking-ticket-value {
+    padding-left: 30px;
+    font-weight: bold;
+}
+
+.parking-ticket-info {
+    margin-top: 20px;
+}
+
+.parking-ticket-qr {
+    width: 200px;
+    height: 200px;
+}
+
+.qr-img {
+    width: 200px;
+    height: 200px;
 }

@@ -1,11 +1,11 @@
 import './Ticket.css';
 import {useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import qrMP from '../../images/qr.png'
+import parkingLogo from '../../images/ParkingIcon.png'
 
-export const Ticket = ({closeModal, submitForm}) => {
+export const Ticket = ({closeModal, reservationId}) => {
     const token = localStorage.getItem('token');
 
-    const reservationId = 1; //get from table
     const [plate, setPlate] = useState('');
     const [model, setModel] = useState('');
     const [entryDate, setEntryDate] = useState('');
@@ -15,11 +15,9 @@ export const Ticket = ({closeModal, submitForm}) => {
         fetch(`http://localhost:8080/api/user/employee/reservation-ticket/${reservationId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
-            },
-            method: 'GET',
-        }).then(response => {
-            return response.json();
+            }
         })
+            .then(response => response.json())
             .then(data => {
                 console.log(data);
                 setPlate(data.vehiclePlate);
@@ -27,43 +25,37 @@ export const Ticket = ({closeModal, submitForm}) => {
                 setEntryDate(data.entryDate);
                 setPrice(data.amount);
             })
-            .catch(error => {
-                toast.error(error.message);
-            });
+            .catch(error => console.log(error));
     }, [])
 
     return (
-        <div className='modal-container' onClick={(e) => {
-            if (e.target.className === 'modal-container')
-                closeModal();
-        }}
-        >
-            <div className='modal1'>
-                <form className='w-100'>
-                    <div>
-                        <h1>Información de la reserva</h1>
-                    </div>
-
-                    <div>
-                        <label>PATENTE: {plate}</label>
-                    </div>
-
-                    <div>
-                        <label>MODELO: {model}</label>
-                    </div>
-                    <div>
-                        <label>FECHA DE INGRESO: {entryDate}</label>
-                    </div>
-
-                    <div>
-                        <label>PRECIO: ${price}</label>
-                    </div>
-                    <div>
-                        <button type='submit' className='btn btn-dark mt-4'>COBRAR</button>
-                    </div>
-                </form>
+        <div className="parking-ticket">
+            <div className="parking-header">
+                <img src={parkingLogo} alt="Parking Logo" className="parking-logo"/>
+                <h1 className="parking-name">Antezana 247, CABA</h1>
             </div>
+            <div className="parking-ticket-info">
+                <div className="parking-ticket-row">
+                    <span className="parking-ticket-label">Patente</span>
+                    <span className="parking-ticket-value">{plate}</span>
+                </div>
+                <div className="parking-ticket-row">
+                    <span className="parking-ticket-label">Modelo</span>
+                    <span className="parking-ticket-value">{model}</span>
+                </div>
+                <div className="parking-ticket-row">
+                    <span className="parking-ticket-label">Ingreso</span>
+                    <span className="parking-ticket-value">{entryDate}</span>
+                </div>
+                <div className="parking-ticket-row">
+                    <span className="parking-ticket-label">Total</span>
+                    <span className="parking-ticket-value">${price}</span>
+                </div>
+            </div>
+            <div className="parking-ticket-qr">
+                <img src={qrMP} alt='qr-atendido' className='qr-img'/>
+            </div>
+            <div className='parking-ticket-info'>Escanea y paga con tu aplicación de Mercado Pago</div>
         </div>
     );
-
-};
+}
