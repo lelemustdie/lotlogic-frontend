@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 
 
-import {Ticket} from './components/Modal/Ticket'
+import {TicketModal} from './components/Modal/TicketModal'
 
 function App() {
     return (
@@ -30,7 +30,7 @@ function App() {
                         <Route exact path="/Home" element={<Home/>}/>
                         <Route exact path="/Entry" element={<Entry/>}/>
                         <Route exact path="/Exit" element={<Exit/>}/>
-                        <Route exact path='/Ticket' element={<Ticket/>}/>
+                        <Route exact path='/TicketModal' element={<TicketModal/>}/>
                         <Route exact path='/PanelOwners' element={<PanelOwners/>}/>
                         <Route exact path='/PanelEmployees' element={<PanelEmployees/>}/>
                         <Route exact path='/PanelParkings' element={<PanelParkings/>}/>

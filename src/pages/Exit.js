@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SidebarAdmin from '../components/SidebarAdmin';
 import SidebarOwner from "../components/SidebarOwner";
 import SidebarEmployee from "../components/SidebarEmployee";
-import {Ticket} from "../components/Modal/Ticket";
+import {TicketModal} from "../components/Modal/TicketModal";
 
 export default function Exit() {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Exit() {
     //from user input
     const [parkingInputIndex, setParkingInputIndex] = useState('');
     const [reservations, setReservations] = useState([]);
-    const [reservationsInputIndex, setReservationsInputIndex] = useState('');
+    const [reservationsInputIndex, setReservationsInputIndex] = useState(0);
     const [parkingAddress, setParkingAddress] = useState('');
     const [ticketModalOpen, setTicketModalOpen] = useState(false);
 
@@ -183,52 +183,49 @@ export default function Exit() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
-            <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                {ticketModalOpen ? (
-                     <Ticket reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal} />
-                     ) : (
-                <form className="form" onSubmit={handleExit}>
-                    <div className='App'>
-
-                        <label>Estacionamiento</label>
-                        {role === 'ADMIN' || role === 'OWNER' ? (
-                            <select className="form-select" id='parking' name='parking' required onChange={event => {
-                                console.log(event.target.selectedIndex);
-                                setParkingInputIndex(event.target.selectedIndex - 1);
-                                console.log(parkingInputIndex);
-                            }}>
-                                <option value="">Seleccione un estacionamiento</option>
-                                {parkings.map((parking, index) => (
-                                    <option key={index} value={parking}>
-                                        {parking['id']} - {parking['address']}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : (
-                            <div>
-                                <input disabled type="text" className="form-control" value={parkingAddress}/>
-                            </div>
-                        )}
-
+            <section className="col-9 d-flex flex-column justify-content-center align-items-center">
+                {ticketModalOpen &&
+                    <TicketModal reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal}/>}
+                <div className='App'>
+                    <label>Estacionamiento</label>
+                    {role === 'ADMIN' || role === 'OWNER' ? (
+                        <select className="form-select" id='parking' name='parking' required onChange={event => {
+                            console.log(event.target.selectedIndex);
+                            setParkingInputIndex(event.target.selectedIndex - 1);
+                            console.log(parkingInputIndex);
+                        }}>
+                            <option value="">Seleccione un estacionamiento</option>
+                            {parkings.map((parking, index) => (
+                                <option key={index} value={parking}>
+                                    {parking['id']} - {parking['address']}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
                         <div>
-                            <label className="mt-2">Reservas</label>
-                            <select className="form-select" id='reservations' name='reservations' required
-                                    onChange={event => {
-                                        console.log(event.target.selectedIndex)
-                                        setReservationsInputIndex(event.target.selectedIndex - 1)
-                                        console.log(reservationsInputIndex)
-                                    }}>
-                                <option value="">Seleccione una reserva</option>
-                                {reservations.map((reservations, index) =>
-                                    <option key={index} value={reservations}>
-                                        {reservations['vehiclePlate']} - {reservations['vehicleModel']}
-                                    </option>)}
-                            </select>
+                            <input disabled type="text" className="form-control" value={parkingAddress}/>
                         </div>
-                        <button className='btn btn-success mt-2' type='submit' onClick={() => setTicketModalOpen(true)}>Cobrar</button>
+                    )}
+
+                    <div>
+                        <label className="mt-2">Reservas</label>
+                        <select className="form-select" id='reservations' name='reservations' required
+                                onChange={event => {
+                                    console.log(event.target.selectedIndex)
+                                    setReservationsInputIndex(event.target.selectedIndex - 1)
+                                    console.log(reservationsInputIndex)
+                                }}>
+                            <option value="">Seleccione una reserva</option>
+                            {reservations.map((reservations, index) =>
+                                <option key={index} value={reservations}>
+                                    {reservations['vehiclePlate']} - {reservations['vehicleModel']}
+                                </option>)}
+                        </select>
                     </div>
-                </form>
-            )}
+                    <button className='btn btn-success mt-2' type='submit'
+                            onClick={() => setTicketModalOpen(true)}>Cobrar
+                    </button>
+                </div>
             </section>
         </div>
     )
