@@ -184,12 +184,11 @@ export default function Exit() {
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form className='form'>
+                {ticketModalOpen ? (
+                     <Ticket reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal} />
+                     ) : (
+                <form className="form" onSubmit={handleExit}>
                     <div className='App'>
-
-                        {/* reservations[reservationsInputIndex].id IS THE ID FROM THE RESERVATION */}
-                        {ticketModalOpen && <Ticket reservationId={reservations[reservationsInputIndex].id}
-                                                    closeModal={closeTicketModal}/>}
 
                         <label>Estacionamiento</label>
                         {role === 'ADMIN' || role === 'OWNER' ? (
@@ -226,9 +225,10 @@ export default function Exit() {
                                     </option>)}
                             </select>
                         </div>
-                        <button className='btn btn-success mt-2'  onClick={() => setTicketModalOpen(true)}>Cobrar</button>
+                        <button className='btn btn-success mt-2' type='submit' onClick={() => setTicketModalOpen(true)}>Cobrar</button>
                     </div>
                 </form>
+            )}
             </section>
         </div>
     )
