@@ -10,6 +10,7 @@ export const Ticket = ({closeModal, reservationId}) => {
     const [model, setModel] = useState('');
     const [entryDate, setEntryDate] = useState('');
     const [price, setPrice] = useState(0);
+    const [address, setAddress] = useState('');
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/user/employee/reservation-ticket/${reservationId}`, {
@@ -24,6 +25,7 @@ export const Ticket = ({closeModal, reservationId}) => {
                 setModel(data.vehicleModel);
                 setEntryDate(data.entryDate);
                 setPrice(data.amount);
+                setAddress(data.parkingReservationAddress);
             })
             .catch(error => console.log(error));
     }, [])
@@ -32,7 +34,7 @@ export const Ticket = ({closeModal, reservationId}) => {
         <div className="parking-ticket">
             <div className="parking-header">
                 <img src={parkingLogo} alt="Parking Logo" className="parking-logo"/>
-                <h1 className="parking-name">Antezana 247, CABA</h1>
+                <h1 className="parking-name">{address}</h1>
             </div>
             <div className="parking-ticket-info">
                 <div className="parking-ticket-row">
