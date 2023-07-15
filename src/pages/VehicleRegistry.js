@@ -182,8 +182,8 @@ export default function ReservationsList() {
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
                     <h2>AUTOS INGRESADOS/EGRESADOS</h2>
-                    <button button type ="submit" className='btn btn-success' onClick={exportToCSV}>Export to CSV</button>
                     <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation} adminColumn={role === 'ADMIN'}/>
+                    <button title='Descargar datos' type ="submit" className='btn btn-dark bi bi-download btn-sm' onClick={exportToCSV}> Descargar datos</button>
                 </div>
             </section>
         </div>
