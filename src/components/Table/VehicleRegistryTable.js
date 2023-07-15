@@ -9,7 +9,7 @@ export const VehicleRegistryTable = ({rows, deleteRow, adminColumn = false,}) =>
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [currentPage, setCurrentPage] = useState(1);
-    const [showDateRange, setShowDateRange] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(true);
 
     const handleOnNextPage = () => {
         setCurrentPage(currentPage + 1);
@@ -62,13 +62,13 @@ export const VehicleRegistryTable = ({rows, deleteRow, adminColumn = false,}) =>
                         <div id="datatable"></div>
                     </section>
                     <div>
-                        <button type="submit" className='btn btn-dark btn-sm mb-3'
-                                onClick={() => setShowDateRange(!showDateRange)}>
-                            Seleccionar fecha
-                        </button>
+                    <button type="submit" className='btn btn-dark btn-sm mb-3'
+                        onClick={() => setShowDateRange(!showDateRange)}>
+                    Seleccionar fecha
+                    </button>
                         {showDateRange && (
-                            <DateRange ranges={[{startDate: startDate, endDate: endDate, key: "selection",},]}
-                                       onChange={handleDateRangeChange}/>)}
+                            <div className="date-range-wrapper">
+                            <DateRange ranges={[{startDate: startDate, endDate: endDate, key: "selection",},]} onChange={handleDateRangeChange}/></div>)}
                     </div>
                     <thead>
                     <tr>

@@ -11,6 +11,10 @@
     width: 100%;
     overflow-x: auto;
 }
+ 
+  .date-range-wrapper {
+    margin-top: 10px;
+  }
 
 .table {
     width: max-content;
