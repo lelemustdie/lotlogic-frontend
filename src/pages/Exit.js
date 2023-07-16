@@ -19,7 +19,7 @@ export default function Exit() {
     //from user input
     const [parkingInputIndex, setParkingInputIndex] = useState('');
     const [reservations, setReservations] = useState([]);
-    const [reservationsInputIndex, setReservationsInputIndex] = useState(0);
+    const [reservationsInputIndex, setReservationsInputIndex] = useState(-1);
     const [parkingAddress, setParkingAddress] = useState('');
     const [ticketModalOpen, setTicketModalOpen] = useState(false);
 
@@ -144,8 +144,7 @@ export default function Exit() {
             .catch(error => console.log(error));
     };
 
-    function handleExit(event) {
-        event.preventDefault();
+    function handleExit() {
         const reservationEditForm = {
             parkingId: parkings[parkingInputIndex].id
         }
@@ -184,8 +183,8 @@ export default function Exit() {
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
             <section className="col-9 d-flex flex-column justify-content-center align-items-center">
-                {ticketModalOpen &&
-                    <TicketModal reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal}/>}
+                {(ticketModalOpen && reservationsInputIndex !== -1) &&
+                    <TicketModal reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal} onSubmit={handleExit}/>}
                 <div className='App'>
                     <label>Estacionamiento</label>
                     {role === 'ADMIN' || role === 'OWNER' ? (
