@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import qrMP from '../../images/qr.png'
 import parkingLogo from '../../images/ParkingIcon.png'
 
-export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
+export const TicketModal = ({ closeModal, reservationId, onSubmit }) => {
     const token = localStorage.getItem('token');
 
     const [plate, setPlate] = useState('');
@@ -16,7 +16,7 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
         fetch(`http://localhost:8080/api/user/employee/reservation-ticket/${reservationId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
-            }
+            },
         })
             .then(response => response.json())
             .then(data => {
@@ -27,40 +27,44 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
                 setPrice(data.amount);
                 setAddress(data.parkingReservationAddress);
             })
-            .then(() => createPaymentOrder())
             .catch(error => console.log(error));
-    }, [])
+    }, [reservationId, token]);
+
+    useEffect(() => {
+        if (price !== 0) {
+            createPaymentOrder();
+        }
+    }, [price]);
 
     async function createPaymentOrder() {
-        const paymentOrderInfo ={
+        const paymentOrderInfo = {
             external_reference: reservationId.toString(),
             title: `Estadia en ${address}`,
             description: `Estadia en ${address}`,
             total_amount: price,
             items: [
                 {
-                    sku_number: "A123K9191938",
-                    category: "parking",
-                    title: "Estacionamiento",
-                    description: `Estacionamiento - patente ${plate}` ,
+                    sku_number: 'A123K9191938',
+                    category: 'parking',
+                    title: 'Estacionamiento',
+                    description: `Estacionamiento - patente ${plate}`,
                     unit_price: price,
                     quantity: 1,
-                    unit_measure: "unit",
-                    total_amount: price
-                }
-            ]
-        }
+                    unit_measure: 'unit',
+                    total_amount: price,
+                },
+            ],
+        };
 
-        console.log(paymentOrderInfo)
+        console.log(paymentOrderInfo);
         fetch('http://localhost:8080/api/mercadopago/payment', {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             method: 'POST',
             body: JSON.stringify(paymentOrderInfo),
         })
             .then(response => response.json())
-            //can add possibility to print the specific qr from response
             .then(onSubmit)
             .catch(error => console.log(error));
     }
