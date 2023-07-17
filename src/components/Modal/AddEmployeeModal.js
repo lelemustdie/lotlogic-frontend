@@ -65,7 +65,7 @@ export const AddEmployeeModal = ({closeModal, submitForm}) => {
                 closeModal();
         }}
         >
-            <div className='modal1'>
+            <div className='modal4'>
                 <form className='w-100' onSubmit={handleFormSubmit}>
                     <div>
                         <label className="m">Estacionamiento</label>
@@ -74,7 +74,7 @@ export const AddEmployeeModal = ({closeModal, submitForm}) => {
                             setInputIndex(event.target.selectedIndex - 1)
                             console.log(parkingInputIndex);
                         }}>
-                            <option value="">Seleccione un estacionamiento</option>
+                            <option value="">Asigne el empleado a un estacionamiento</option>
                             {parkings.map((parking, index) =>
                                 <option key={index} value={parking}>
                                     {parking['id']} - {parking['address']}
@@ -82,22 +82,22 @@ export const AddEmployeeModal = ({closeModal, submitForm}) => {
                         </select>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>Nombre</label>
                         <input required type='text' className='form-control' id='firstName' name='input_ownername'/>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>Apellido</label>
                         <input required type='text' className='form-control' id='lastName' name='input_ownerlastname'/>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>DNI</label>
                         <input required type='number' className='form-control' id='dni' name='input_ownerdni'/>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>Contraseña</label>
                         <input required min='3' type='password' className='form-control' id='password'
                                name='input_ownerpassword'/>

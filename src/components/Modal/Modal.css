@@ -16,7 +16,34 @@
     padding: 2rem;
     background-color: white;
     width: 25em;
-    height: 80vh;
+    height: 78vh;
+    overflow-y: auto;
+}
+
+.modal2 {
+    border-radius: 5px;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+    height: 50vh;
+    overflow-y: auto;
+}
+
+.modal3 {
+    border-radius: 5px;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+    height: 65vh;
+    overflow-y: auto;
+}
+
+.modal4 {
+    border-radius: 5px;
+    padding: 2rem;
+    background-color: white;
+    width: 25em;
+    height: 60vh;
     overflow-y: auto;
 }
 

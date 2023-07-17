@@ -40,20 +40,20 @@ export default function AddParkingModal(props) {
             if (e.target.className === 'modal-container')
                 closeModal();
         }}>
-            <div className='modal1'>
+            <div className='modal3'>
                 <form className='w-100 form' onSubmit={submitForm}>
 
                     <div>
-                        <label>Dirección:</label>
-                        <input placeholder='Av. Cabildo 892'required type='text' className='form-control' id='address' name='input_address'
+                        <label>Dirección</label>
+                        <input placeholder='Av. Cabildo 892' required type='text' className='form-control' id='address'
+                               name='input_address'
                                onChange={event => handleAddressChange(event)}/>
                     </div>
 
                     <div>
-
                         {Object.values(floor)?.map(floor => (
                             <div key={floor.index}>
-                                <div>Piso {floor.index} Ingresar cant. cocheras (Máx. 250)</div>
+                                <div>Piso {floor.index} - Cantidad de cocheras (Máx. 250)</div>
                                 <input
                                     className='form-control'
                                     type="number"
@@ -62,32 +62,32 @@ export default function AddParkingModal(props) {
                                     max={250}
                                 />
 
-                                <button type="button" className='btn btn-danger mt-4'
+                                <button type="button" className='btn btn-danger'
                                         onClick={() => handleRemoveFloor(floor.index)}>
                                     Eliminar piso
                                 </button>
                             </div>
                         ))}
-                        <button type="button" className='btn btn-dark mt-4' onClick={handleAddFloor}>Añadir un piso (Máx
+                        <button type="button" className='btn btn-dark' onClick={handleAddFloor}>Añadir un piso (Máx
                             20)
                         </button>
                     </div>
 
-                    <div>
-                        <div>Tarifas (Precio/HS):</div>
-                        <span>Auto</span>
+                    <div className='mt-4'>
+                        <div >Tarifas (Precio/HS)</div>
+                        <label className='mt-4'>Auto</label>
                         <input required type='number' className='form-control' id='fees'
                                name='AUTO' onChange={handleFeeChange}/>
-                        <span>Camioneta/PickUp</span>
+                        <label>Camioneta</label>
                         <input required type='number' className='form-control'
                                id='fees' name='CAMIONETA' onChange={handleFeeChange}/>
-                        <span>Moto</span>
+                        <label>Moto</label>
                         <input required type='number' className='form-control' id='fees'
                                name='MOTO' onChange={handleFeeChange}/>
                     </div>
 
                     <div>
-                        <button type='submit' className='btn btn-success mt-4'>AGREGAR ESTACIONAMIENTO</button>
+                        <button type='submit' className='btn btn-success'>AGREGAR ESTACIONAMIENTO</button>
                     </div>
                 </form>
             </div>

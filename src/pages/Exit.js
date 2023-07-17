@@ -182,10 +182,13 @@ export default function Exit() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
-            <section className="col-9 d-flex flex-column justify-content-center align-items-center">
+            <section className="col-7 d-flex flex-column justify-content-center">
+
                 {(ticketModalOpen && reservationsInputIndex !== -1) &&
-                    <TicketModal reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal} onSubmit={handleExit}/>}
-                <div className='App'>
+                    <TicketModal reservationId={reservations[reservationsInputIndex].id} closeModal={closeTicketModal}
+                                 onSubmit={handleExit}/>}
+
+                <div>
                     <label>Estacionamiento</label>
                     {role === 'ADMIN' || role === 'OWNER' ? (
                         <select className="form-select" id='parking' name='parking' required onChange={event => {
@@ -207,7 +210,7 @@ export default function Exit() {
                     )}
 
                     <div>
-                        <label className="mt-2">Reservas</label>
+                        <label className="mt-3">Reservas</label>
                         <select className="form-select" id='reservations' name='reservations' required
                                 onChange={event => {
                                     console.log(event.target.selectedIndex)
@@ -222,7 +225,7 @@ export default function Exit() {
                         </select>
                     </div>
                     <button className='btn btn-success mt-2' type='submit'
-                            onClick={() => setTicketModalOpen(true)}>Cobrar
+                            onClick={() => setTicketModalOpen(true)}>COBRAR
                     </button>
                 </div>
             </section>

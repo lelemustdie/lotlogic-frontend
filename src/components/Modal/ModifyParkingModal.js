@@ -98,7 +98,7 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
                                defaultValue={address} onChange={event => setAddress(event.target.value)}/>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         {Object.values(floors)?.map((floor, index) => (
                             <div key={index}>
                                 <div>Piso {floor.index}</div>
@@ -113,19 +113,21 @@ export const ModifyParkingModal = ({closeModal, parkingId}) => {
                         </button>
                     </div>
 
-                    {Object.values(fees)?.map((fee, index) => (
-                        <div key={index}>
-                            <div>Tarifa {fee.feeType}</div>
-                            <input className='form-control'
-                                   type="number"
-                                   defaultValue={fee.feePrice}
-                                   onChange={event => handleFeeChange(event, index)}
-                            />
-                        </div>
-                    ))}
+                    <div className='mt-3'>
+                        {Object.values(fees)?.map((fee, index) => (
+                            <div key={index}>
+                                <div>Tarifa {fee.feeType}</div>
+                                <input className='form-control'
+                                       type="number"
+                                       defaultValue={fee.feePrice}
+                                       onChange={event => handleFeeChange(event, index)}
+                                />
+                            </div>
+                        ))}
+                    </div>
 
                     <div>
-                        <button type='submit' className='btn btn-dark mt-4' onClick={handleModifyParking}>MODIFICAR
+                        <button type='submit' className='btn btn-success mt-4' onClick={handleModifyParking}>MODIFICAR
                             ESTACIONAMIENTO
                         </button>
                     </div>

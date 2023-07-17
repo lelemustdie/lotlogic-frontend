@@ -208,10 +208,10 @@ export default function Entry() {
                 {role === 'OWNER' && <SidebarOwner/>}
                 {role === 'EMPLOYEE' && <SidebarEmployee/>}
             </section>
-            <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
-                <form className='form' onSubmit={handleEntry}>
+            <section className="col-7 d-flex flex-column justify-content-center ">
+                <form onSubmit={handleEntry}>
                     <div>
-                        <label className="m">Estacionamiento</label>
+                        <label>Estacionamiento</label>
                         {role === 'ADMIN' || role === 'OWNER' ? (
                             <select className="form-select" id='parking' name='parking' required onChange={event => {
                                 console.log(event.target.selectedIndex);
@@ -231,20 +231,20 @@ export default function Entry() {
                             </div>
                         )}
                     </div>
-                    <div>
+                    <div className='mt-3'>
                         <label>Patente</label>
                         <input required type="text" className="form-control" id="vehicle_plate" name="vehicle_plate"
                                value={vehiclePlate} onChange={event => setVehiclePlate(event.target.value)}/>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>Modelo</label>
                         <input required type="text" className="form-control" id="vehicle_model" name="vehicle_model"
                                value={vehicleModel} onChange={event => setVehicleModel(event.target.value)}/>
 
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label className="m">Tarifas</label>
                         <select className="form-select" id='fee' name='fee' required onChange={event => {
                             console.log(event.target.value)
@@ -260,7 +260,7 @@ export default function Entry() {
                         </select>
                     </div>
 
-                    <div>
+                    <div className='mt-3'>
                         <label>Piso</label>
                         <select className="form-select" id='floor' name='floor' required onChange={event => {
                             console.log(event.target.value)
@@ -276,8 +276,8 @@ export default function Entry() {
                         </select>
                     </div>
 
-                    <div style={{textAlign: "center"}}>
-                        <button type="submit" className='btn btn-success '>INGRESAR AUTO</button>
+                    <div>
+                        <button type="submit" className='btn btn-success mt-2'>INGRESAR VEHICULO</button>
                     </div>
                 </form>
             </section>
