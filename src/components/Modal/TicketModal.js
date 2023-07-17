@@ -2,8 +2,9 @@ import './Ticket.css';
 import {useEffect, useState} from "react";
 import qrMP from '../../images/qr.png'
 import parkingLogo from '../../images/ParkingIcon.png'
+import {toast} from "react-toastify";
 
-export const TicketModal = ({ closeModal, reservationId, onSubmit }) => {
+export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
     const token = localStorage.getItem('token');
 
     const [plate, setPlate] = useState('');
@@ -69,6 +70,17 @@ export const TicketModal = ({ closeModal, reservationId, onSubmit }) => {
             .catch(error => console.log(error));
     }
 
+    function cancelOrder() {
+        fetch('http://localhost:8080/api/mercadopago/cancel-payment', {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .catch(error => console.log(error));
+        toast.success("Orden cancelada");
+        //eslint-disable-next-line no-restricted-globals
+        location.reload();
+    }
+
     return (
         <div className='modal-container' onClick={(e) => {
             if (e.target.className === 'modal-container')
@@ -101,6 +113,10 @@ export const TicketModal = ({ closeModal, reservationId, onSubmit }) => {
                     <img src={qrMP} alt='qr-atendido' className='qr-img'/>
                 </div>
                 <div className='parking-ticket-info'>Escanea y paga con tu aplicación de Mercado Pago</div>
+
+                <div className='ticket-cancel'>
+                    <button className='btn btn-danger' onClick={cancelOrder}>Cancelar orden</button>
+                </div>
             </div>
         </div>
     );
