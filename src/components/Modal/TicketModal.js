@@ -81,16 +81,16 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
         })
             .then(response => response.json())
             .catch(error => console.log(error));
+
         toast.success("Orden cancelada");
-        //eslint-disable-next-line no-restricted-globals
-        closeModal();
-        navigate('/VehicleRegistry')
     }
 
     return (
         <div className='modal-container' onClick={(e) => {
             if (e.target.className === 'modal-container')
                 closeModal();
+            //eslint-disable-next-line no-restricted-globals
+            location.reload()
         }}>
             <div className="parking-ticket">
                 <div className="parking-header">
