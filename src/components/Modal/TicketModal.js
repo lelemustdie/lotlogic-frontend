@@ -3,8 +3,10 @@ import {useEffect, useState} from "react";
 import qrMP from '../../images/qr.png'
 import parkingLogo from '../../images/ParkingIcon.png'
 import {toast} from "react-toastify";
+import {useNavigate} from 'react-router-dom';
 
 export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
+    const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
     const [plate, setPlate] = useState('');
@@ -73,12 +75,16 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
     function cancelOrder() {
         fetch('http://localhost:8080/api/mercadopago/cancel-payment', {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
             .then(response => response.json())
             .catch(error => console.log(error));
         toast.success("Orden cancelada");
         //eslint-disable-next-line no-restricted-globals
-        location.reload();
+        closeModal();
+        navigate('/VehicleRegistry')
     }
 
     return (
