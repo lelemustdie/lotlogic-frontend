@@ -98,27 +98,38 @@ export default function ReservationsList() {
                 });
         }
     }, []);
-    const exportToCSV = () => {
-        const csvRows = reservations.map((reservation) => [
-            reservation.vehiclePlate,
-            reservation.vehicleModel,
-            reservation.entryDate,
-            reservation.exitDate ?? "N/A",
-        ]);
-      
-        const csvHeader = "Patente; Modelo; Ingreso; Egreso\n";
+    const exportToCSV = (role) => {
+        const csvRows = reservations.map((reservation) => {
+            const row = [
+                reservation.vehiclePlate,
+                reservation.vehicleModel,
+                reservation.entryDate,
+                reservation.exitDate ?? "N/A",
+            ];
+            if (role !== "EMPLOYEE") {
+                row.push(reservation.parkingReservationAddress);
+            }
+            return row;
+        });
+    
+        let csvHeader = "Patente; Modelo; Ingreso; Egreso;";
+        if (role !== "EMPLOYEE") {
+            csvHeader += " Estacionamiento";
+        }
+        csvHeader += "\n";
+    
         const csvContent = csvRows.reduce((content, row) => {
-          const csvRow = row.map((field) => `"${field}"`).join(";");
-          return content + csvRow + "\n";
-        }, csvHeader );
-      
+            const csvRow = row.map((field) => `"${field}"`).join(";");
+            return content + csvRow + "\n";
+        }, csvHeader);
+    
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute("download", "Historial.csv");
         link.click();
-      };
+    };
       
 
     const handleDeleteReservation = (targetIndex) => {
@@ -182,7 +193,7 @@ export default function ReservationsList() {
             <section className="col-9 fs-4 d-flex flex-column justify-content-center align-items-center">
                 <div className="text-center">
                     <h2>AUTOS INGRESADOS/EGRESADOS</h2>
-                    <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation} adminColumn={role === 'ADMIN'}/>
+                    <VehicleRegistryTable rows={reservations} deleteRow={handleDeleteReservation} adminColumn={role === 'ADMIN' || role === 'OWNER'}/>
                     <button title='Descargar datos' type ="submit" className='btn btn-dark bi bi-download btn-sm' onClick={exportToCSV}> Descargar datos</button>
                 </div>
             </section>
