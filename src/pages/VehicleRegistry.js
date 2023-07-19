@@ -98,38 +98,52 @@ export default function ReservationsList() {
                 });
         }
     }, []);
-    const exportToCSV = (role) => {
-        const csvRows = reservations.map((reservation) => {
-            const row = [
-                reservation.vehiclePlate,
-                reservation.vehicleModel,
-                reservation.entryDate,
-                reservation.exitDate ?? "N/A",
-            ];
-            if (role !== "EMPLOYEE") {
-                row.push(reservation.parkingReservationAddress);
-            }
-            return row;
-        });
-    
-        let csvHeader = "Patente; Modelo; Ingreso; Egreso;";
-        if (role !== "EMPLOYEE") {
-            csvHeader += " Estacionamiento";
-        }
-        csvHeader += "\n";
-    
+    const exportToCSV = () => {
+        if (role === 'ADMIN' || role === 'OWNER') {
+        const csvRows = reservations.map((reservation) => [
+            reservation.vehiclePlate,
+            reservation.vehicleModel,
+            reservation.entryDate,
+            reservation.exitDate ?? "N/A",
+            reservation.parkingReservationAddress,
+        ]);
+      
+        const csvHeader = "Patente; Modelo; Ingreso; Egreso; Estacionamiento\n";
         const csvContent = csvRows.reduce((content, row) => {
-            const csvRow = row.map((field) => `"${field}"`).join(";");
-            return content + csvRow + "\n";
-        }, csvHeader);
-    
+          const csvRow = row.map((field) => `"${field}"`).join(";");
+          return content + csvRow + "\n";
+        }, csvHeader );
+      
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute("download", "Historial.csv");
         link.click();
-    };
+        }
+        else{
+        const csvRows = reservations.map((reservation) => [
+            reservation.vehiclePlate,
+            reservation.vehicleModel,
+            reservation.entryDate,
+            reservation.exitDate ?? "N/A",
+        ]);
+
+        const csvHeader = "Patente; Modelo; Ingreso; Egreso\n";
+        const csvContent = csvRows.reduce((content, row) => {
+          const csvRow = row.map((field) => `"${field}"`).join(";");
+          return content + csvRow + "\n";
+        }, csvHeader );
+      
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "Historial.csv");
+        link.click();
+
+        }
+      };
       
 
     const handleDeleteReservation = (targetIndex) => {
