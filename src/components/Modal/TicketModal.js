@@ -87,7 +87,7 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
             if (e.target.className === 'modal-container')
                 closeModal();
             //eslint-disable-next-line no-restricted-globals
-            location.reload()
+            //location.reload()
         }}>
             <div className="parking-ticket">
                 <div className="parking-header">
@@ -117,9 +117,10 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
                 </div>
                 <div className='parking-ticket-info'>Escanea y paga con tu aplicación de Mercado Pago</div>
 
-                <div className='ticket-cancel'>
-                    <button className='btn btn-danger' onClick={cancelOrder}>Cancelar orden</button>
-                </div>
+
+
+
+
             </div>
         </div>
     );
