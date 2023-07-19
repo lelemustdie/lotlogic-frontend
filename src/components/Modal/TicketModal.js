@@ -75,9 +75,6 @@ export const TicketModal = ({closeModal, reservationId, onSubmit}) => {
     function cancelOrder() {
         fetch('http://localhost:8080/api/mercadopago/cancel-payment', {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
         })
             .then(response => response.json())
             .catch(error => console.log(error));
